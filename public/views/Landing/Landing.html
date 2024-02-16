@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../views/Landing/LandingStyle.css">
+</head>
+<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Nunito:wght@700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300&display=swap" rel="stylesheet">
+
+    <header class="barraSuperior">
+        <img id="logOriginal" src="../Assets/Imagenes/Logos/FoodieOriginal.png" alt="logOriginal">
+    </header>
+
+<section ID="Home">
+    <div class="navbar">
+        <ul>
+            <li><b><a href="#Home">Home</a></b></li>
+            <li><div class="linea"></div></li>
+            <li><b><a href="#Foodie">Foodie</a></b></li>
+            <li><div class="linea"></div></li>
+            <li><b><a href="#AboutUs">About us</a></b></li>
+            <li><div class="linea"></div></li>
+            <li><b><a href="#Contact">Contact</a></b></li>
+        </ul>
+    </div>
+    <h1 class="OracionIzq">
+        <p class="OI">Ordena lo que <span><br> quieras</span> a la hora que <br><span>quieras</span></p>
+    </h1>
+    <div>
+        <img id="ImagenGrande" src="../Assets/Imagenes/Recursos extras/LandPicv2.png" alt="cafeteria" class="background">
+        <img id="ImagenPeque" src="../Assets/Imagenes/Recursos extras/telefono-movil.png" alt="ImagenPeque">
+    </div>
+        <div class="LogReg">
+            <button id= "botonlogin" class="LogIn">Iniciar sesión</button>
+            <button id= "botonregister" class="SignUp">Registrarse</button>
+        </div>
+       
+</section>
+
+<section id="Foodie">
+        <div class="Contenedor">
+            <img class="drip"src="../Assets/Imagenes/Recursos extras/drip.png" alt="goteado">
+        </div>
+        <div class="triangle"></div>
+        
+<div class="Comentarios">
+    <div class="com1"><p id="coms">Dile <b>adiós</b> a las largas <b>filas</b>  en las cafeterías. <span><b>Foodie</b></span> te permite <b>ordenar</b> tu <b>comida</b> desde tu dispositivo, ahorrándote tiempo valioso durante tus <b>descansos</b></p><div class="tri1"></div></div>
+        
+        <div class="com2"><p id="coms"><b>Personaliza</b> tu pedido a tu gusto. Elige tus platillos y bebidas <b>favoritas</b> y ajústalos según tus <b>preferencias</b> alimenticias</p><div class="tri2"></div></div>
+
+        <div class="com3"><p id="coms">Al <b>evitar</b> las <b>filas y las esperas</b>, contribuyes a reducir el desperdicio de <span><b>tiempo y energía</b></span> en las cafeterías.</p><div class="tri3"></div></div>
+</div>
+
+</section>
+<section id="AboutUs">
+            <div class="triBlock">
+            <div class="triangle2"></div>
+            <div class="triangle1"></div>
+            </div>
+    <div id="block1" class="FlexAutores">
+        <div class="AU1"></div>
+        <div class="AU2"></div>
+        <div class="AU3"></div>
+        <div class="AU4"></div>
+    </div>
+    <div class="center"><container><img class="logo" src="../Assets/Imagenes/Logos/blacklogo.png" alt="FoodieBlack"></container></div>
+</section>
+<section id="Contact">
+    <h1 class="CU">C<span>o</span>ntact us</h1>
+    <div class="lineaH1"></div>
+     <div class="triBlock2">
+        <div class="tri4"></div>
+<div class="ParteMedia">
+    <h2 class="ES">Tu tiemp<span>o</span>,<br>tu c<span>o</span>mida,</br>tu manera.</h2>
+    <div class="cuadroFormulario">
+        <div class="FoodieLog">
+            <img id="FLog" src="../Assets/Imagenes/Logos/FoodieNegro.png" alt="Foodies">
+        </div>
+        <div class="linea"></div>
+      <form class="form" action="/" method="post">
+        <div class="SeccionDerecha">
+            <input class="introducir" type="text" id= "nombre" name= "nombre" placeholder="Nombre">
+            <input class="introducir" type="text" id= "correo" name= "correo" placeholder="Correo">
+            <input class="introducir" type="text" id= "telefono" name= "telefono" placeholder="Teléfono">
+            <button class="botonSend">Enviar</button>
+        </div>
+        <div class="SeccionIzquierda">
+            <input class="message" type="text" id= "mensaje" name= "mensaje" placeholder="(Mensaje)">
+        </div>
+        </form>
+    </div>
+    </div> 
+    
+</div>
+</section>
+<button id="scrollTopButton" onclick="scrollToTop()"><img src="../Assets/Imagenes/Recursos extras/home.png" alt="casa"></button>
+<script>
+    window.onscroll = function () {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("scrollTopButton").style.display = "block";
+      } else {
+        document.getElementById("scrollTopButton").style.display = "none";
+      }
+    };
+    function scrollToTop() {
+      document.body.scrollTop = 0; 
+      document.documentElement.scrollTop = 0
+    }
+
+    document.getElementById("botonlogin").addEventListener("click", function() {
+    window.location.href = "/Login";
+    })
+    document.getElementById("botonregister").addEventListener("click", function() {
+    window.location.href = "/Choose";
+    })
+    </script>
+    
+</body>
+</html>

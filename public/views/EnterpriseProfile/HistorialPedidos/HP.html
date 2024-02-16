@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../../views/EnterpriseProfile/HistorialPedidos/HP.css">
+</head>
+<body>
+    <div id="LeftPart">
+        <div id="ContentLeft">
+            <a class="Foodie" href="/homeP"><img class="Foodie" src="../../../Assets/Imagenes/Logos/FoodieBlanco.png" alt="Foodie"></a>
+            <input type="checkbox" id="check">
+        <label for="check" class="menu-button">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </label>
+            <hr class="HeaderLine">
+            <ul class="List">
+            <div class="Imagen" id="openModalImage"></div>
+            <ul id="Categories">
+                <a href="/providerProfile" class="Category" id="P"><img class="Icons" src="../../../Assets/Imagenes/Recursos extras/avatarN.png" alt="Perfil">Perfil</a>
+                <a href="/providerProfileHistory" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/historial.png" alt="Historial" class="Icons">Historial de pedidos</a>
+                <a href="/providerProfileMenu" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/menu.png" alt="Menu" class="Icons">Menu</a>
+                <a href="/providerProfileStatistics" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/estadisticas.png" alt="Estadisticas" class="Icons">Estadisticas</a>
+                <a href="/providerQA" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/preguntas.png" alt="Q&A" class="Icons">Preguntas frecuentes</a>
+                <a href="/homeP"  class="Button" id="Orders">Pedidos en curso</a>
+            </ul>
+            </ul>
+        </div>
+        
+    </div>
+
+    <div id="RightPart">
+        <div class="Filters">
+            <div class="ContenedorTiempo">
+
+            </div>
+
+            <div class="ContenedorLupa">
+                <button class="LupaBtn2" id="nobuscar" onclick="nobuscar()">
+                    <img class="Lupa" src="../../../Assets/Imagenes/Recursos extras/XB.png" alt="Lupa">
+                </button>
+                <div class="NameContent">
+                    <input type="text" class="NameFilter" id="busqueda">
+                </div>
+                <button class="LupaBtn" id="buscar" onclick="buscar()">
+                    <img class="Lupa" src="../../../Assets/Imagenes/Recursos extras/search.png" alt="Lupa">
+                </button>
+            </div>
+        </div>
+
+        <div id="HistorialPadre" class="HistorialBlock">
+            <h2 id="NoResults"></h2>
+            <div id="Historial">
+            <!-- AQUI EMPIEZA EL HISTORIAL DE UN PRODUCTO-->
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../../views/EnterpriseProfile/HistorialPedidos/HP.js"></script>
+</html>

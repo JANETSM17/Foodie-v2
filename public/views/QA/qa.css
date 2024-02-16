@@ -1,0 +1,332 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../../../Assets/Tipografias/Nunito/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'NunitoBold';
+    src: url('../../../Assets/Tipografias/Nunito/static/Nunito-Bold.ttf') format('truetype');
+    font-weight: bold; 
+}
+@keyframes brillo {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 180, 0, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 10px rgba(255, 180, 0, 0.7), 0 0 20px rgba(255, 180, 0, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 180, 0, 0.7);
+    }
+}
+*{
+    margin: 0%;
+    padding: 0%;
+    font-family: 'Nunito' , sans-serif;
+}
+html{
+    overflow: hidden;
+}
+header {
+    width: 100%;
+    height: 12vh;
+    background-color: black;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding: 0%;
+}
+.paginas li button{
+    cursor: pointer;
+    max-height: 100%;
+    background-color: unset;
+    border-style: none;
+    padding: 8px;
+}
+button {
+    cursor: pointer;
+    background-color: unset;
+    border-style: none;
+}
+.Button {
+    height: 28%;
+    width: 80%;
+    background-color: #ffc029ff;
+    border-radius: 2vh;
+    margin: auto;
+    font-size: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: transparent;
+}
+.Button:Hover {
+    background-color: rgb(255, 168, 7);
+    transition: 0.2s ease-in;
+}
+/* Estilos Barra Nav */
+@media (min-width: 850px) {
+
+    
+header{
+    width: 100%;
+    height: 10vh;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#barra{
+    max-height: 100%;
+    max-width: 30%;
+    margin-left: 10px;
+    
+}
+.paginas{
+    display: flex;
+    justify-content: space-between;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+}
+.paginas button{
+    background-color: transparent;
+    border-style: none;
+    color: white;
+    font-size: 1.25rem;
+    border-radius: 30px;
+}
+.funciones{
+    width: 10%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    margin-right: 10px;
+}
+.funciones button{
+    height: 30px;
+    width: 30px;
+    border-style: none;
+    background-color: transparent;
+}
+.bolsa{
+    background-image: url('../../../assets/Imagenes/Recursos%20extras/bolsaW.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.bolsa:hover{
+    cursor: pointer;
+    background-color: white;
+    background-image: url('../../../assets/Imagenes/Recursos%20extras/bolsaB.png');
+}
+.perfil{
+    background-image: url('../../../assets/Imagenes/Recursos%20extras/avatarW.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.perfil:hover{
+    cursor: pointer;
+    background-color: white;
+    background-image: url('../../../assets/Imagenes/Recursos%20extras/avatarN.png');
+}
+.paginas button:hover{
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+#check{
+    display: none;
+}
+ul{
+  list-style: none;  
+}
+.RightPart {
+    height: 100%;
+    width: 97%;
+    background-color: white;
+    border-radius: 4vh;
+    box-shadow: 7px 6px 21px -1px rgba(0,0,0,0.35);
+    margin: auto;
+    display: grid;
+    grid-template-rows: 6% 85% 9%;
+}
+h1 {
+    margin: auto;
+}
+.Questions {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-self: center;
+}
+.LeftSection, .RightSection {
+    height: 100%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+}
+#ContactUs {
+    height: 80%;
+    width: 20%;
+}
+p {
+    text-align: center;
+}
+}
+@media (max-width: 850px) {
+   
+    #check{
+        display: none;
+    }
+    .menu-button {
+        margin-right: auto;
+        margin-left: auto;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+    
+    .bar {
+        width: 30px;
+        height: 4px;
+        background-color: white;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+    header{
+        width: 100%;
+        height: 10vh;
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    #barra{
+        width: 150px;
+        height: auto;
+        
+    }
+    ul{
+        position: fixed;
+        top: 10vh;
+        width: 100%;
+        height: 0vh;
+        background-color: #2b2b2bff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 0 0 30px 30px;
+        list-style: none;
+        transition: all .5s ease;
+        overflow: hidden;
+        z-index: 10;
+    }
+    .paginas button{
+        background-color: transparent;
+        width: 100%;
+        height: 10vh;
+        border-style: none;
+        color: white;
+        font-size: 1.25rem;
+        transition: height 0.5s ease;
+    }
+    .paginas button:hover{
+        height: 15vh;
+        cursor: pointer;
+        background-color: rgb(95, 95, 95);
+    }
+    ul li:last-child button:hover{
+        border-radius: 0 0 30px 30px;
+    }
+    .funciones{
+        width: 150px;
+        height: 10vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .funciones button{
+        height: 30px;
+        width: 30px;
+        border-style: none;
+        background-color: transparent;
+    }
+    .bolsa{
+        background-image: url('../../../assets/Imagenes/Recursos%20extras/bolsaW.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .bolsa:hover{
+        cursor: pointer;
+    }
+    .perfil{
+        background-image: url('../../../assets/Imagenes/Recursos%20extras/avatarW.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .perfil:hover{
+        cursor: pointer;
+    }
+
+    #check:checked ~ ul{
+        height: 35vh;
+    }
+
+
+
+
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(1) {
+        transform: translateY(12.5px) rotate(45deg);
+    }
+    
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(3) {
+        transform: translateY(-12.5px) rotate(-45deg);
+    }
+
+
+}
+@media (min-width: 1200px){
+    .central{
+        border-radius: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 400px;
+        height: 95%;
+        background-color: white;
+        box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+        transition: all .5s ease;
+    }
+    .side1{
+        border-radius: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 300px;
+        height: 80%;
+        align-self: center;
+        background-color: white;
+        box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+        transition: all .5s ease;
+    }
+    .side2{
+        border-radius: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 300px;
+        height: 80%;
+        align-self: center;
+        background-color: white;
+        box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+        transition: all .5s ease;
+    }
+}

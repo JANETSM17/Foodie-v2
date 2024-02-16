@@ -1,0 +1,879 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../../../Assets/Tipografias/Nunito/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NunitoBold';
+    src: url('../../../Assets/Tipografias/Nunito/static/Nunito-Bold.ttf') format('truetype');
+    font-weight: bold; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+html{
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+header {
+    width: 100%;
+    height: 12vh;
+    background-color: black;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding: 0%;
+}
+.paginas li button{
+    cursor: pointer;
+    max-height: 100%;
+    background-color: unset;
+    border-style: none;
+    padding: 8px;
+}
+button {
+    background-color: unset;
+    border-style: none;
+    cursor: pointer;
+}
+
+@media (min-width: 850px) {
+header{
+    width: 100%;
+    height: 10vh;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#barra{
+    max-height: 100%;
+    max-width: 30%;
+    margin-left: 10px;
+    
+}
+.paginas{
+    display: flex;
+    justify-content: space-between;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+}
+.paginas button{
+    background-color: transparent;
+    border-style: none;
+    color: white;
+    font-size: 1.25rem;
+    border-radius: 30px;
+}
+.funciones{
+    width: 10%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    margin-right: 10px;
+}
+.funciones button{
+    height: 30px;
+    width: 30px;
+    border-style: none;
+    background-color: transparent;
+}
+.bolsa{
+    background-image: url('../../../assets/Imagenes/Recursos%20extras/bolsaW.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.bolsa:hover{
+    cursor: pointer;
+    background-color: white;
+    background-image: url('../../../assets/Imagenes/Recursos%20extras/bolsaB.png');
+}
+.perfil{
+    background-image: url('../../../assets/Imagenes/Recursos%20extras/avatarW.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.perfil:hover{
+    cursor: pointer;
+    background-color: white;
+    background-image: url('../../../assets/Imagenes/Recursos%20extras/avatarN.png');
+}
+.paginas button:hover{
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+#check{
+    display: none;
+}
+.paginas{
+  list-style: none;  
+}
+}
+@media (max-width: 850px) {
+    #check{
+        display: none;
+    }
+    .menu-button {
+        margin-right: auto;
+        margin-left: auto;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+    
+    .bar {
+        width: 30px;
+        height: 4px;
+        background-color: white;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+    header{
+        width: 100%;
+        height: 10vh;
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    img{
+        width: 150px;
+        height: auto;
+        
+    }
+    .paginas{
+        position: fixed;
+        top: 10vh;
+        width: 100%;
+        height: 0vh;
+        background-color: #2b2b2bff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 0 0 30px 30px;
+        list-style: none;
+        transition: all .5s ease;
+        overflow: hidden;
+        z-index: 999;
+    }
+    .paginas button{
+        background-color: transparent;
+        width: 100%;
+        height: 10vh;
+        border-style: none;
+        color: white;
+        font-size: 1.25rem;
+        transition: height 0.5s ease;
+    }
+    .paginas button:hover{
+        height: 15vh;
+        cursor: pointer;
+        background-color: rgb(95, 95, 95);
+    }
+    .paginas li:last-child button:hover{
+        border-radius: 0 0 30px 30px;
+    }
+    .funciones{
+        width: 150px;
+        height: 10vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .funciones button{
+        height: 30px;
+        width: 30px;
+        border-style: none;
+        background-color: transparent;
+    }
+    .bolsa{
+        background-image: url('../../../assets/Imagenes/Recursos%20extras/bolsaW.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .bolsa:hover{
+        cursor: pointer;
+    }
+    .perfil{
+        background-image: url('../../../assets/Imagenes/Recursos%20extras/avatarW.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .perfil:hover{
+        cursor: pointer;
+    }
+
+    #check:checked ~ ul{
+        height: 35vh;
+    }
+
+
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(1) {
+        transform: translateY(12.5px) rotate(45deg);
+    }
+    
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(3) {
+        transform: translateY(-12.5px) rotate(-45deg);
+    }
+
+
+}
+
+@media (min-width: 800px) {
+    
+
+section{
+    width: 100%;
+    height: 90vh;
+    background-color: #efefef;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+
+}
+.menu{
+    width: 95%;
+    height: 88vh;
+    background-color: white;
+    border-radius: 3vh 3vh 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.comedor{
+    width: 100%;
+    min-height: 30%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.foto{
+    width: 120px;
+    height: 120px;
+    border-radius: 120px;
+    background-color: #d9d9d9ff;
+}
+.info{
+    width: 300px;
+    height: 100%;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.rate{
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.rate img{
+    width: 30px;
+}
+.productos{
+    width: 80%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.categoria{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.categoria p{
+    width: 100%;
+    text-align: center;
+}
+.producto{
+    width: 400px;
+    height: 15vh;
+    background-color: #efefef;
+    border-radius: 3vh;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    justify-content: space-between;
+    transition: all .3s ease;
+    margin: 20px 0;
+}
+.producto .producto{
+    margin: 0;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0);
+}
+.producto:hover{
+    background-color: #d9d9d9ff;
+}
+
+.fotop{
+    min-width: 10vh;
+    height: 10vh;
+    border-radius: 10vh;
+    background-color: #d9d9d9ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+}
+.fotop img{
+    width: auto;
+    height: 70%;
+}
+.agregar{
+    min-width: 50px;
+    height: 100%;
+    border-radius: 0 3vh 3vh 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../../../Assets/Imagenes/Recursos%20extras/bolsaRB.png");
+    background-repeat: no-repeat;
+    background-size: 40px;
+    background-position: center;
+    background-color: #d9d9d9ff;
+    transition: all .5s ease;
+    
+}
+.agregar:hover{
+    min-width: 60px;
+    transform: translateX(5px);
+}
+.categorias{
+    width: 500px;
+    height: 70px;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+#estrella{
+    max-width: fit-content;
+    margin: 5px;
+}
+.nombres{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.nombres a{
+    width: 80px;
+    height: 30px;
+    background-color: #efefef;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nombres button{
+    width: 80px;
+    height: 30px;
+    background-color: #ffb400ff;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.productoExtendido{
+    width: 100%;
+    height: 30vh;
+    background-color: #efefef;
+    border-radius: 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    display: none;
+    margin: 20px 0;
+}
+.info2{
+    width: 150px;
+    height: 100%;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding-top: 30px;
+    box-sizing: border-box;
+}
+.division{
+    width: 2px;
+    height: 90%;
+    background-color: #d9d9d9ff;
+}
+.descripcion{
+    width: 300px;
+    height: 90%;
+    background-color: white;
+    border-radius: 3vh;
+    font-size: 1.5rem;
+    padding-left: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: auto;
+}
+.ingredientes{
+    font-size: 1rem;
+    margin-top: 30%;
+}
+.total{
+    width: 70px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#cantidad{
+    width: 40px;
+    height: auto;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+    color: black;
+}
+.botones{
+    width: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.aumentar{
+    width: 100%;
+    height: 30px;
+    transform: rotate(180deg);
+    background-image: url("../../../Assets/Imagenes/Recursos%20extras/FlechaO.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    margin-bottom: 20px;
+}
+.disminuir{
+    width: 100%;
+    height: 30px;
+    background-image: url("../../../Assets/Imagenes/Recursos%20extras/FlechaO.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+}
+.final{
+    width: 150px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.cerrar{
+    margin-top: 10px;
+    width: 20px;
+    height: 20px;
+    background-image: url("../../../Assets/Imagenes/Recursos%20extras/XB.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    align-self: flex-end;
+}
+.agregar2{
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #ffb400ff;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.productofase1{
+    width: 400px;
+}
+}
+@media (max-width: 800px) {
+    
+
+    section{
+        width: 100%;
+        height: 90vh;
+        background-color: #efefef;
+        display: flex;
+        justify-content: center;
+        align-items: end;
+    
+    }
+    .menu{
+        width: 99%;
+        height: 88vh;
+        background-color: white;
+        border-radius: 3vh 3vh 0 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .comedor{
+        width: 100%;
+        min-height: 40%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .foto{
+        width: 120px;
+        height: 120px;
+        border-radius: 120px;
+        background-color: #d9d9d9ff;
+    }
+    .info{
+        width: 300px;
+        height: 100%;
+        font-size: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .rate{
+        display: flex;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .rate img{
+        width: 30px;
+    }
+    .productos{
+        width: 99%;
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+    }
+    
+    .categoria{
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .categoria p{
+        width: 100%;
+        text-align: center;
+    }
+    .producto{
+        width: 95%;
+        height: 15vh;
+        background-color: #efefef;
+        border-radius: 3vh;
+        box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem;
+        justify-content: space-between;
+        transition: all .3s ease;
+        margin: 20px 0;
+    }
+    .producto .producto{
+        margin: 0;
+        box-shadow: -2px 2px 5px rgba(0, 0, 0, 0);
+    }
+    .producto:hover{
+        background-color: #d9d9d9ff;
+    }
+    
+    .fotop{
+        min-width: 10vh;
+        height: 10vh;
+        border-radius: 10vh;
+        background-color: #d9d9d9ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+    }
+    .fotop img{
+        width: auto;
+        height: 70%;
+    }
+    .agregar{
+        min-width: 50px;
+        height: 100%;
+        border-radius: 0 3vh 3vh 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("../../../Assets/Imagenes/Recursos%20extras/bolsaRB.png");
+        background-repeat: no-repeat;
+        background-size: 40px;
+        background-position: center;
+        background-color: #d9d9d9ff;
+        transition: all .5s ease;
+        
+    }
+    .agregar:hover{
+        min-width: 60px;
+        transform: translateX(5px);
+    }
+    .categorias{
+        width: 300px;
+        height: 100px;
+        font-size: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #estrella{
+        max-width: fit-content;
+        margin: 5px;
+    }
+    .nombres{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .nombres a{
+        width: 80px;
+        height: 30px;
+        background-color: #efefef;
+        color: black;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    
+    .productoExtendido{
+        width: 100%;
+        height: 40vh;
+        background-color: #efefef;
+        border-radius: 3vh;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;
+        display: none;
+        margin: 20px 0;
+    }
+    .info2{
+        width: 30%;
+        height: 40%;
+        font-size: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        padding-top: 15px;
+        box-sizing: border-box;
+    }
+    .division{
+        width: 2px;
+        height: 90%;
+        background-color: #d9d9d9ff;
+        display: none;
+    }
+    .descripcion{
+        width: 60%;
+        height: 40%;
+        background-color: white;
+        border-radius: 3vh;
+        font-size: 1.5rem;
+        padding-left: 20px;
+        box-sizing: border-box;
+        text-align: center;
+        overflow: auto;
+        margin-top: 15px;
+    }
+    .ingredientes{
+        font-size: 1rem;
+        margin-top: 10%;
+    }
+    .total{
+        width: 70px;
+        height: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #cantidad{
+        width: 40px;
+        height: auto;
+        font-size: 2rem;
+        font-weight: bold;
+        background-color: transparent;
+        border: none;
+        color: black;
+    }
+    .botones{
+        width: 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .aumentar{
+        width: 100%;
+        height: 30px;
+        transform: rotate(180deg);
+        background-image: url("../../../Assets/Imagenes/Recursos%20extras/FlechaO.png");
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: center;
+        margin-bottom: 20px;
+    }
+    .disminuir{
+        width: 100%;
+        height: 30px;
+        background-image: url("../../../Assets/Imagenes/Recursos%20extras/FlechaO.png");
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: center;
+    }
+    .final{
+        width: 130px;
+        height: 55%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .cerrar{
+        margin-top: 10px;
+        width: 20px;
+        height: 20px;
+        background-image: url("../../../Assets/Imagenes/Recursos%20extras/XB.png");
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: center;
+        align-self: flex-end;
+    }
+    .agregar2{
+        width: 100px;
+        height: 50px;
+        border-radius: 10px;
+        text-align: center;
+        background-color: #ffb400ff;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .productofase1{
+        width: 400px;
+    }
+    }
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.CalificarContent {
+    height: 25%;
+    width: 50%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 4vh;
+    box-shadow: .5vh .8vh 1vh rgba(0, 0, 0, 0.3);
+    margin: auto;
+    margin-top: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 6vh;
+    cursor: pointer;
+}
+.Stars {
+    height: 30%;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.Star {
+    height: 100%;
+    width: 100%;
+    background-image: url("../../Assets/Imagenes/Recursos extras/estrellaVacia.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.Star:hover,
+.Star.checked {
+    background-image: url("../../Assets/Imagenes/Recursos extras/estrella.png");
+    cursor: pointer;
+}
+.AcceptRate {
+    width: 15%;
+    height: 20%;
+    background-color: #ffb400ff;
+    border-radius: 2vh;
+    border: none;
+}
+.AcceptRate:hover{
+    width: 16%;
+    height: 21%;
+    background-color: rgb(255, 136, 0);
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}

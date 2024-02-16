@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrate</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../views/SingUp-C/singup-c.css">
+</head>
+<body>
+    <header>
+        <button id="botonBarra">
+            <img id="barra" src="../Assets/Imagenes/Logos/FoodieOriginal.png" alt="Foodie">
+        </button>
+    </header>
+    <section>
+        <form class="login" action="/signUp-C" method="post">
+            <div class="titulo">
+            <img src= "../assets/Imagenes/Logos/blacklogo.png" alt="">
+            <h1>Crear Cuenta</h1>
+            </div>
+            <hr>
+                <input placeholder="Correo Electrónico" type="email" id="email" name="correo" maxlength="25" required>
+                <input placeholder="Nombre y Apellido" type="text" id="nombre" name="nombre" maxlength="25" required>
+                <input placeholder="Contraseña" type="password" id="password" name="contraseña" maxlength="16" required>
+                <input placeholder="Confirmar Contraseña" type="password" id="confirm_password" name="confirm_password" maxlength="16" required>
+                <input placeholder="Número De Telefóno" type="number" id="telefono" name="telefono" maxlength= "10" required>
+                <button id="Siguiente"type="submit">Siguiente</button>   
+            </form>
+    </section>
+    <script src="../../views/SingUp-C/singup-c.js"></script>
+</body>
+</html>

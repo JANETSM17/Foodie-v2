@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../views/homeC/homec.css">
+</head>
+<body>
+    <header> 
+        <img id="barra" src="../../Assets/Imagenes/Logos/FoodieOriginal.png" alt="Foodie">
+        <input type="checkbox" id="check">
+        <label for="check" class="menu-button">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </label>
+        <ul class="paginas">
+            <li><button onclick="irHome()">Home</button></li>
+            <li><button onclick="irPedidos()">Mis Pedidos</button></li>
+            <li><button onclick="irQA()">Preguntas Frecuentes</button></li>
+            <li><button id="botonContactCliente" onclick="irContact()">Contact</button></li>
+         </ul>
+        <div class="funciones">
+            <button title="desplegar la bolsa" onclick="irBag()" class="bolsa"></button>
+            <button title="ir hacia el perfil" onclick="irProfile()" class="perfil"></button>
+        </div>
+    </header>
+    <section>
+        <div id="comedores" class="comedores">
+            <button id="Regresar"></button>
+            <div id= "comedoresDisponibles" class="comedoresDisponibles">
+                
+            </div>
+            <button id="Seguir"></button>
+        </div>
+
+        <form action="/homeC/agregarComedor" method="post">
+            <div class="unirComedor">
+                <label for="codigo">Código de <br> comedor</label>
+                <input id="codigo" name="campoCodigo" type="text" maxlength="6" oninput="this.value = this.value.toUpperCase()" placeholder="[xxxxxx]">  
+            </div>
+        <button title="Agregar Comedor" class="agregar" type="submit"></button>
+        </form>
+    </section>
+    <script src="../../views/homeC/homec.js"></script>
+</body>
+</html>

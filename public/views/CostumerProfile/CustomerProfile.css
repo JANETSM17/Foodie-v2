@@ -1,0 +1,756 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../../../Assets/Tipografias/Nunito/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'NunitoBold';
+    src: url('../../../Assets/Tipografias/Nunito/static/Nunito-Bold.ttf') format('truetype');
+    font-weight: bold; 
+}
+*{
+    margin: 0%;
+    padding: 0%;
+    font-family: 'Nunito' , sans-serif;
+}
+body {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 22vw auto;
+    overflow-x: hidden;
+    background-color: #eeeeeeff;
+}
+body::-webkit-scrollbar {
+    width: 1vw;
+    background: #d9d9d9ff;
+}
+body::-webkit-scrollbar-thumb {
+    background: #ff9900ff;
+    border-radius: 10%;
+}
+a {
+    font-style: inherit;
+}
+#LeftSide {
+    background-color: #404040ff;
+    height: 100vh;
+    grid-column: 22vw;
+}
+#ContentLeft {
+    background-color: #404040ff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    width: 22vw;
+}
+.img {
+    padding: 0;
+    margin: 2vh 0 2vh 0;
+    width: 90%;
+}
+.LogoB {
+    width: 100%;
+    height: 100%;
+}
+hr {
+    margin: 1vw;
+    height: .1%;
+    width: 85%;
+    background-color: #efefef;
+    border-radius: 10%;
+}
+.BLines {
+    height: .1vw;
+    width: 75%;
+    background-color: black;
+    border-radius: 10%;
+}
+.Imagen {
+    background-color: #eeeeeeff;
+    object-fit: cover;
+    width: 15vw;
+    height: 15vw;
+    border-radius: 50%;
+    margin: 0% 15%;
+}
+.Imagen:hover{
+    background-color: rgb(224, 224, 224);
+    cursor: pointer;
+    box-shadow: .5vh .8vh 1vh rgba(0, 0, 0, 0.3);
+    transition: .2s ease-in ;
+}
+.buttons {
+    flex-direction: column;
+    display: flex;
+    height: 48vh;
+    width: 100%;
+    margin: 1% 10%;
+    align-items: center;
+    justify-content: center;
+}
+.button {
+    background-color: #ffc029ff;
+    height: 8vh;
+    width: 14vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8%;
+    border-radius: 1.5vh;
+}
+.button:hover{
+    background-color: rgb(247, 168, 22);
+    cursor: pointer;
+    box-shadow: .5vh .8vh 1vh rgba(0, 0, 0, 0.3);
+    transition: .2s ease-in ;
+}
+.OyD {
+    margin: 4%;
+    color: #ff9900;
+}
+.OyD:hover {
+    cursor: pointer;
+}
+#RightSide {
+    background-color: #efefefff;
+    height: 100%;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+span {
+    color:#ff9900 ;
+}
+.cajas  {
+    background-color: #efefefff;
+    height: auto;
+    width:min-content;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 1% 0%;
+    justify-content: space-evenly;
+}
+.UInfo {
+    background-color: white;
+    height: 35vh;
+    width: 50vw;
+    border-radius: 4vh;
+    box-shadow: .4vh .4vh .4vh rgba(133, 133, 133, 0.3);
+    margin: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+.Gasto {
+    background-color: white;
+    height: 350px;
+    width: 350px;
+    margin: 4%;
+    border-radius: 4vh;
+    font-size: 4vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    box-shadow: .4vh .4vh .4vh rgba(133, 133, 133, 0.3);
+}
+.Pendiente {
+    background-color: white;
+    height: 350px;
+    width: 350px;
+    margin: 4%;
+    border-radius: 4vh;
+    box-shadow: .4vh .4vh .4vh rgba(133, 133, 133, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 3vh;
+    flex-direction: column;
+    border-color: transparent;
+}
+p {
+    margin: auto;
+}
+.ImgPendiente {
+    background-color: #eeeeeeff;
+    height: 9vw;
+    width: 9vw;
+    margin: 1vh;
+    border-radius: 50%;
+}
+.Pendiente:hover{
+    background-color: rgb(226, 226, 226);
+    cursor: pointer;
+    box-shadow: .5vh .8vh 1vh rgba(173, 173, 173, 0.3);
+    transition: .2s ease-in ;
+}
+.CajaHistorial {
+    height: 100vh;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+.Historial {
+    background-color: white;
+    height: auto;
+    width: 390px;
+    border-radius: 4vh;
+    box-shadow: .4vh .4vh .4vh rgba(133, 133, 133, 0.3);
+    bottom: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    text-align: center;
+    flex-direction: column;
+    font-size: 3vh;
+    z-index: 999;
+}
+.HTitle {
+    margin: 0;
+    height: 10vh;
+    width: 100%;
+    border-radius: 4vh 4vh 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    background-color: white;
+}
+.PedidoH {
+    height: 15%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    font-size: 2.2vh;
+    margin-left: 20px;
+}
+.ImgH {
+    height: 5vw;
+    width: 5vw;
+    border-radius: 50%;
+    background-color: #eeeeeeff;
+}
+.Total {
+    font-size: 3vh;
+}
+.modal {
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(20, 20, 20, 0.7);
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+}
+.PendienteContent {
+    height: 35vw;
+    width: 50vw;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    position: relative;
+    top: 15%;
+    left: 22%;
+    border-radius: 4vh;
+    flex-direction: column;
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 40px;
+    cursor: pointer;
+}
+                        /* Estilos para el botón "Cerrar" en la ventana modal */
+#closeButton {
+    background-color: #ccc;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#closeButton:hover {
+    background-color: #999;
+}
+.ProductosPendientes {
+    height: auto;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    flex-wrap: wrap;
+    padding: 0;
+}
+.Vline {
+    height: 90%;
+    width: 0.1%;
+    background-color: rgb(160, 160, 160);
+}
+.ProductoPendiente {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    flex-direction: row;
+}
+.ImgPrd {
+    background-color: #eeeeeeff;
+    height: 10vw;
+    width: 10vw;
+    border-radius: 50%;
+}
+/* Estilos para el fondo de la ventana modal */
+#modalImage {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} /* Estilo del recuadro modal de explorar imagenes */
+#modalImage .modal-content {
+    height: 35vw;
+    width: 50vw;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 15%;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    position: relative;
+    top: 15%;
+    left: 22%;
+    border-radius: 4vh;
+    flex-direction: column;
+    padding: 0;
+}
+.CuadroExplorar {
+    height: 70%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    border-color: rgb(193, 193, 193);
+    border-width: 1px;
+    border-style:solid;
+}
+.nube {
+    height: 20vw;
+    width: 20vw;
+}
+#modalImage .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 6vh;
+    cursor: pointer;
+}
+.BotonExplorar, .BotonAceptar {
+    height: 5vh;
+    width: auto;
+    background-color: rgb(255, 184, 52);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border: 0;
+    border-radius: 10%;
+}
+.pedidos{
+    width: 98%;
+    height: 85vh;
+    margin-top: 11vh;
+    overflow-y:scroll;
+}
+.pedidos::-webkit-scrollbar {
+    width: 1vw;
+    background: #d9d9d9ff;
+}
+.pedidos::-webkit-scrollbar-thumb {
+    background: #ff9900ff;
+    border-radius: 10%;
+}
+
+#imagenPedidoH{
+    height: 100%;
+    width: 100%;
+}
+
+.profile {
+    list-style: none;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+li {
+    flex-direction: column;
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+    margin: 1% 10%;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+#check {
+    display: none;
+}
+
+
+
+
+
+@media screen and (max-width:800px) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    #check {
+        display: none;
+    }
+    #check:checked ~ .profile{
+        height: 100vh;
+        z-index: 2;
+    }
+    .profile {
+        height: 0vh;
+        width: 100%;
+        background-color: rgba(0,0,0, 0.5);
+        backdrop-filter: blur(5px);
+        overflow: hidden;
+        position: absolute;
+        top: 10vh;
+        transition: height .5s ease;
+        z-index: 1000;
+    }
+    .menu-button {
+        margin-right: auto;
+        margin-left: auto;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+    .bar {
+        width: 30px;
+        height: 4px;
+        background-color: rgb(255, 255, 255);
+        transition: transform 0.3s, opacity 0.3s;
+    }
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(1) {
+        transform: translateY(12.5px) rotate(45deg);
+    }
+    
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(3) {
+        transform: translateY(-12.5px) rotate(-45deg);
+    }
+    #LeftSide {
+        background-color: red;
+        height: 10vh;
+        width: 100%;
+    }
+    #ContentLeft {
+        flex-direction: row;
+        height: 10vh;
+        width: 100%;
+    }
+    .HeaderLine {
+        display: none;
+    }
+    .img {
+        padding: 0;
+        margin: 0 2vh;
+        width: 40%;
+    }
+    .Imagen {
+        width: 30vw;
+        height: 30vw;
+    }
+    .Pbuttons {
+        height: 50vh;
+        width: 75vw;
+    }
+    .buttons {
+        height: 48vh;
+        width: 50vw;
+        margin: 1% 10%;
+    }
+    .button {
+        height: 20vh;
+        width: 45vw;
+    }
+}
+.modal, #modalImage {
+    z-index: 3;
+}
+/* Establece la propiedad de overflow:hidden en el cuerpo cuando se activa el menú */
+body.menu-active {
+    overflow: hidden;
+  }
+  
+/* ESTILOS VENTANAS MODALES */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+#LogoutModal {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.13);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.LogoutContent {
+    height: 20%;
+    width: 40%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 2vh;
+    margin: auto;
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.ChangePModal {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.13);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ChangePContent {
+    height: 20vw;
+    width: 40vw;
+    background-color: rgb(255, 255, 255);
+    border-radius: 2vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+}
+    #ConfirmNewPass {
+        width: 30%;
+        height: 15%;
+    }
+    #PreviousPass, #NewPass {
+        height: 15%;
+        width: 70%;
+        border-radius: 2vh;
+        text-align: center;
+        background-color:#efefef;
+        border-width: 0;
+        font-size: 2vw;
+    }
+    h2 {
+        margin: 0;
+        text-align: center;
+    }
+    #closeChangePBtn {
+        margin-left: auto;
+    }
+.DeleteModal {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.13);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.DeleteContent {
+    height: 50%;
+    width: 35%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 4vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    box-shadow: .5vh .8vh 1vh rgba(0, 0, 0, 0.3);
+}
+    #PassDeleteAccount {
+        height: 10%;
+        width: 70%;
+        border-radius: 2vh;
+        text-align: center;
+        background-color:#efefef;
+        border-width: 0;
+    }
+    p {
+        text-align: center;
+    }
+    #DeleteAccount {
+        height: 12%;
+        width: 25%;
+        margin: 5%;
+    }
+#myModal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} /* Estilo del recuadro modal de explorar imagenes */
+.modal-content {
+    margin: 0;
+    height: 35vw;
+    width: 50vw;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 15%;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    position: relative;
+    top: 15%;
+    left: 22%;
+    border-radius: 4vh;
+    flex-direction: column;
+    padding: 0;
+}
+.CuadroExplorar {
+    height: 70%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    border-color: rgb(193, 193, 193);
+    border-width: 1px;
+    border-style:solid;
+}
+.nube {
+    height: 20vw;
+    width: 20vw;
+}
+#modalImage .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 6vh;
+    cursor: pointer;
+}
+.BotonAceptar {
+    height: 10%;
+    width: auto;
+    background-color: rgb(255, 184, 52);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border: none;
+    border-radius: 15%;
+}
+.BotonAceptar:hover {
+    background-color: rgb(255, 168, 7);
+    cursor: pointer;
+    box-shadow: rgb(145, 145, 145);
+}
+.Button {
+    height: 28%;
+    width: 80%;
+    background-color: #ffc029ff;
+    border-radius: 2vh;
+    margin: auto;
+    font-size: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: transparent;
+}
+.Button:hover {
+    background-color: rgb(247, 168, 22);
+    cursor: pointer;
+    box-shadow: .5vh .8vh 1vh rgba(0, 0, 0, 0.3);
+    transition: .2s ease-in ;
+}
+#closePendienteBtn {
+    height: 3vh;
+    width: 3vh;
+}
+#logoProvPend{
+    height: 100%;
+    width: 100%;
+}

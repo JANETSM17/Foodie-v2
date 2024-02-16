@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../views/Menu/Menu.css">
+</head>
+<body>
+    <header> 
+        <img id="barra" src="../../assets/Imagenes/Logos/FoodieOriginal.png" alt="Foodie">
+        <input type="checkbox" id="check">
+        <label for="check" class="menu-button">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </label>
+        <ul class="paginas">
+            <li><button onclick="irHome()">Home</button></li>
+            <li><button onclick="irPedidos()">Mis Pedidos</button></li>
+            <li><button onclick="irQA()">Preguntas Frecuentes</button></li>
+            <li><button id="botonContactCliente" onclick="irContact()">Contact</button></li>
+         </ul>
+        <div class="funciones">
+            <button title="desplegar la bolsa" onclick="irBag()" class="bolsa"></button>
+            <button title="ir hacia el perfil" onclick="irProfile()" class="perfil"></button>
+        </div>
+    </header>
+    <section>
+        <div id="menu" class="menu">
+            <div id="comedor" class="comedor">
+                
+            </div>
+            <div class="productos">
+                <div id="Comida" class="categoria">
+                </div>
+                <div id="Bebidas" class="categoria">
+                </div>
+                <div id="Frituras" class="categoria">
+                </div>
+                <div id="Dulces" class="categoria">
+                </div>
+                <div id="Otros" class="categoria">
+                </div>
+            
+            </div>
+    </div>
+        <div id="CalificarModal" class="modal">
+            <div id="CalificarContent" class="CalificarContent">
+                <span class="close" id="closeCalificarBtn">&times;</span>
+                <h1>¿Cómo calificas nuestro servicio?</h1>
+            <div class="Stars">
+                <div class="Star" id="Star1" onclick="assignCategory(1, this.id)"></div>
+                <div class="Star" id="Star2" onclick="assignCategory(2, this.id)"></div>
+                <div class="Star" id="Star3" onclick="assignCategory(3, this.id)"></div>
+                <div class="Star" id="Star4" onclick="assignCategory(4, this.id)"></div>
+                <div class="Star" id="Star5" onclick="assignCategory(5, this.id)"></div>
+            </div>
+            <button class="AcceptRate" id="AcceptRate">Calificar</button>
+            </div>
+        </div>
+    </div>
+    </section>
+    <script src="../../views/Menu/Menu.js"></script>
+</body>
+</html>

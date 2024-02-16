@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmacion Pedido</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../views/bag/bag.css">
+</head>
+<body>
+    <header> 
+        <img id="barra" src="../../assets/Imagenes/Logos/FoodieOriginal.png" alt="Foodie">
+        <input type="checkbox" id="check">
+        <label for="check" class="menu-button">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </label>
+        <ul class="paginas">
+            <li><button onclick="irHome()">Home</button></li>
+            <li><button onclick="irPedidos()">Mis Pedidos</button></li>
+            <li><button onclick="irQA()">Preguntas Frecuentes</button></li>
+            <li><button id="botonContactCliente" onclick="irContact()">Contact</button></li>
+         </ul>
+        <div class="funciones">
+            <button title="desplegar la bolsa" onclick="irBag()" class="bolsa"></button>
+            <button title="ir hacia el perfil" onclick="irProfile()" class="perfil"></button>
+        </div>
+    </header>
+    <section> 
+        <p class="titulo">Confirmacion de pedido</p>
+        <div class="usuario">
+            <p id="bagItems"></p>
+            <p id="usrName"></p>
+            <p id="usrPhone"></p>
+        </div>
+        <div class="division"></div>
+        <div id="productos" class="productos">
+        
+        </div>
+    </section>
+    <footer>
+        <p class="comentario">C<span>o</span>mentari<span>o</span>s</p>
+        <input id="especificaciones" class="especificaciones" type="text" placeholder="Escribe aqui las especificaciones de tu pedido">
+        <div class="finalizar">
+            <p id="totalBag">Total: $</p>
+            <button class="EnviarPedido" onclick="enviarPedido()">Enviar Pedido</button>
+            <p class="advertencia">**Una Vez Enviado El Pedido No Podras Cancelar**</p>
+        </div>
+        <p class="pick-up">Hacer <br><span>Pick-up</span><br>En</p>
+        <div class="recogida">
+            <input type="text" name="" id="minutos"  maxlength="2" oninput="validarNumeros(this)">
+            Minutos
+        </div>
+    </footer>
+    <script src="../../views/bag/bag.js"></script>
+</body>
+</html>

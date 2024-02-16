@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnterpriseProfile</title>
+    <link rel="stylesheet" href="../../views/EnterpriseProfile/EProfile/EnterpriseProfile.css">
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+</head>
+<body>
+    <div id="LeftPart">
+        <div id="ContentLeft">
+            <a class="Foodie" href="/homeP"><img class="Foodie" src="../../Assets/Imagenes/Logos/FoodieBlanco.png" alt="Foodie"></a>
+            <input type="checkbox" id="check">
+        <label for="check" class="menu-button">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </label>
+            <hr class="HeaderLine">
+            <ul class="List">
+            <img class="Imagen" id="openModalImage">
+            <ul id="Categories">
+                <a href="/providerProfile" class="Category" id="P"><img class="Icons" src="../../../Assets/Imagenes/Recursos extras/avatarN.png" alt="Perfil">Perfil</a>
+                <a href="/providerProfileHistory" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/historial.png" alt="Historial" class="Icons">Historial de pedidos</a>
+                <a href="/providerProfileMenu" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/menu.png" alt="Menu" class="Icons">Menu</a>
+                <a href="/providerProfileStatistics" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/estadisticas.png" alt="Estadisticas" class="Icons">Estadisticas</a>
+                <a href="/providerQA" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/preguntas.png" alt="Q&A" class="Icons">Preguntas frecuentes</a>
+                <a href="/homeP"  class="Button" id="Orders">Pedidos en curso</a>
+            </ul>
+            </ul>
+        </div>
+        
+    </div>
+
+    <div id="RightPart">
+
+         <div class="Name" id="name">
+
+         </div>
+
+        <div class="Code" id="clave">
+
+        </div>
+
+        <div class="Info" id ="info" class="Info">
+            
+        </div>
+
+        <div class="Preparation" id="tiempo">
+            
+        </div>
+
+        <div class="Activity"  id="Activity">
+            <p class="PAct"><b>Actividad</b></p>
+            <p>Nota: El color gris indica apagado, mientras que naranja es encendido</p>
+            <div class="SwitchContainer">
+                <label class="Switch">
+                    <input type="checkbox" id="toggleSwitch" class="toggleSwitch" onclick="toggleSwitch()">
+                    <span class="Slider"></span>
+                </label>
+            </div>
+        </div>
+
+    <div class="Bloques">
+
+        <div class="Rate" id="rate">
+            
+        </div>
+
+        <div class="Logs">
+            <button class="Button" id="Logout" >Cerrar sesión</button>
+            <button class="Button" id="ChangeP">Cambiar contraseña</button>
+            <button class="Button" id="Delete">Eliminar cuenta</button>
+        </div>
+        <!-- Parte de las ventanas modales-->
+
+<div id="LogoutModal" class="modal">
+    <div id="LogoutContent" class="LogoutContent"> 
+        <span class="close" id="closeLogoutBtn">&times;</span>
+        <h2><b>¿Estás segur@ de que deseas cerrar sesión?</b></h2>
+        <button class="Button" type="submit" id="CerrarSesion" onclick="logout()">Cerrar sesión</button>
+    </div>
+</div>
+
+<div id="ChangePModal" class="modal">
+    <div id="ChangePContent" class="ChangePContent">
+        <span class="close" id="closeChangePBtn">&times;</span>
+        <h2>Cambio de contraseña</h2>
+        <p>Escribe tu antigua contraseña:</p>
+        <input type="password" id="PreviousPass">
+        <p>Escribe la nueva contraseña</p>
+        <input type="password" id="NewPass">
+        <button class="Button" id="ConfirmNewPass">Confirmar</button>
+    </div>
+</div>
+
+<div id="DeleteModal" class="modal">
+    <div id="DeleteContent" class="DeleteContent">
+        <span class="close" id="closeDeleteBtn">&times;</span>
+        <h2>¡Cuidado!</h2>
+        <h2>Estás a punto de eliminar tu cuenta.</h2>
+        <p>Una vez eliminada tu cuenta NO PODRAS RECUPERARLA, <br>todo será eliminado de forma permanente.</p>
+        <p>Escribe tu contraseña:</p>
+        <input type="password" id="PassDeleteAccount">
+        <button class="Button" id="DeleteAccount">Eliminar cuenta</button>
+    </div>
+</div>
+    </div>
+    <script src="../../views/EnterpriseProfile/EProfile/EnterpriseProfile.js"></script>
+    <script src="../../views/EnterpriseProfile/EProfile/EnterpriseProfileBack.js"></script>
+</body>
+</html>

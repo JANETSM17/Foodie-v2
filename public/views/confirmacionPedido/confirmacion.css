@@ -1,0 +1,544 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../../../Assets/Tipografias/Nunito/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NunitoBold';
+    src: url('../../../Assets/Tipografias/Nunito/static/Nunito-Bold.ttf') format('truetype');
+    font-weight: bold; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+html{
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+header {
+    width: 100%;
+    height: 12vh;
+    background-color: black;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding: 0%;
+}
+.paginas li button{
+    cursor: pointer;
+    max-height: 100%;
+    background-color: unset;
+    border-style: none;
+    padding: 8px;
+}
+button {
+    background-color: unset;
+    border-style: none;
+}
+@media (min-width: 850px) {
+header{
+    width: 100%;
+    height: 10vh;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+img{
+    max-height: 100%;
+    max-width: 30%;
+    margin-left: 10px;
+    
+}
+.paginas{
+    display: flex;
+    justify-content: space-between;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+}
+.paginas button{
+    background-color: transparent;
+    border-style: none;
+    color: white;
+    font-size: 1.25rem;
+    border-radius: 30px;
+}
+.funciones{
+    width: 10%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    margin-right: 10px;
+}
+.funciones button{
+    height: 30px;
+    width: 30px;
+    border-style: none;
+    background-color: transparent;
+}
+.bolsa{
+    background-image: url('../../assets/Imagenes/Recursos%20extras/bolsaW.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.bolsa:hover{
+    cursor: pointer;
+    background-color: white;
+    background-image: url('../../assets/Imagenes/Recursos%20extras/bolsaB.png');
+}
+.perfil{
+    background-image: url('../../assets/Imagenes/Recursos%20extras/avatarW.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.perfil:hover{
+    cursor: pointer;
+    background-color: white;
+    background-image: url('../../assets/Imagenes/Recursos%20extras/avatarN.png');
+}
+.paginas button:hover{
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+#check{
+    display: none;
+}
+.paginas{
+  list-style: none;  
+}
+}
+@media (max-width: 850px) {
+    #check{
+        display: none;
+    }
+    .menu-button {
+        margin-right: auto;
+        margin-left: auto;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+    
+    .bar {
+        width: 30px;
+        height: 4px;
+        background-color: white;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+    header{
+        width: 100%;
+        height: 10vh;
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    img{
+        width: 150px;
+        height: auto;
+        
+    }
+    .paginas{
+        position: fixed;
+        top: 10vh;
+        width: 100%;
+        height: 0vh;
+        background-color: #2b2b2bff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 0 0 30px 30px;
+        list-style: none;
+        transition: all .5s ease;
+        overflow: hidden;
+        z-index: 999;
+    }
+    .paginas button{
+        background-color: transparent;
+        width: 100%;
+        height: 10vh;
+        border-style: none;
+        color: white;
+        font-size: 1.25rem;
+        transition: height 0.5s ease;
+    }
+    .paginas button:hover{
+        height: 15vh;
+        cursor: pointer;
+        background-color: rgb(95, 95, 95);
+    }
+    .paginas li:last-child button:hover{
+        border-radius: 0 0 30px 30px;
+    }
+    .funciones{
+        width: 150px;
+        height: 10vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .funciones button{
+        height: 30px;
+        width: 30px;
+        border-style: none;
+        background-color: transparent;
+    }
+    .bolsa{
+        background-image: url('../assets/Imagenes/Recursos%20extras/bolsaW.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .bolsa:hover{
+        cursor: pointer;
+    }
+    .perfil{
+        background-image: url('../assets/Imagenes/Recursos%20extras/avatarW.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .perfil:hover{
+        cursor: pointer;
+    }
+
+    #check:checked ~ ul{
+        height: 35vh;
+    }
+
+
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(1) {
+        transform: translateY(12.5px) rotate(45deg);
+    }
+    
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    input[type="checkbox"]:checked + .menu-button .bar:nth-child(3) {
+        transform: translateY(-12.5px) rotate(-45deg);
+    }
+
+
+}
+
+section{
+    width: 100%;
+    background-color: #efefef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 90vh;
+}
+.superior{
+    display: flex;
+    width: 100%;
+    height: 10vh;
+    align-items: center;
+    justify-content: space-around;
+}
+.listos{
+    width: 200px;
+    height: 5vh;
+    display: flex;
+    padding-left: 10px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 5vh;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.titulo{
+    font-size: 2.5rem;
+}
+#listos{
+    background-color: #efefef;
+    height: 5vh;
+    width: 5vh;
+    border-radius: 5vh;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform .5s ease;
+    transform: scale(1.1);
+    background-image: url('../Assets/Imagenes/Recursos%20extras/BolsaCB.png');
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: center;
+}
+#listos:hover{
+    transform: scale(1.3);
+}
+
+.buscador{
+    width: 200px;
+    height: 5vh;
+    display: flex;
+    background-color: white;
+    border-radius: 5vh;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+#busqueda{
+    width: 130px;
+    height: 3vh;
+    background-color: white;
+    border-style: none;
+    padding: 2px;
+    margin: auto;
+    font-size: 1.2rem;
+}
+#busquedaL{
+    width: 130px;
+    height: 3vh;
+    background-color: white;
+    border-style: none;
+    padding: 2px;
+    margin: auto;
+    font-size: 1.2rem;
+}
+#buscarpendiente{
+    background-color: #efefef;
+    height: 5vh;
+    width: 5vh;
+    border-radius: 5vh;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform .5s ease;
+    transform: scale(1.1);
+    background-image: url('../Assets/Imagenes/Recursos%20extras/search.png');
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+}
+#buscarpendiente:hover{
+    transform: scale(1.3);
+}
+#nobuscarpendiente{
+    display: none;
+    height: 5vh;
+    width: 5vh;
+    transition: transform .5s ease;
+    transform: scale(1.1);
+    background-image: url("../Assets/Imagenes/Recursos%20extras/proximo.png");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+}
+#buscarlisto{
+    background-color: #efefef;
+    height: 5vh;
+    width: 5vh;
+    border-radius: 5vh;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform .5s ease;
+    transform: scale(1.1);
+    background-image: url('../Assets/Imagenes/Recursos%20extras/search.png');
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+}
+#buscarlisto:hover{
+    transform: scale(1.3);
+}
+#nobuscarlisto{
+    display: none;
+    height: 5vh;
+    width: 5vh;
+    transition: transform .5s ease;
+    transform: scale(1.1);
+    background-image: url("../Assets/Imagenes/Recursos%20extras/proximo.png");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+}
+
+#pedidospendientes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+#pedidoslistos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.pedido{
+    width: 90%;
+    min-height: 150px;
+    height: 20vh;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 3vh;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+    margin: 25px;
+    display: flex;
+}
+
+.contacto{
+    height: 100%;
+    width: 250px;
+    border-radius: 3vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.usuario{
+    display: flex;
+    font-size: 1.5rem;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.usuario img{
+    width: 40px;
+    height: 40px;
+
+}
+.numero{
+    display: flex;
+    font-size: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+#numerodepedido{
+    font-size: 2rem;
+    font-weight: bold;
+    margin-left: 30px;
+}
+.telefono{
+    text-align: center;
+    font-size: 1.2rem;
+}
+.division{
+    width: 2px;
+    height: 80%;
+    background-color: #747373;
+}
+.contenido{
+    height: 100%;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+}
+.productos{
+    height: 90%;
+    overflow: auto;
+}
+.productos li{
+    margin: 20px;
+}
+.comentario{
+    height: 90%;
+    width: 250px;
+    background-color: #efefef;
+    border-radius: 3vh;
+    color: #747373;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.precio{
+    height: 100%;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-weight: bold;
+    font-size: 2rem;
+}
+.recogida{
+    height: 100%;
+    width: 200px;
+    font-size: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}   
+.boton{
+    width: 100px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    border-radius: 3vh;
+    padding-top: 20px;
+    box-sizing: border-box;
+    font-size: 20px;
+    margin-right: 1vh;
+}
+.listo{
+    width: 90%;
+    min-height: 50px;
+    height: 7vh;
+    background-color: #ffb400ff;
+    background-image: url("../Assets/Imagenes/Recursos%20extras/BolsaCB.png");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+    border-radius: 2vh;
+    margin-top: 2vh;
+}
+#entregado{
+    width: 90%;
+    min-height: 50px;
+    height: 7vh;
+    background-color: #ffb400ff;
+    background-image: url("../Assets/Imagenes/Recursos%20extras/bolsaRB.png");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+    border-radius: 2vh;
+    margin-top: 2vh;
+}
+span{
+    color: #ffb400ff;
+}
+@media  (max-width: 1200px){
+    .comentario{
+        display: none;
+    }
+}
+@media  (max-width: 1000px){
+    .contenido{
+        display: none;
+    }
+}
+@media  (max-width: 650px){
+    .recogida{
+        display: none;
+    }
+    .listos{
+        display: none;
+    }
+    .buscador{
+        display: none;
+    }
+    .division{
+        display: none;
+    }
+    .contacto{
+        font-size: 1rem;
+    }
+    .precio{
+        font-size: 1.5rem;
+    }
+}

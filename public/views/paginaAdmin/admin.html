@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="html" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+    <style>
+        body{
+    background-color: orange;
+}
+.head{
+    text-align: center;
+    color: white;
+    font-size: 120%;
+    background-color: rgb(0, 0, 0);
+    text-size-adjust: 100%;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    height: 25px;
+    border-radius: 10px;
+}
+.navBar{
+display: grid;
+grid-template-columns: repeat(7,auto);
+background-color: transparent;
+text-align: center;
+gap: 0;
+padding: 1%;
+align-items: center;
+}
+.dash{
+    background-color: black;
+    height: 20%;
+    border-radius: 5px;
+}
+button{
+    background-color:transparent;
+    width: auto;
+    border: 0cm;
+    color: white;
+    font-size: 100%;
+}
+.elementNav button:hover{
+background-color: rgb(118, 122, 122);
+border-radius: 5px;
+}
+.tablaCmnts{
+    border: 2px solid black;
+    border-collapse: collapse;
+    width:100%;
+}
+.t1{
+    background-color: black;
+    color: white;
+}
+.t2{
+    background-color: rgb(134, 132, 132);
+    color: black;
+}
+td{
+    text-align: center;
+    border: 2px solid rgb(255, 255, 255);
+    padding: 4px;
+    font-size: 100%;
+}
+th{
+    text-align: center;
+    border: 2px solid rgb(255, 255, 255);
+    padding: 4px;
+    font-size: 100%;
+}
+.tablaContainer{
+    padding: 3%;
+}
+.footerCont{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
+footer{
+    position: sticky;
+    font-size: 100%;
+    text-align: center;
+    color: white;
+    background-color: rgb(132, 98, 34);
+    padding-bottom: 1%;
+}
+.submit{
+    background-color: rgb(185, 183, 180);
+    color: black;
+}
+.submit:hover{
+    background-color: black;
+    color: white;
+}
+    </style>
+</head>
+
+<body>
+    <div>
+        <header class="head">Foodie</header>
+    </div>
+        
+    <div class="tablaContainer">
+    <table id = "cmntsTable" class="tablaCmnts">
+        <thead>
+            <tr>
+                <th class="t1">Nombre</th>
+                <th class="t2">Correo</th>
+                <th class="t1">Telefono</th>  
+                <th class="t2">Mensaje</th>
+                <th class="t1">Fecha</th> 
+            </tr>
+        </thead>
+        <tbody id="comprasBody"></tbody>
+    </table>
+</div>
+<h3>Eliminar comedor:</h3>
+    <form action="/admin/quitarComedor" method="post">
+        <label for="nombre">Nombre del comedor:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <p></p>
+        <button  class="submit" type="submit">Confirmar</button>
+    </form>
+    <h3>Eliminar usuario:</h3>
+    <form action="/admin/quitarCliente" method="post">
+        <label for="correo">Correo del cliente:</label>
+        <input type="text" id="correo" name="correo" required>
+        <p></p>
+        <button  class="submit" type="submit">Confirmar</button>
+    </form>
+<script >
+    fetch('/admin/comentarios')
+      .then(response => response.json())
+      .then(data => {
+        const comprasDataDiv = document.getElementById('cmntsTable');
+        
+        data.forEach(item => {
+          var row = document.createElement('tr');
+          var nombreCell = document.createElement('td');
+          nombreCell.textContent = item.nombre;
+          nombreCell.classList.add('t1');
+          var correoCell = document.createElement('td');
+          correoCell.textContent = item.correo;
+          correoCell.classList.add('t2');
+          var telefonoCell = document.createElement('td');
+          telefonoCell.textContent = item.telefono;
+          telefonoCell.classList.add('t1');
+          var mensajeCell = document.createElement('td');
+          mensajeCell.textContent = item.mensaje;
+          mensajeCell.classList.add('t2');
+          var fechaCell = document.createElement('td');
+          fechaCell.textContent = item.fecha;
+          fechaCell.classList.add('t1');
+
+          row.appendChild(nombreCell);
+          row.appendChild(correoCell);
+          row.appendChild(telefonoCell);
+          row.appendChild(mensajeCell);
+          row.appendChild(fechaCell);
+
+          cmntsTable.appendChild(row);
+        });
+      })
+      .catch(error => console.log('Error:', error));
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,180 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../../../Assets/Tipografias/Nunito/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'NunitoBold';
+    src: url('../../../Assets/Tipografias/Nunito/static/Nunito-Bold.ttf') format('truetype');
+    font-weight: bold; 
+}
+*{
+    margin: 0%;
+    padding: 0%;
+    font-family: 'Nunito' , sans-serif;
+}
+@keyframes brillo {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 180, 0, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 180, 0, 0.7), 0 0 40px rgba(255, 180, 0, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 180, 0, 0.7);
+    }
+}
+html{
+    overflow: hidden;
+}
+
+header{
+    width: 100%;
+    height: 12vh;
+    background: radial-gradient(circle,#414141ff, #020202ff);
+    display: flex;
+    justify-content: center;
+}
+header button{
+    height: 100%;
+    background-color: transparent;
+    border: none;
+}
+header button:hover{
+    cursor: pointer;
+}
+header button img{
+    max-height: 100%;
+}
+    section{
+        width: 100%;
+        height: 88vh;
+        background: radial-gradient(circle, #ffc57a, #f69311);
+        display: flex;
+        justify-content: center;
+    }
+    .Plato{
+        display: flex;
+        align-self: end;
+        justify-content: center;
+        height:75vh;
+        background-image: url("../assets/Imagenes/Recursos%20extras/Plato.png");
+        background-repeat: no-repeat;
+    }
+    
+    .login{
+        
+        height: 68vh;
+        border-radius: 20px 20px 0px 0px;
+        margin-top: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        align-self: end;
+        justify-self: center;
+        justify-content: center;
+        background-color: white;
+      
+    }
+    .titulo{
+        display: flex;
+        height: 70px;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .Logo{
+        max-height: 80%;
+    }
+    h1{
+        margin-left: 10px;
+        font-size: 2rem;
+    }
+    input{
+        width: 80%;
+        height: 13%;
+        border-radius: 10px;
+        border: none;
+        background-color: #efefefff;
+        text-align: center;
+        font-size: 1.25rem;
+        color: #434343;
+    }
+    input::placeholder{
+        color: black;
+    }
+    #logear{
+        width: 40%;
+        height: 13%;
+        border-radius: 10px;
+        border:none;
+        background-color: #ffb400;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    #logear:hover{
+        animation: brillo 2s ease-in-out infinite;
+        cursor: pointer;
+    }
+    hr{
+        width: 80%;
+        height: 1px;
+        background-color: black;
+        margin-top: 10px;
+    }
+    @media screen and (min-width:800px){
+        .Cuchillo{  
+            height: 70%;
+            align-self: end;
+            margin-bottom: 20px;
+            margin-right: 5%;
+        }
+        .Tenedor{
+            height: 70%;
+            align-self: end;
+            margin-bottom: 20px;
+            margin-left: 5%;
+            
+        }
+        .Plato{
+            width: 650px;
+            background-size: 650px 75vh ;
+        }
+        .login{
+            width: 500px;
+        }
+    }
+    @media screen and (max-width:800px){
+        .Cuchillo{  
+            display: none;
+        }
+        .Tenedor{
+            display: none;
+        }
+        .Plato{
+            width: 100%;
+            background-size: 100% 75vh ;
+        }
+        .login{
+            width: 80%;
+        }
+    }
+    @media screen and (max-width: 500px){
+        .Plato{
+            background: none;
+            height: 70%;
+            align-self: center;
+        }
+        .login{
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+        }
+        input{
+            font-size: 1rem;
+        }
+        #logear{
+            box-shadow: 0 0 10px rgba(255, 180, 0, 0.7);
+        }
+    }

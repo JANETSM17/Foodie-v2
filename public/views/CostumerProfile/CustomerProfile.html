@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../views/CostumerProfile/CustomerProfile.css">
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+</head>
+<body>
+    <div id="LeftSide">
+        <div id="ContentLeft">
+            <div class="img"><img class="LogoB" src="../../Assets/Imagenes/Logos/FoodieBlanco.png" alt="FoodieBlanco "></div>
+
+        <hr class="HeaderLine">
+        
+        <input type="checkbox" id="check">
+        <label for="check" class="menu-button">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </label>
+    <ul class="profile">
+        <li class="Pimage"><div class="Imagen" id="openModalImage">
+            <!-- La imagen de perfil aquí -->
+        </div></li>
+
+        <li class="Pbuttons"><div class="buttons">
+            <div class="button" onclick="irHome()"><p>Home</p></div>
+            <div class="button" onclick="irContact()"><p>Contactanos</p></div>
+            <div class="button" onclick="irQA()"><p>Preguntas <br>frecuentes</p></div>
+            <p class="OyD" id="Logout">Cerrar sesión</p>
+            <p class="OyD" id="Delete">Eliminar cuenta</p>
+        </div></li>
+    </ul>
+    </div>
+
+    </div>
+    
+    <div id="RightSide">
+        <ul class="cajas">
+            <div class="UInfo">
+                <p id="name"></p>
+                <hr class="BLines">
+                <p id="mail"></p>
+                <hr class="BLines">
+                <p id="phone"></p>
+            </div>
+
+            <div class="Gasto">
+                <p>Te uniste el:</p>
+                <p><span><b id="fecha"></b></span></p>
+                <p>Total gastado:</p>
+                <p><b id="totalCuenta"></b></p>
+            </div>
+
+            <button class="Pendiente" id="Pendiente">
+                <b id="frase">Pedido pendiente en:</b> 
+                <!-- IMAGEN, NOMBRE Y CANTIDAD DE LA EMPRESA AQUI-->
+                <div class="ImgPendiente" id="imgPendiente"></div>
+                <div class="NPendiente"><b id="nombrePendiente"></div>
+                <div class="CPendiente" id="totalPendiente"></b> </div>
+            </button>
+            
+
+        </ul>
+        <div class="CajaHistorial">
+            <div class="Historial">
+                <p class="HTitle"><b><span>Historial de pedidos</span></b></p>
+                <div class="pedidos" id="pedidos">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL PARA CERRAR SESION-->
+    <div id="LogoutModal" class="modal">
+        <div id="LogoutContent" class="LogoutContent"> 
+            <span class="close" id="closeLogoutBtn">&times;</span>
+            <h2><b>¿Estás segur@ de que deseas cerrar sesión?</b></h2>
+            <button class="Button" type="submit" id="CerrarSesion" onclick="logout()">Cerrar sesión</button>
+        </div>
+    </div>
+<!--MODAL PARA BORRAR CUENTAS-->
+    <div id="DeleteModal" class="modal">
+        <div id="DeleteContent" class="DeleteContent">
+            <span class="close" id="closeDeleteBtn">&times;</span>
+            <h2>¡Cuidado!</h2>
+            <h2>Estás a punto de eliminar tu cuenta.</h2>
+            <p>Una vez eliminada tu cuenta NO PODRAS RECUPERARLA, <br>todo será eliminado de forma permanente.</p>
+            <p>Escribe tu contraseña:</p>
+            <input type="password" id="PassDeleteAccount">
+            <button class="Button" id="DeleteAccount">Eliminar cuenta</button>
+        </div>
+    </div>
+<!--MODAL PARA PEDIDOS PENDIENTES-->
+<div id="modal" class="modal">
+    <div class="PendienteContent" id="PendienteContent">
+        <span class="close" id="closePendienteBtn">&times;</span>
+        <p class="HTitle">Tienes un pedido pendiente <br>El pedido deberá ser pagado directamente en la sucursal </p>
+        <ul class="ProductosPendientes">
+            <div class="ProductoPendiente">
+                <div class="ImgPrd"></div>
+                <hr class="Vline">
+                <p>Nombre del producto aki</p>
+                <p><b>2</b></p><!-- CANTIDAD DEL PRODUCTO -->
+                <p><b>(Subtotal)</b></p>
+            </div>
+        </ul>
+        <div class="IdPedido">Numero de pedido: <br>21</div><!-- No. de la orden -->
+    </div>
+</div>
+<script src="../../views/CostumerProfile/CustomerProfile.js"></script>
+<script src="../../views/CostumerProfile/CustomerPBack.js"></script>
+</body>
+</html>

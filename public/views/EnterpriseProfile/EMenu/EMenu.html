@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../../views/EnterpriseProfile/EMenu/EMenu.css">
+</head>
+<body>
+    <div id="LeftPart">
+        <div id="ContentLeft">
+            <a class="Foodie" href="/homeP"><img class="Foodie" src="../../../Assets/Imagenes/Logos/FoodieBlanco.png" alt="Foodie"></a>
+            <input type="checkbox" id="check">
+        <label for="check" class="menu-button">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </label>
+            <hr class="HeaderLine">
+            <ul class="List">
+            <div class="Imagen" id="openModalImage"></div>
+            <ul id="Categories">
+                <a href="/providerProfile" class="Category" id="P"><img class="Icons" src="../../../Assets/Imagenes/Recursos extras/avatarN.png" alt="Perfil">Perfil</a>
+                <a href="/providerProfileHistory" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/historial.png" alt="Historial" class="Icons">Historial de pedidos</a>
+                <a href="/providerProfileMenu" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/menu.png" alt="Menu" class="Icons">Menu</a>
+                <a href="/providerProfileStatistics" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/estadisticas.png" alt="Estadisticas" class="Icons">Estadisticas</a>
+                <a href="/providerQA" class="Category"><img src="../../../Assets/Imagenes/Recursos extras/preguntas.png" alt="Q&A" class="Icons">Preguntas frecuentes</a>
+                <a href="/homeP"  class="Button" id="Orders">Pedidos en curso</a>
+            </ul>
+            </ul>
+        </div>
+    </div>
+    <div id="RigthPart">
+        <button class="agregarProducto" id="agregarProducto">
+            Agregar Producto
+        </button>
+        <div id="menu" class="productosMenu">
+            
+        </div>
+    </div>
+
+    <div id="AgregarPModal" class="modal">
+        <div id="AgregarPContent" class="AgregarPContent">
+
+        <div class="HeaderAddP">
+            <h2>Agregar producto</h3>
+            <span class="close" id="closeAgregarPBtn">&times;</span>
+        </div>
+        <div class="ContenedorContent">
+            <div class="ImgNamePrice">
+                <p><b>Nombre del producto</b></p>
+                <input type="text" id="NewName">
+                <p><b>Precio del producto</b></p>
+                <input type="number" id="NewPrice">
+            </div>
+
+            <input type="text" id="ProductDescription">
+
+            <div class="Categories">
+                <p>Categroria:</p>
+                <ul class="ListaCategories">
+                    <button class="NewCategoria" id="NewComida" onclick="assignCategory(1, this.id)">Comida</button>
+                    <button class="NewCategoria" id="NewBebidas" onclick="assignCategory(2, this.id)">Bebidas</button>
+                    <button class="NewCategoria" id="NewDulces" onclick="assignCategory(3, this.id)">Dulces</button>
+                    <button class="NewCategoria" id="NewFrituras" onclick="assignCategory(4, this.id)">Frituras</button>
+                    <button class="NewCategoria" id="NewOtros" onclick="assignCategory(5, this.id)">Otros</button>
+                </ul>
+                <button class="Agregar" id="Agregar">Agregar</button>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <script src="../../../views/EnterpriseProfile/EMenu/EMenu.js"></script>
+</body>
+</html>

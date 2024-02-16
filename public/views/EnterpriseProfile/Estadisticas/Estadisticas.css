@@ -1,0 +1,390 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../../../Assets/Tipografias/Nunito/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'NunitoBold';
+    src: url('../../../Assets/Tipografias/Nunito/static/Nunito-Bold.ttf') format('truetype');
+    font-weight: bold; 
+}
+*{
+    margin: 0%;
+    padding: 0%;
+    font-family: 'Nunito' , sans-serif;
+}
+body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 22% 78%;
+    background-color: #efefefff;
+}
+/* En tu archivo de estilo CSS o en línea en el HTML */
+a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+#check {
+    display: none;
+}
+                                    /*SECCION DE BOTON*/
+.Button {
+    height: 28%;
+    width: 80%;
+    background-color: #ffc029ff;
+    border-radius: 2vh;
+    margin: auto;
+    font-size: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: transparent;
+}
+.Button:hover {
+    background-color: rgb(247, 168, 22);
+    cursor: pointer;
+    box-shadow: .5vh .8vh 1vh rgba(0, 0, 0, 0.3);
+    transition: .2s ease-in ;
+}
+
+#LeftPart {
+    background-color: #404040ff;
+    height: 100vh;
+}
+#ContentLeft {
+    background-color: #404040ff;
+    height: 100vh;
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+}
+.List {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5%;
+}
+.Foodie {
+    height: 5.8vw;
+    width: auto;
+}
+hr {
+    margin: 1vw;
+    height: .1%;
+    width: 85%;
+    background-color: #efefef;
+    border-radius: 10%;
+}
+.Imagen {
+    background-color: #eeeeeeff;
+    object-fit: cover;
+    width: 12vw;
+    height: 12vw;
+    border-radius: 50%;
+    margin: 0% 15%;
+}
+.Imagen:hover{
+    background-color: rgb(224, 224, 224);
+    cursor: pointer;
+    box-shadow: .5vh .8vh 1vh rgba(0, 0, 0, 0.3);
+    transition: .2s ease-in ;
+}
+#Categories {
+    height: 60%;
+    width: 90%;
+    background-color: #efefefff;
+    margin-left: auto;
+    border-top-left-radius: 3vh;
+    border-bottom-left-radius: 3vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2%;
+    padding: 0;
+}
+    .Category {
+        height: 14%;
+        width: 100%;
+        background-color: #efefefff;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+    }
+    .Category:hover {
+        background-color: rgb(218, 218, 218);
+        cursor: pointer;
+    }
+    #P {
+        border-top-left-radius: 1.5vh;
+    }
+    #Orders {
+        height: 15%;
+        margin: 0;
+    }
+    .Icons {
+        height: 70%;
+        width: auto;
+        margin: 0 10% 0 10%;
+    }
+                                                            /* RIGHT PART*/
+#RightPart {
+    height: 97%;
+    width: 97%;
+    background-color: white;
+    box-shadow: .5vh .8vh 1vh rgba(0, 0, 0, 0.3);
+    border-radius: 2.5vh;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 35% 65%;
+}
+.Bloques {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.Block {
+    height: 80%;
+    width: 20%;
+    background-color: #efefefff;
+    border-radius: 2.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.Categoria {
+    height: 18%;
+    width: 100%;
+    margin: 0;
+    border: none;
+}
+.Categoria:hover {
+    background-color: rgb(218, 218, 218);
+    cursor: pointer;
+    height: 20%;
+    transition: 0.2s ease-in;
+}
+#Filter{
+    justify-content: space-evenly;
+}
+    h1 {
+        margin: 0;
+        font-size: 1.8vw;
+    }
+    .FElement {
+        height: 16%;
+        width: 60%;
+        border-radius: 2vh;
+        border-width: 0;
+        background-color: white;
+    }
+    .FElement:hover {
+        cursor: pointer;
+        border-width: 1.5px;
+        background-color: #efefef;
+    }
+#Total {
+    justify-content: space-evenly;
+}
+    #CategoryTotal {
+        font-size: 2.5vw;
+    }
+    .TdC {
+        font-size: 2vw;
+        text-align: center;
+        margin: 1%;
+    }
+#Sellers {
+    width: 35%;
+}
+    .top {
+        height: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        
+    }
+    .Numeros {
+        width: 100%;
+        height: 20%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 10%;
+    }
+    .position {
+        background-color: white;
+        height: 5vh;
+        width: 5vh;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        border-radius: 50%;
+    }
+    #BestSellers {
+        height: 40%;
+        width: 28%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-radius: 3vh;
+    }
+#Graphs {
+    height: 97%;
+    width: 97%;
+    background-color: #efefef;
+    border-radius: 2.5vh;
+    margin: auto;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-rows: 70% 40%;
+    grid-template-columns: 5% 95%;
+    justify-self: center;
+    align-self: center;
+}
+.NumerosIzq {
+    height: 95%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+.ContenedorGrafica {
+    height: 90%;
+    width: 100%;
+    border-bottom: solid 2px;
+    border-left: solid 2px;
+    border-color: rgb(0, 0, 0);
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+p {
+    text-align: center;
+    margin: 0;
+}
+.ProductBar {
+    max-height: 37vh;
+    width: 10%;
+    margin: auto auto 0 auto;
+    background-color:rgb(255, 159, 41);
+    border-top-right-radius: 2vh;
+    border-top-left-radius: 2vh;
+}
+.NoProducto {
+    margin-top: auto;
+}
+
+@media (width < 600px) {
+    body {
+        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 100%;
+    }
+    /* BOTON DE HAMBURGUESA*/
+.menu-button {
+    margin-right: auto;
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.bar {
+    width: 30px;
+    height: 4px;
+    background-color: rgb(255, 255, 255);
+    transition: transform 0.3s, opacity 0.3s;
+}
+input[type="checkbox"]:checked + .menu-button .bar:nth-child(1) {
+    transform: translateY(12.5px) rotate(45deg);
+}
+
+input[type="checkbox"]:checked + .menu-button .bar:nth-child(2) {
+    opacity: 0;
+}
+
+input[type="checkbox"]:checked + .menu-button .bar:nth-child(3) {
+    transform: translateY(-12.5px) rotate(-45deg);
+}
+#check {
+    display: none;
+}
+#check:checked ~ .List {
+    height: 100vh;
+}
+.List {
+    height: 0vh;
+    width: 100%;
+    background-color: rgba(0,0,0, 0.5);
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+    position: absolute;
+    top: 10vh;
+    transition: height .5s ease;
+    z-index: 1000;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.Imagen {
+    height: 24vw;
+    width: 24vw;
+}
+#Categories {
+    background-color: transparent;
+    margin: 0;
+}
+.Category {
+    border-radius: 2vh;
+    height: 10%;
+    width: 50%;
+    background-color: #efefefff;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+    #LeftPart {
+        background-color: red;
+        height: 10vh;
+        width: 100%;
+    }
+    hr {
+        display: none;
+    }
+    #ContentLeft {
+        flex-direction: row;
+        height: 10vh;
+        width: 100%;
+    }
+    #Orders {
+        height: 10%;
+        width: 20%;
+    }
+    #RightPart {
+        display: grid;
+        grid-template-columns: 1;
+        grid-template-rows: 100%;
+    }
+}

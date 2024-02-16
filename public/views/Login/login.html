@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicia Sesion</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../views/Login/login.css">
+</head>
+<body>
+    <header>
+        <button id="botonBarra">
+            <img id="barra" src="../Assets/Imagenes/Logos/FoodieOriginal.png" alt="Foodie">
+        </button>
+    </header>
+    <section>
+        <img  class="Cuchillo" src="../assets/Imagenes/Recursos extras/Cuchillo.png" alt="">
+        <div class="Plato">
+            <form class="login" action="/login" method="post">
+                <div class="titulo">
+                    <img class="Logo" src="../assets/Imagenes/Logos/blacklogo.png" alt="">
+                    <h1>Iniciar Sesión</h1>
+                </div>
+                <hr>
+                <input placeholder="Correo Electrónico" class= "introducir" type="email" id="email" name="email" required>
+                <input placeholder="Contraseña" class= "introducir" type="password" id="password" name="password" required>
+                <button id="logear" type="submit">Siguiente</button>
+            </form>            
+        </div>
+        <img class="Tenedor" src="../assets/Imagenes/Recursos extras/Tenedor.png" alt="">
+    </section>
+    <script src="../../views/Login/login.js"></script>
+</body>
+</html>
