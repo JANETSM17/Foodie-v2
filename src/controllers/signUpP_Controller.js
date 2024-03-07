@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     const { nombre, telefono, correo, contraseña, regimen, rfc ,direccion, password } = req.body;
     // Insertar el usuario en la base de dato
-    const sql = `INSERT INTO proveedores (nombre, telefono, correo, contraseña, regimen_fiscal, rfc, direccion,clave_de_paso) VALUES (?, ?, ?, ?, ?, ?, ?,'${clave}')`;
+    const sql = `INSERT INTO proveedores (nombre, telefono, correo, contraseña, regimen_fiscal, rfc, direccion,clave_de_paso) VALUES (?, ?, ?, SHA(?), ?, ?, ?,'${clave}')`;
     if(contraseña==password){
     db.query(sql, [nombre, telefono, correo, contraseña, regimen, rfc, direccion], (err, results) => {
         if (err) {
@@ -29,8 +29,10 @@ router.post('/', (req, res) => {
             res.send('No registrado con exito');
         } else {
             console.log('Usuario registrado con éxito');
-            globals.setID(results.insertId);
-            console.log(globals.getID());
+            req.session.userID = results.insertId
+            req.session.userType = "proveedor"
+            console.log(req.session.userID)
+            console.log(req.session.userType)
             res.redirect('/homeP');
         }
     })}else{

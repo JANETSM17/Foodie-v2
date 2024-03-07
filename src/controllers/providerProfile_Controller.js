@@ -2,11 +2,10 @@ const express = require('express');
 const db = require('../services/db'); // Importa la configuración de la base de datos
 const path = require('path');
 const router = express.Router();
-const globals = require('../services/globals');
 const providerProfileHController = require('./providerProfileHistory_Controller');
 const providerProfileMController = require('./providerProfileMenu_Controller');
 const providerProfileSController = require('./providerProfileStatistics_Controller');
-const providerProfileQAController = require('./providerProfileQA_Controller');
+const providerProfileQAController = require('./providerProfileQA_Controller');//es necesario???????
 
 
 
@@ -17,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/infoP',(req,res) => {
-    const sql = `SELECT * FROM proveedores WHERE id = ${globals.getID()};`
+    const sql = `SELECT * FROM proveedores WHERE id = ${req.session.userID};`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -35,7 +34,7 @@ router.post('/updateSwitchState', (req, res) => {
     const newState = req.body.state; // Obtener el nuevo estado del cuerpo de la solicitud
 
     // Actualizar el estado en la base de datos
-    const sql = `UPDATE proveedores SET active = ${newState} WHERE id = ${globals.getID()};`;
+    const sql = `UPDATE proveedores SET active = ${newState} WHERE id = ${req.session.userID};`;
 
     db.query(sql, (error, resultado) => {
         if (error) {
@@ -52,8 +51,8 @@ router.post('/updateSwitchState', (req, res) => {
 router.post('/changePassword', (req, res) => {
     const previousPass = req.body.previousPass;
     const newPass = req.body.newPass;
-    const currentPassQuery = `SELECT contraseña FROM proveedores WHERE id = ${globals.getID()};`;
-    const sqlupdate = `UPDATE proveedores SET contraseña = '${newPass}' WHERE id = ${globals.getID()} AND contraseña = '${previousPass}';`;
+    const currentPassQuery = `SELECT contraseña FROM proveedores WHERE id = ${req.session.userID};`;
+    const sqlupdate = `UPDATE proveedores SET contraseña = '${newPass}' WHERE id = ${req.session.userID} AND contraseña = '${previousPass}';`;
 
     db.query(currentPassQuery, (error, results) => {
         if (error) {
@@ -94,7 +93,7 @@ router.post('/deleteAccount', (req, res) => {
     const enteredPassword = req.body.password;
 
     // Verifica si la contraseña ingresada coincide con la almacenada en la base de datos
-    const checkPasswordQuery = `SELECT contraseña FROM proveedores WHERE id = ${globals.getID()};`;
+    const checkPasswordQuery = `SELECT contraseña FROM proveedores WHERE id = ${req.session.userID};`;
 
     db.query(checkPasswordQuery, (error, results) => {
         if (error) {
@@ -109,7 +108,7 @@ router.post('/deleteAccount', (req, res) => {
             // Compara la contraseña almacenada con la proporcionada por el usuario
             if (currentPasswordFromDB === enteredPassword) {
                 // Realiza la eliminación de la cuenta en la base de datos
-                const deleteAccountQuery = `DELETE FROM proveedores WHERE id = ${globals.getID()};`;
+                const deleteAccountQuery = `DELETE FROM proveedores WHERE id = ${req.session.userID};`;
 
                 db.query(deleteAccountQuery, (error, result) => {
                     if (error) {
@@ -132,15 +131,16 @@ router.post('/deleteAccount', (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-    globals.setID(0);
-    globals.setMenu(0);
+    req.session.userID = null;
+    req.session.selectedMenu = null;
+    req.session.userType=null;
     res.sendStatus(200);
 });
 
 router.post('/updateDatabaseTiempo', (req, res) => {
     const newValue = req.body.newValue;
     // Realiza la actualización del valor en la base de datos
-    const sql = `UPDATE proveedores SET min_espera = ${newValue} WHERE id = ${globals.getID()};`;
+    const sql = `UPDATE proveedores SET min_espera = ${newValue} WHERE id = ${req.session.userID};`;
 
     db.query(sql, (error, resultado) => {
         if (error) {
@@ -156,7 +156,7 @@ router.post('/updateDatabaseTiempo', (req, res) => {
 router.post('/updateDatabaseCodigo', (req, res) => {
     const newCodigo = req.body.newCodigo;
     // Realiza la actualización del valor en la base de datos
-    const sql = `UPDATE proveedores SET clave_de_paso = '${newCodigo}' WHERE id = ${globals.getID()};`;
+    const sql = `UPDATE proveedores SET clave_de_paso = '${newCodigo}' WHERE id = ${req.session.userID};`;
 
     db.query(sql, (error, resultado) => {
         if (error) {

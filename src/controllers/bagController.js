@@ -2,18 +2,17 @@ const express = require('express');
 const db = require('../services/db'); // Importa la configuración de la base de datos
 const path = require('path');
 const router = express.Router();
-const globals = require('../services/globals');
 
 router.get('/', (req, res) => {
     const homecPagePath = path.join(__dirname, '../../public/views/bag/bag.html');
     console.log('entras a bolsa')
-    console.log(globals.getID())
+    console.log(req.session.userID)
     res.sendFile(homecPagePath);
 });
 
 router.get('/getUsrInfo',(req,res) => {
     console.log('inicia la consulta del usuario')
-    const sql = `select nombre, telefono from clientes where id = ${globals.getID()}`
+    const sql = `select nombre, telefono from clientes where id = ${req.session.userID}`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -30,7 +29,7 @@ router.get('/getUsrInfo',(req,res) => {
 
 router.get('/getProductos',(req,res) => {
     console.log('inicia la consulta del carrito')
-    const sql = `select id, nombre, imagen, precio from productos where id in (select id_producto from productos_pedidos where id_pedido = (select id from pedidos where id_cliente = ${globals.getID()} and id_estado = 1))`
+    const sql = `select id, nombre, imagen, precio from productos where id in (select id_producto from productos_pedidos where id_pedido = (select id from pedidos where id_cliente = ${req.session.userID} and id_estado = 1))`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -47,7 +46,7 @@ router.get('/getProductos',(req,res) => {
 
 router.get('/getPedido',(req,res) => {
     console.log('inicia el query para obtener el id del carrito')
-    const sql = `select id from pedidos where id_cliente = ${globals.getID()} and id_estado = 1`
+    const sql = `select id from pedidos where id_cliente = ${req.session.userID} and id_estado = 1`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -65,7 +64,7 @@ router.get('/enviarPedido/:id/:espera',(req,res) => {
     const id = req.params.id
     const espera = req.params.espera
     console.log('inicia el envio del pedido')
-    const sql = `call sndOrd(${id},${globals.getID()},${espera})`
+    const sql = `call sndOrd(${id},${req.session.userID},${espera})`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -80,7 +79,7 @@ router.get('/enviarPedido/:id/:espera',(req,res) => {
 router.get('/enviarEspecificaciones/:texto',(req,res) => {
     const texto = req.params.texto
     console.log('inicia el envio de especificaciones')
-    const sql = `update pedidos set especificaciones = '${texto}' where id_cliente = ${globals.getID()} and id_estado = 1`
+    const sql = `update pedidos set especificaciones = '${texto}' where id_cliente = ${req.session.userID} and id_estado = 1`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -95,7 +94,7 @@ router.get('/enviarEspecificaciones/:texto',(req,res) => {
 
 router.get('/confirmar',(req,res) => {
     console.log('inicia la confirmacion')
-    const sql = `select count(*) as cuenta from pedidos where id_cliente = ${globals.getID()} and (id_estado = 3 or id_estado = 4)`
+    const sql = `select count(*) as cuenta from pedidos where id_cliente = ${req.session.userID} and (id_estado = 3 or id_estado = 4)`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);

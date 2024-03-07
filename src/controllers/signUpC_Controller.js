@@ -3,8 +3,6 @@ const db = require('../services/db'); // Importa la configuración de la base de
 const path = require('path');
 const router = express.Router();
 const homeCController = require('./homeC_Controller');//Importa rutas
-const globals = require('../services/globals')
-
 
 router.get('/', (req, res) => {
     const signUpCPagePath = path.join(__dirname, '../../public/views/SingUp-C/singup-c.html');
@@ -14,15 +12,17 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     const { nombre, telefono, correo, contraseña, confirm_password } = req.body;
     // Insertar el usuario en la base de dato
-    const sql = 'INSERT INTO clientes (nombre, telefono, correo, contraseña) VALUES (?, ?, ?, ?)';
+    const sql = 'INSERT INTO clientes (nombre, telefono, correo, contraseña) VALUES (?, ?, ?, SHA(?))';
     if (contraseña===confirm_password) {
         db.query(sql, [nombre, telefono, correo, contraseña], (err, results) => {
         if (err) {
             console.error('Error al registrar el usuario: ' + err.message);
             res.send('No registrado con exito');
         } else {
-            globals.setID(results.insertId);
-            console.log(globals.getID());
+            req.session.userID = results.insertId
+            req.session.userType = "client"
+            console.log(req.session.userID)
+            console.log(req.session.userType)
             console.log('Usuario registrado con éxito');
             res.redirect('/homeC');
         }

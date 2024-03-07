@@ -2,20 +2,19 @@ const express = require('express');
 const db = require('../services/db'); // Importa la configuración de la base de datos
 const path = require('path');
 const router = express.Router();
-const globals = require('../services/globals');
 
 router.use(express.json());
 
 router.get('/', (req, res) => {
     const menuPagePath = path.join(__dirname, '../../public/views/Menu/Menu.html');
     console.log('entras a menu')
-    console.log('el usuario: '+globals.getID());
-    console.log('entra al menu del comedor: '+globals.getMenu())
+    console.log('el usuario: '+req.session.userID);
+    console.log('entra al menu del comedor: '+req.session.selectedMenu)
     res.sendFile(menuPagePath);
 });
 router.get('/queCafe',(req,res) => {
     console.log('inicia el query')
-    const sql = `select * from proveedores where id = ${globals.getMenu()}`
+    const sql = `select * from proveedores where id = ${req.session.selectedMenu}`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -32,7 +31,7 @@ router.get('/queCafe',(req,res) => {
 
 router.get('/comida',(req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${globals.getMenu()} and id_categoria = 1`
+    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 1`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -48,7 +47,7 @@ router.get('/comida',(req,res) => {
 
 router.get('/bebidas',(req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${globals.getMenu()} and id_categoria = 2`
+    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 2`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -64,7 +63,7 @@ router.get('/bebidas',(req,res) => {
 
 router.get('/frituras',(req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${globals.getMenu()} and id_categoria = 3`
+    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 3`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -80,7 +79,7 @@ router.get('/frituras',(req,res) => {
 
 router.get('/dulces',(req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${globals.getMenu()} and id_categoria = 4`
+    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 4`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -96,7 +95,7 @@ router.get('/dulces',(req,res) => {
 
 router.get('/otros',(req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${globals.getMenu()} and id_categoria = 5`
+    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 5`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -149,8 +148,8 @@ router.get('/agregarCarrito/:id_producto/:cantidad/:idCarrito',(req,res) => {
 
 router.post('/calificar', (req, res) => {
     const rating = req.body.rating;
-    const idProveedor = globals.getMenu(); 
-    const idCliente = globals.getID(); 
+    const idProveedor = req.session.selectedMenu; 
+    const idCliente = req.session.userID; 
 
     const sql = `CALL reseña(${idProveedor}, ${idCliente}, ${rating})`;
 

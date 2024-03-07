@@ -2,7 +2,6 @@ const express = require('express');
 const db = require('../services/db'); // Importa la configuración de la base de datos
 const path = require('path');
 const router = express.Router();
-const globals = require('../services/globals');
 
 router.get('/', (req, res) => {
     const profilePPagePath = path.join(__dirname, '../../public/views/CostumerProfile/CustomerProfile.html');
@@ -10,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/infoC',(req,res) => {
-    const sql = `SELECT  nombre, correo, telefono, DATE(created_at) as fecha FROM clientes WHERE id = ${globals.getID()};`
+    const sql = `SELECT  nombre, correo, telefono, DATE(created_at) as fecha FROM clientes WHERE id = ${req.session.userID};`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -25,7 +24,7 @@ router.get('/infoC',(req,res) => {
 });
 
 router.get('/getPedidos',(req,res) => {
-    const sql = `SELECT pedidos.id, pedidos.total, pedidos. created_at FROM pedidos WHERE id_cliente = ${globals.getID()};`
+    const sql = `SELECT pedidos.id, pedidos.total, pedidos. created_at FROM pedidos WHERE id_cliente = ${req.session.userID};`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -40,7 +39,7 @@ router.get('/getPedidos',(req,res) => {
 });
 
 router.get('/getTotal',(req,res) => {
-    const sql = `select SUM(total) as total from pedidos where id_cliente = ${globals.getID()} and id_estado=5`
+    const sql = `select SUM(total) as total from pedidos where id_cliente = ${req.session.userID} and id_estado=5`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -55,8 +54,9 @@ router.get('/getTotal',(req,res) => {
 });
 
 router.post('/logout', (req, res) => {
-    globals.setID(0);
-    globals.setMenu(0);
+    req.session.userID = null;
+    req.session.selectedMenu = null;
+    req.session.userType=null;
     res.sendStatus(200);
 });
 
@@ -64,7 +64,7 @@ router.post('/deleteAccount', (req, res) => {
     const enteredPassword = req.body.password;
 
     // Verifica si la contraseña ingresada coincide con la almacenada en la base de datos
-    const checkPasswordQuery = `SELECT contraseña FROM clientes WHERE id = ${globals.getID()};`;
+    const checkPasswordQuery = `SELECT contraseña FROM clientes WHERE id = ${req.session.userID};`;
 
     db.query(checkPasswordQuery, (error, results) => {
         if (error) {
@@ -79,7 +79,7 @@ router.post('/deleteAccount', (req, res) => {
             // Compara la contraseña almacenada con la proporcionada por el usuario
             if (currentPasswordFromDB === enteredPassword) {
                 // Realiza la eliminación de la cuenta en la base de datos
-                const deleteAccountQuery = `DELETE FROM clientes WHERE id = ${globals.getID()};`;
+                const deleteAccountQuery = `DELETE FROM clientes WHERE id = ${req.session.userID};`;
 
                 db.query(deleteAccountQuery, (error, result) => {
                     if (error) {
@@ -102,7 +102,7 @@ router.post('/deleteAccount', (req, res) => {
 });
 
 router.get('/getPedidoPendiente',(req,res) => {
-    const sql = `select proveedores.ruta as ruta,proveedores.nombre as nombre,pedidos.total as total from pedidos join productos_pedidos on productos_pedidos.id_pedido = pedidos.id join productos on productos_pedidos.id_producto = productos.id join proveedores on proveedores.id = productos.id_proveedor where pedidos.id = (select id from pedidos where id_cliente = ${globals.getID()} and (id_estado = 3 or id_estado = 4))`
+    const sql = `select proveedores.ruta as ruta,proveedores.nombre as nombre,pedidos.total as total from pedidos join productos_pedidos on productos_pedidos.id_pedido = pedidos.id join productos on productos_pedidos.id_producto = productos.id join proveedores on proveedores.id = productos.id_proveedor where pedidos.id = (select id from pedidos where id_cliente = ${req.session.userID} and (id_estado = 3 or id_estado = 4))`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -118,7 +118,7 @@ router.get('/getPedidoPendiente',(req,res) => {
 });
 
 router.get('/getPedidosHist',(req,res) => {
-    const sql = `select proveedores.ruta as ruta, pedidos.total as total, pedidos.created_at as hora from pedidos join productos_pedidos on productos_pedidos.id_pedido = pedidos.id join productos on productos_pedidos.id_producto = productos.id join proveedores on proveedores.id = productos.id_proveedor where pedidos.id in (select id from pedidos where id_cliente = ${globals.getID()} and id_estado = 5)`
+    const sql = `select proveedores.ruta as ruta, pedidos.total as total, pedidos.created_at as hora from pedidos join productos_pedidos on productos_pedidos.id_pedido = pedidos.id join productos on productos_pedidos.id_producto = productos.id join proveedores on proveedores.id = productos.id_proveedor where pedidos.id in (select id from pedidos where id_cliente = ${req.session.userID} and id_estado = 5)`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);

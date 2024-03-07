@@ -2,7 +2,6 @@ const express = require('express');
 const db = require('../services/db'); // Importa la configuración de la base de datos
 const path = require('path');
 const router = express.Router();
-const globals = require('../services/globals');
 const profilePController = require('./providerProfile_Controller');
 const contactUsEController = require("./contactUsE_Controller")
 
@@ -13,7 +12,7 @@ router.get('/', (req, res) => {
 
 router.get('/pedidosEnCurso',(req,res) => {
     console.log('inicia el query')
-    const sql = `select pedidos.id as id, clientes.nombre as nombre, clientes.telefono as telefono, pedidos.especificaciones as especificaciones, pedidos.total as total, pedidos.descripcion as descripcion, pedidos.entrega as entrega from pedidos join clientes on pedidos.id_cliente=clientes.id where pedidos.id_estado = 3 AND pedidos.id in (select id_pedido from productos_pedidos where id_producto in (select id from productos where id_proveedor = ${globals.getID()}))`
+    const sql = `select pedidos.id as id, clientes.nombre as nombre, clientes.telefono as telefono, pedidos.especificaciones as especificaciones, pedidos.total as total, pedidos.descripcion as descripcion, pedidos.entrega as entrega from pedidos join clientes on pedidos.id_cliente=clientes.id where pedidos.id_estado = 3 AND pedidos.id in (select id_pedido from productos_pedidos where id_producto in (select id from productos where id_proveedor = ${req.session.userID}))`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -44,7 +43,7 @@ router.get('/pedidoListo/:id',(req,res)=>{
 
 router.get('/pedidosListos',(req,res) => {
     console.log('inicia el query')
-    const sql = `select pedidos.id as id, clientes.nombre as nombre, clientes.telefono as telefono, pedidos.especificaciones as especificaciones, pedidos.total as total, pedidos.descripcion as descripcion, pedidos.entrega as entrega from pedidos join clientes on pedidos.id_cliente=clientes.id where pedidos.id_estado = 4 AND pedidos.id in (select id_pedido from productos_pedidos where id_producto in (select id from productos where id_proveedor = ${globals.getID()}))`
+    const sql = `select pedidos.id as id, clientes.nombre as nombre, clientes.telefono as telefono, pedidos.especificaciones as especificaciones, pedidos.total as total, pedidos.descripcion as descripcion, pedidos.entrega as entrega from pedidos join clientes on pedidos.id_cliente=clientes.id where pedidos.id_estado = 4 AND pedidos.id in (select id_pedido from productos_pedidos where id_producto in (select id from productos where id_proveedor = ${req.session.userID}))`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);

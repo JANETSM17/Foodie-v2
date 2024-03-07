@@ -2,7 +2,6 @@ const express = require('express');
 const db = require('../services/db'); // Importa la configuración de la base de datos
 const path = require('path');
 const router = express.Router();
-const globals = require('../services/globals');
 
 router.get('/', (req, res) => {
     const profilePMenuPagePath = path.join(__dirname, '../../public/views/EnterpriseProfile/EMenu/EMenu.html');
@@ -10,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/productos',(req,res) => {
-    const sql = `SELECT categorias.nombre AS categoria, productos.nombre AS nombre, productos.precio AS precio, productos.descripcion AS descripcion, productos.imagen AS imagen, productos.active AS active, productos.id AS id FROM productos JOIN categorias ON categorias.id=productos.id_categoria WHERE productos.id_proveedor = ${globals.getID()};`
+    const sql = `SELECT categorias.nombre AS categoria, productos.nombre AS nombre, productos.precio AS precio, productos.descripcion AS descripcion, productos.imagen AS imagen, productos.active AS active, productos.id AS id FROM productos JOIN categorias ON categorias.id=productos.id_categoria WHERE productos.id_proveedor = ${req.session.userID};`
     db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
@@ -23,7 +22,7 @@ router.get('/productos',(req,res) => {
 
     })
 });
-0
+
 router.post('/updateSwitchState/:id', (req, res) => {
     const id = req.params.id;
     const newState = req.body.state; // Obtener el nuevo estado del cuerpo de la solicitud
@@ -63,7 +62,7 @@ router.post('/agregarProducto', (req, res) => {
     // Realizar la inserción del nuevo producto en la base de datos
     const sql = `INSERT INTO productos (nombre, precio, descripcion, id_categoria, id_proveedor) VALUES (?, ?, ?, ?, ?);`;
 
-    db.query(sql, [newProduct.nombre, newProduct.precio, newProduct.descripcion, newProduct.id_categoria, globals.getID()], (error, resultado) => {
+    db.query(sql, [newProduct.nombre, newProduct.precio, newProduct.descripcion, newProduct.id_categoria, req.session.userID], (error, resultado) => {
         if (error) {
             console.error("Error al agregar el nuevo producto en la base de datos:", error.message);
             return res.status(500).send("Error al agregar el nuevo producto en la base de datos");
