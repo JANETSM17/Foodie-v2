@@ -4,8 +4,25 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    const profilePStatisticsPagePath = path.join(__dirname, '../../public/views/EnterpriseProfile/Estadisticas/Estadisticas.html');
-    res.sendFile(profilePStatisticsPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "proveedor":
+                const profilePStatisticsPagePath = path.join(__dirname, '../../public/views/EnterpriseProfile/Estadisticas/Estadisticas.html');
+                res.sendFile(profilePStatisticsPagePath);
+                break;
+            
+            case "cliente":
+                res.redirect('/clientProfile');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
+    
 });
 
 router.get('/infoProductos',(req,res) => {

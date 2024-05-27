@@ -162,7 +162,7 @@ botonSiguiente.addEventListener('click', () => {
     if (status == 0) {
       alert("Parece ser que este comedor se encuentra cerrado, vuelve a \n intentar hacer un pedido cuando abra. Gracias <3");
   } else {
-      const xhr = new XMLHttpRequest();
+      /*const xhr = new XMLHttpRequest();
       xhr.open('GET', `/homeC/setMenu/${id}`, true);
 
       xhr.onreadystatechange = function () {
@@ -174,7 +174,8 @@ botonSiguiente.addEventListener('click', () => {
               }
           }
       };
+      xhr.send();*/
+      hacerSolicitud(`/homeC/setMenu/${id}`)
       window.location.href = '/menu';
-      xhr.send();
     }
   }

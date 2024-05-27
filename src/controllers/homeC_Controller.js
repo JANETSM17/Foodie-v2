@@ -10,10 +10,27 @@ const profileCController = require('./clientProfile_Controller');
 const QAController = require('./QA_Controller');
 
 router.get('/', (req, res) => {
-    const homecPagePath = path.join(__dirname, '../../public/views/homeC/homec.html');
-    console.log('entras a homeC')
-    console.log(req.session.userID)
-    res.sendFile(homecPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "cliente":
+                const homecPagePath = path.join(__dirname, '../../public/views/homeC/homec.html');
+                console.log('entras a homeC')
+                console.log(req.session.userID)
+                res.sendFile(homecPagePath);
+                break;
+            
+            case "proveedor":
+                res.redirect('/homeP');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
+    
 });
 
 router.get('/comedores',(req,res) => {
@@ -63,6 +80,14 @@ router.get('/setMenu/:id',(req,res)=>{
     console.log('se actualiza el menu')
     const id = req.params.id;
     req.session.selectedMenu = id;
+    if(!req.session.selectedMenu){
+        console.log("selectedMenu no existe wey....")
+        res.json({mensaje: "no se armo"})
+    }else{
+       console.log("El menu seleccionado es: "+req.session.selectedMenu)
+       res.json({mensaje: "si se armo"}) 
+    }
+    
 })
 
 router.use('/menu',menuController);

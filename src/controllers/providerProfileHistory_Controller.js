@@ -4,8 +4,25 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    const profilePHistoryPagePath = path.join(__dirname, '../../public/views/EnterpriseProfile/HistorialPedidos/HP.html');
-    res.sendFile(profilePHistoryPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "proveedor":
+                const profilePHistoryPagePath = path.join(__dirname, '../../public/views/EnterpriseProfile/HistorialPedidos/HP.html');
+                res.sendFile(profilePHistoryPagePath);
+                break;
+            
+            case "cliente":
+                res.redirect('/clientProfile');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
+    
 });
 
 router.get('/getPedidosHist',(req,res) => {

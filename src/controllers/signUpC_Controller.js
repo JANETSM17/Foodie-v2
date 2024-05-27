@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
             res.send('No registrado con exito');
         } else {
             req.session.userID = results.insertId
-            req.session.userType = "client"
+            req.session.userType = "cliente"
             console.log(req.session.userID)
             console.log(req.session.userType)
             console.log('Usuario registrado con éxito');

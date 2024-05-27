@@ -4,10 +4,26 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    const homecPagePath = path.join(__dirname, '../../public/views/confirmacionPedido/confirmacion.html');
-    console.log('entras a confirmacion')
-    console.log(req.session.userID)
-    res.sendFile(homecPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "cliente":
+                const homecPagePath = path.join(__dirname, '../../public/views/confirmacionPedido/confirmacion.html');
+                console.log('entras a confirmacion')
+                console.log(req.session.userID)
+                res.sendFile(homecPagePath);
+                break;
+            
+            case "proveedor":
+                res.redirect('/homeP');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
 });
 router.get('/pedidosEnCurso',(req,res) => {
     console.log('inicia el query')

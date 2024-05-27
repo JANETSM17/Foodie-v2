@@ -6,11 +6,28 @@ const router = express.Router();
 router.use(express.json());
 
 router.get('/', (req, res) => {
-    const menuPagePath = path.join(__dirname, '../../public/views/Menu/Menu.html');
-    console.log('entras a menu')
-    console.log('el usuario: '+req.session.userID);
-    console.log('entra al menu del comedor: '+req.session.selectedMenu)
-    res.sendFile(menuPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "cliente":
+                const menuPagePath = path.join(__dirname, '../../public/views/Menu/Menu.html');
+                console.log('entras a menu')
+                console.log('el usuario: '+req.session.userID);
+                console.log('entra al menu del comedor: '+req.session.selectedMenu)
+                res.sendFile(menuPagePath);
+                break;
+            
+            case "proveedor":
+                res.redirect('/homeP');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
+    
 });
 router.get('/queCafe',(req,res) => {
     console.log('inicia el query')

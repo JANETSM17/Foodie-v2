@@ -4,8 +4,24 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    const profilePPagePath = path.join(__dirname, '../../public/views/CostumerProfile/CustomerProfile.html');
-    res.sendFile(profilePPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "cliente":
+                const profilePPagePath = path.join(__dirname, '../../public/views/CostumerProfile/CustomerProfile.html');
+                res.sendFile(profilePPagePath);
+                break;
+            
+            case "proveedor":
+                res.redirect('/providerProfile');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
 });
 
 router.get('/infoC',(req,res) => {

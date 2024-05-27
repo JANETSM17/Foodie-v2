@@ -16,7 +16,7 @@ function irHome() {
   function irPedidos() {
     window.location.href = "/pedidos";
   };
-  
+
 
 //funcion para mandar llamar URLs
 function hacerSolicitud(url) {
@@ -248,6 +248,7 @@ function modificarCantidad(event, accion) {
 
     if (cuenta == 0) {
         hacerSolicitud(`/menu/agregarCarrito/${id_producto}/1/${idCarrito}`)
+        alert("Producto agregado")
     }else{
         alert('Ya has agregado este producto a tu carrito.\nSi deseas agregar mas elementos de este articulo,\n modifica la cantidad desde el apartado de "Bolsa"')
     } 

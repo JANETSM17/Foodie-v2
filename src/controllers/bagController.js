@@ -4,10 +4,26 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    const homecPagePath = path.join(__dirname, '../../public/views/bag/bag.html');
-    console.log('entras a bolsa')
-    console.log(req.session.userID)
-    res.sendFile(homecPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "cliente":
+                const homecPagePath = path.join(__dirname, '../../public/views/bag/bag.html');
+                console.log('entras a bolsa')
+                console.log(req.session.userID)
+                res.sendFile(homecPagePath);
+                break;
+            
+            case "proveedor":
+                res.redirect('/homeP');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
 });
 
 router.get('/getUsrInfo',(req,res) => {

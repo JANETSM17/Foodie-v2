@@ -4,8 +4,25 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    const profilePMenuPagePath = path.join(__dirname, '../../public/views/EnterpriseProfile/EMenu/EMenu.html');
-    res.sendFile(profilePMenuPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "proveedor":
+                const profilePMenuPagePath = path.join(__dirname, '../../public/views/EnterpriseProfile/EMenu/EMenu.html');
+                res.sendFile(profilePMenuPagePath);
+                break;
+            
+            case "cliente":
+                res.redirect('/clientProfile');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
+    
 });
 
 router.get('/productos',(req,res) => {

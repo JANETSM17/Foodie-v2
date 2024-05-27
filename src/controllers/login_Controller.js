@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
             // El usuario existe y es un cliente, aquí puedes redirigirlo a una página de inicio de sesión exitosa
 
             req.session.userID = results[0].id;//obtiene el id de la cuenta que inicio sesion y le da ese valor a la variable idUser
-            req.session.userType = "client"
+            req.session.userType = "cliente"
             console.log(req.session.userID);//confirmacion del valor de idUser
             res.redirect(`/homeC`);
         } else {

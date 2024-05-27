@@ -6,8 +6,24 @@ const profilePController = require('./providerProfile_Controller');
 const contactUsEController = require("./contactUsE_Controller")
 
 router.get('/', (req, res) => {
-    const homepPagePath = path.join(__dirname, '../../public/views/homeP/homep.html');
-    res.sendFile(homepPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "proveedor":
+                const homepPagePath = path.join(__dirname, '../../public/views/homeP/homep.html');
+                res.sendFile(homepPagePath);
+                break;
+            
+            case "cliente":
+                res.redirect('/homeC');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
 });
 
 router.get('/pedidosEnCurso',(req,res) => {

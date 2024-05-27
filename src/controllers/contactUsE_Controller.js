@@ -4,8 +4,25 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    const ContactUsEPagePath = path.join(__dirname, '../../public/views/ContactUs/EnterpriseCU/ContactUsE.html');
-    res.sendFile(ContactUsEPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "proveedor":
+                const ContactUsEPagePath = path.join(__dirname, '../../public/views/ContactUs/EnterpriseCU/ContactUsE.html');
+                res.sendFile(ContactUsEPagePath);
+                break;
+            
+            case "cliente":
+                res.redirect('/contactUsC');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
+    
 });
 
 router.post('/', (req, res) => {
