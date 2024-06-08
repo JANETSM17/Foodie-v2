@@ -61,7 +61,7 @@ function crearRestaurante(id, nombre, rate, tiempo, ruta, estado) {
   // Crear y agregar los restaurantes al contenedor
   var restaurantes = [];
 
-  var resComedores = hacerSolicitud('/login/homeC/comedores')
+  var resComedores = []//hacerSolicitud('/login/homeC/comedores')
 
   resComedores.forEach(item => {
     restaurantes.push(crearRestaurante(item.id,item.nombre,item.calif,item.min_espera,item.ruta,item.active));

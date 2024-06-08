@@ -1,20 +1,67 @@
 // db.js es la configuración de la base de datos
-const mysql = require('mysql');
+const { MongoClient, ObjectId} = require('mongodb')
+const url = 'mongodb+srv://Admin:FOODIE@clusterfoodie.10j4aom.mongodb.net/'
+const client = new MongoClient(url)
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password:'2624',
-    database: 'foodie',
-    port: 3307
-});
+const dbName = 'foodie'
 
-db.connect((err) => {
-    if (err) {
-        console.error('Error al conectar a la base de datos:', err);
-        return;
+async function con(){
+    console.log("inicia la funcion")
+    await client.connect()
+    console.log("conectado chido")
+    const database = client.db(dbName)
+    const cli = await database.collection('clientes').find().toArray()
+    console.log(cli[0]._id)
+}
+
+function objectID(id){
+    let ID = new ObjectId(id)
+    return ID
+}
+
+async function query(type,collection,primaryObject,secondaryObject) {
+    await client.connect()
+    console.log("conexion lograda")
+    const database = client.db(dbName)
+    let res
+    switch (type) {
+        case "insert":
+            res = await database.collection(collection).insertOne(primaryObject)
+            await client.close()
+            await console.log(res)
+            return res
+
+        case "delete":
+            
+            break;
+
+        case "update":
+            res = await database.collection(collection).updateOne(primaryObject,secondaryObject)
+            await client.close()
+            await console.log(res)
+            return res
+
+        case "find":
+            res = await database.collection(collection).find(primaryObject).project(secondaryObject).toArray()
+            await client.close()
+            return res
+        case "agregation":
+            
+            break;
+
+        default:
+            break;
     }
-    console.log('Conexión a la base de datos MariaDB establecida');
-});
+}
 
-module.exports = db;
+con()
+.catch(console.error)
+.finally(()=>client.close())
+
+
+
+const db ={
+    "client":client,
+    "database": this.database
+}
+module.exports = {query,objectID};

@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
 router.get('/comedores',(req,res) => {
     console.log('inicia el query')
     const sql = `select * from proveedores where id in (select id_proveedor from proveedores_clientes where id_cliente = ${req.session.userID})`
-    db.query(sql,(error,resultado)=>{
+    /*db.query(sql,(error,resultado)=>{
         if(error){
             console.error("Error"+error.message);
             return res.status(500).send("Error al consultar los datos");
@@ -46,20 +46,33 @@ router.get('/comedores',(req,res) => {
             
         };   
 
-    })
+    })*/
 });
 
-router.post('/agregarComedor', (req,res)=>{
+router.post('/agregarComedor', async (req,res)=>{
     const codigo = req.body.campoCodigo;
-    const sql = `insert into proveedores_clientes (id_proveedor, id_cliente) values ((select id from proveedores where clave_de_paso ='${codigo}'),${req.session.userID}) `;
-    db.query(sql,(error)=>{
+    const comedor = await db.query("find","proveedores",{clave:codigo},{_id:1})
+    const confirmComedor = await db.query("find","clientes",{_id:db.objectID(req.session.userID),"proveedores.id_proveedor":comedor[0]._id},{_id:1})
+    if(confirmComedor.length==0){
+        if(comedor.length>0){ 
+            console.log(comedor)
+            const result = await db.query("update","clientes",{_id:db.objectID(req.session.userID)},{$push:{proveedores:{id_proveedor:comedor[0]._id,calificacion:0}}})
+            console.log(result)
+        }else{
+            console.log("No existe un comedor con esa clave")
+        }
+    }else{
+        console.log("Ya tienes este comedor agregado")
+    }
+    
+    /*db.query(sql,(error)=>{
         if(error){
             console.error("No funciono el insert "+error.message)
         }else{
             console.log("si se pudo enlazar el comedor");
             res.redirect('/login/homeC')
         }
-    })
+    })*/
 });
 
 router.get('/borrarComedor/:id',(req,res)=>{
@@ -67,13 +80,13 @@ router.get('/borrarComedor/:id',(req,res)=>{
     const sql = `delete from proveedores_clientes where id_proveedor = ${id} AND id_cliente = ${req.session.userID}`
     console.log('id='+id)
     console.log('global='+req.session.userID)
-    db.query(sql,(error)=>{
+    /*db.query(sql,(error)=>{
         if(error){
             console.error("No funciono el delete "+error.message)
         }else{
             console.log("si se pudo eliminar el enlace");
         }
-    })
+    })*/
 })
 
 router.get('/setMenu/:id',(req,res)=>{

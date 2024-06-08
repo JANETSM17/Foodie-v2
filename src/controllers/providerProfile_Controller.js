@@ -2,13 +2,6 @@ const express = require('express');
 const db = require('../services/db'); // Importa la configuración de la base de datos
 const path = require('path');
 const router = express.Router();
-const providerProfileHController = require('./providerProfileHistory_Controller');
-const providerProfileMController = require('./providerProfileMenu_Controller');
-const providerProfileSController = require('./providerProfileStatistics_Controller');
-const providerProfileQAController = require('./providerProfileQA_Controller');//es necesario???????
-
-
-
 
 router.get('/', (req, res) => {
     if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
