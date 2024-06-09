@@ -11,13 +11,33 @@ router.get('/', (req, res) => {
     res.sendFile(loginPagePath);
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const { email, password } = req.body;
     // Consulta SQL para buscar el usuario en la base de datos
-    const sql1 = 'SELECT * FROM clientes WHERE BINARY correo = ? AND BINARY contraseña = SHA(?)';
-    const sql2 = 'SELECT * FROM proveedores WHERE BINARY correo = ? AND BINARY contraseña = SHA(?)';
 
-    db.query(sql1, [email, password], (err, results) => {
+    const cliente = await db.query("find","clientes",{correo:email,"contraseña":password},{_id:1})
+    console.log(cliente)
+    if(cliente.length>0){
+        req.session.userID = cliente[0]._id;//obtiene el id de la cuenta que inicio sesion y le da ese valor a la variable idUser
+        req.session.userType = "cliente"
+        console.log(req.session.userID);//confirmacion del valor de idUser
+        res.redirect(`/homeC`);
+    }else{
+        const proveedor = await db.query("find","proveedores",{correo:email,password:password},{_id:1})
+        if(proveedor.length>0){
+            req.session.userID = proveedor[0]._id;//obtiene el id de la cuenta que inicio sesion y le da ese valor a la variable idUser
+            req.session.userType = "proveedor"
+            console.log(req.session.userID);//confirmacion del valor de idUser
+            res.redirect(`/homeP`);
+        }else{
+            res.send(`<script>
+                window.location.href = "/login";
+                alert("Correo y/o contraseña incorrecta, intente de nuevo");
+                </script>`);
+        }
+    }
+
+    /*db.query(sql1, [email, password], (err, results) => {
         if (err) {
             console.error('Error al buscar usuario:', err);
             res.status(500).send('Error interno del servidor');
@@ -54,7 +74,7 @@ router.post('/', (req, res) => {
                 }
             });
         }
-    });
+    });*/
 });
 router.use(`/homeC`, homeCController); //Home cliente
 router.use('/homeP', homePController); //Home Proveedor

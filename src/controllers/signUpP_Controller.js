@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
             while(claves.includes(clave)){
                 crearClave()
             }
-            const queryObject = {nombre: nombre, correo: correo, contraseña: contraseña, telefono: telefono, created_at: new Date(),imagen: 'rutaImaginaria.jpg',active: true, "regimen fiscal": regimen, direccion: direccion, calif: 0, min_espera:15,clave:clave};//crea un objeto con la info del usuario
+            const queryObject = {nombre: nombre, correo: correo, contraseña: contraseña, telefono: telefono, created_at: new Date(),imagen: '../assets/Imagenes/Logos/cubiertos.png',active: true, "regimen fiscal": regimen, direccion: direccion, calif: 0, min_espera:15,clave:clave};//crea un objeto con la info del usuario
 
             const result = await db.query("insert","proveedores",queryObject)//hace el insert en la base de datos
             req.session.userID = await result.insertedId //guarda el ID en una variable de sesion

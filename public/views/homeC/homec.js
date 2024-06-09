@@ -38,7 +38,7 @@ function crearRestaurante(id, nombre, rate, tiempo, ruta, estado) {
 
    
     restaurante.innerHTML = `
-      <button id="Cerrar" onclick="borrar(${id})"></button>
+      <button id="Cerrar" onclick="borrar('${id}')"></button>
       <div class="logoComedor">
           <img id="logo" src="${ruta}" alt="${nombre}">
       </div>
@@ -61,10 +61,11 @@ function crearRestaurante(id, nombre, rate, tiempo, ruta, estado) {
   // Crear y agregar los restaurantes al contenedor
   var restaurantes = [];
 
-  var resComedores = []//hacerSolicitud('/login/homeC/comedores')
-
+  var resComedores = hacerSolicitud('/login/homeC/comedores')
+  console.log(resComedores)
+  
   resComedores.forEach(item => {
-    restaurantes.push(crearRestaurante(item.id,item.nombre,item.calif,item.min_espera,item.ruta,item.active));
+    restaurantes.push(crearRestaurante(item._id,item.nombre,item.calif,item.min_espera,item.imagen,item.active));
   });
   
   const restauranteContainer = document.getElementById('comedoresDisponibles');
@@ -129,7 +130,6 @@ function crearRestaurante(id, nombre, rate, tiempo, ruta, estado) {
   
   // Llama a la función inicialmente para mostrar los primeros restaurantes
   mostrarRestaurantes();
-  
 
 botonSiguiente.addEventListener('click', () => {
     mostrarRestaurantes('siguiente');
@@ -141,25 +141,27 @@ botonSiguiente.addEventListener('click', () => {
   });
 
   function borrar(id) {
+    console.log("Borrando comedor")
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `/homeC/borrarComedor/${id}`, true);
+    xhr.open('GET', `/homeC/borrarComedor/${id}`,false);
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 console.log("Si jalo");
+                window.location.href= '/homeC';
             } else {
                 console.error('Error al borrar el comedor:', xhr.status);
             }
         }
     };
-    window.location.href= '/homeC';
+    
     xhr.send();
     }
     
   function entrarComedor(id,status) {
-    if (status == 0) {
+    if (status == false) {
       alert("Parece ser que este comedor se encuentra cerrado, vuelve a \n intentar hacer un pedido cuando abra. Gracias <3");
   } else {
       /*const xhr = new XMLHttpRequest();

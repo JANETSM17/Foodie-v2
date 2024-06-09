@@ -31,9 +31,11 @@ async function query(type,collection,primaryObject,secondaryObject) {
             await console.log(res)
             return res
 
-        case "delete":
-            
-            break;
+        case "deleteOne":
+            res = await database.collection(collection).deleteOne(primaryObject)
+            await client.close()
+            await console.log(res)
+            return res
 
         case "update":
             res = await database.collection(collection).updateOne(primaryObject,secondaryObject)
