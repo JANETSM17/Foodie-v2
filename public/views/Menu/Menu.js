@@ -65,7 +65,7 @@ function mostrarComedor(nombre,rate, foto) {
 var infoComedor = hacerSolicitud('/menu/queCafe')
 
 infoComedor.forEach(item => {
-    mostrarComedor(item.nombre,item.calif,item.ruta)
+    mostrarComedor(item.nombre,item.calif,item.imagen)
 });
 
 
@@ -83,7 +83,7 @@ function crearProducto(imagen, nombre, precio , descripcion, id){
              <p class="nombrep">${nombre}</p>
              <p class="precio">$${precio}</p>
              </button>
-             <button  title="Agregar a la bolsa" onclick="agregarCarritoRapido(${id})"class="agregar"></button>
+             <button  title="Agregar a la bolsa" onclick="agregarCarritoRapido('${id}')"class="agregar"></button>
     </div>
     <div class="productoExtendido">
          <div class="info2">
@@ -102,7 +102,7 @@ function crearProducto(imagen, nombre, precio , descripcion, id){
          <div class="final">
              <button class="cerrar" onclick="cerrarDescripcion(event)"></button>
              <p class="precio">$${precio}</p>
-             <button class="agregar2" onclick="agregarCarritoRapido(${id})">Agregar a la bolsa</button>
+             <button class="agregar2" onclick="agregarCarritoRapido('${id}')">Agregar a la bolsa</button>
          </div>
     </div> `;
     return producto;
@@ -124,7 +124,7 @@ comida.innerHTML = "<p>Comida</p>";
 
 const infoComida = hacerSolicitud('/menu/comida');
 infoComida.forEach(item => {
-    comidaArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item.id))
+    comidaArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item._id))
 });
 
 comidaArreglo.forEach(producto => {
@@ -141,7 +141,7 @@ bebidas.innerHTML = "<p>Bebidas</p>";
 
 const infoBebidas = hacerSolicitud('/menu/bebidas');
 infoBebidas.forEach(item => {
-    bebidasArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item.id))
+    bebidasArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item._id))
 });
 
 bebidasArreglo.forEach(producto => {
@@ -154,7 +154,7 @@ frituras.innerHTML = "<p>Frituras</p>";
 
 const infoFrituras = hacerSolicitud('/menu/frituras');
 infoFrituras.forEach(item => {
-    friturasArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item.id))
+    friturasArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item._id))
 });
 
 friturasArreglo.forEach(producto => {
@@ -167,7 +167,7 @@ dulces.innerHTML = "<p>Dulces</p>";
 
 const infoDulces = hacerSolicitud('/menu/dulces');
 infoDulces.forEach(item => {
-    dulcesArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item.id))
+    dulcesArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item._id))
 });
 
 dulcesArreglo.forEach(producto => {
@@ -181,7 +181,7 @@ const otrosArreglo = [];
 
 const infoOtros = hacerSolicitud('/menu/otros');
 infoOtros.forEach(item => {
-    otrosArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item.id))
+    otrosArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item._id))
 });
 
 otros.innerHTML = "<p>Otros</p>";
@@ -227,26 +227,14 @@ function modificarCantidad(event, accion) {
   }
 
   const infoCarrito = hacerSolicitud('/bag/getPedido');
-    const idCarrito = infoCarrito[0].id;
-
-  /*function agregarCarrito(id_producto) {
-    const producto = document.getElementsByName(`cantidad${id_producto}`)[0];
-    const cantidad = producto.value;
-    const infoConfirm = hacerSolicitud(`/login/homeC/menu/confirmar/${id_producto}/${idCarrito}`);
-    const cuenta = infoConfirm[0].cuenta;
-
-    if (cuenta == 0) {
-        hacerSolicitud(`/login/homeC/menu/agregarCarrito/${id_producto}/${cantidad}/${idCarrito}`)
-    }else{
-        alert('Ya has agregado este producto a tu carrito.\nSi deseas agregar mas elementos de este articulo,\n modifica la cantidad desde el apartado de "Bolsa"')
-    } 
-  }*/
+    const idCarrito = infoCarrito[0]._id;
 
   function agregarCarritoRapido(id_producto) {
     const infoConfirm = hacerSolicitud(`/menu/confirmar/${id_producto}/${idCarrito}`);
-    const cuenta = infoConfirm[0].cuenta;
+    const cuenta = infoConfirm.length;
+    alert(cuenta)
 
-    if (cuenta == 0) {
+    if (cuenta.length == 0) {
         hacerSolicitud(`/menu/agregarCarrito/${id_producto}/1/${idCarrito}`)
         alert("Producto agregado")
     }else{
@@ -309,7 +297,7 @@ const acceptRateBtn = document.getElementById('AcceptRate');
         const data = { rating: rating };
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', url, true);
+        xhr.open('POST', url, false);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         xhr.onreadystatechange = function () {
@@ -322,8 +310,8 @@ const acceptRateBtn = document.getElementById('AcceptRate');
                 }
             }
         };
-        window.location.href = "/menu";
         xhr.send(JSON.stringify(data));
+        window.location.href = "/menu";
     }
     
 });

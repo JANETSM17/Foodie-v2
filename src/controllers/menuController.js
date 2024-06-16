@@ -3,6 +3,17 @@ const db = require('../services/db'); // Importa la configuración de la base de
 const path = require('path');
 const router = express.Router();
 
+async function mandarReseña(idCliente,idProveedor,rating){
+    const reseña = await db.query("update","clientes",{_id:db.objectID(idCliente)},{$set:{"proveedores.$[elem].calificacion":rating}},{arrayFilters:[{"elem.id_proveedor":db.objectID(idProveedor)}]})
+    return reseña
+}
+
+async function obtenerPromedio(idProveedor){
+    const promedio = await db.query("agregation","clientes",[{$unwind:'$proveedores'},{$match:{"proveedores.id_proveedor":db.objectID(idProveedor)}},{$group:{_id:"$proveedores.id_proveedor",calif:{$avg:"$proveedores.calificacion"}}}],)
+    console.log(promedio)
+    return promedio[0].calif
+}
+
 router.use(express.json());
 
 router.get('/', (req, res) => {
@@ -29,156 +40,80 @@ router.get('/', (req, res) => {
     }
     
 });
-router.get('/queCafe',(req,res) => {
+router.get('/queCafe', async (req,res) => {
     console.log('inicia el query')
-    const sql = `select * from proveedores where id = ${req.session.selectedMenu}`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
-
-    })
+    const info = await db.query("find","proveedores", {_id:db.objectID(req.session.selectedMenu)},{nombre:1,_id:0,calif:1,imagen:1})
+    console.log(info)
+    res.json(info)
 });
 
-router.get('/comida',(req,res) => {
+router.get('/comida',async (req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 1`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
-
-    })
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"comida"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
+    res.json(info)
 });
 
-router.get('/bebidas',(req,res) => {
+router.get('/bebidas',async (req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 2`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"bebidas"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
 
-    })
+    res.json(info)
 });
 
-router.get('/frituras',(req,res) => {
+router.get('/frituras', async (req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 3`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"frituras"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
 
-    })
+    res.json(info)
 });
 
-router.get('/dulces',(req,res) => {
+router.get('/dulces',async (req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 4`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"dulces"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
 
-    })
+    res.json(info)
 });
 
-router.get('/otros',(req,res) => {
+router.get('/otros',async (req,res) => {
     console.log('inicia el query')
-    const sql = `select * from productos where id_proveedor = ${req.session.selectedMenu} and id_categoria = 5`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"otros"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
 
-    })
+    res.json(info)
 });
 
-router.get('/confirmar/:id_producto/:idCarrito',(req,res) => {
+router.get('/confirmar/:id_producto/:idCarrito',async (req,res) => {
     const id_producto = req.params.id_producto;
     const idCarrito = req.params.idCarrito;
-    console.log('inicia la confirmacion')
-    const sql = `select count(*) as cuenta from productos_pedidos where id_producto = ${id_producto} and id_pedido = ${idCarrito}`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log('termina la confirmacion')
-            res.json(resultado)
-            
-        };   
-
-    })
+    const info = await db.query("find","pedidos",{_id:db.objectID(idCarrito),"descripcion.producto.id_producto":db.objectID(id_producto)},{_id:1})
+    console.log("resultado de la confirmacion:")
+    console.log(info)
+    res.json(info)
 })
 
-router.get('/agregarCarrito/:id_producto/:cantidad/:idCarrito',(req,res) => {
+router.get('/agregarCarrito/:id_producto/:cantidad/:idCarrito',async (req,res) => {
     const id_producto = req.params.id_producto;
     const cantidad = req.params.cantidad;
     const idCarrito = req.params.idCarrito;
     console.log('inicia el query')
-    const sql = `insert into productos_pedidos (id_producto,id_pedido,cantidad) values (${id_producto},${idCarrito},${cantidad})`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
-
-    })
+    const producto = await db.query("find","productos",{_id:db.objectID(id_producto)},{_id:1,nombre:1,precio:1})
+    const resultado = await db.query("update","pedidos",{_id:db.objectID(idCarrito)},{$push:{descripcion:{producto:{id_producto:db.objectID(id_producto),nombre:producto[0].nombre,precio:producto[0].precio},cantidad: cantidad}}})
+    res.json({status:resultado})
+    
 });
 
-router.post('/calificar', (req, res) => {
+router.post('/calificar', async (req, res) => {
     const rating = req.body.rating;
     const idProveedor = req.session.selectedMenu; 
-    const idCliente = req.session.userID; 
-
-    const sql = `CALL reseña(${idProveedor}, ${idCliente}, ${rating})`;
-
-    db.query(sql, (error, resultado) => {
-        if (error) {
-            console.error("Error" + error.message);
-            return res.status(500).send("Error al actualizar la calificación en la base de datos");
-        } else {
-            console.log("Calificación actualizada exitosamente");
-            res.status(200).send("Calificación actualizada exitosamente");
-        }
-    });
+    const idCliente = req.session.userID;
+    console.log("Se hac la reseña") 
+    const reseña = await mandarReseña(idCliente,idProveedor,rating)
+    console.log(reseña)
+    console.log("Se obtiene el promedio")
+    const promedio = await obtenerPromedio(idProveedor)
+    console.log(promedio)
+    console.log("Se hace el update del promedio")
+    const update = await db.query("update","proveedores",{_id:db.objectID(idProveedor)},{$set:{calif:promedio}})
+    res.status(200).send("Calificación actualizada exitosamente");
 });
 
 module.exports = router;

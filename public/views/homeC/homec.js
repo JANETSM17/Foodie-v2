@@ -51,7 +51,7 @@ function crearRestaurante(id, nombre, rate, tiempo, ruta, estado) {
           <img class="reloj" src="../Assets/Imagenes/Recursos%20Extras/reloj.png" alt="Reloj">
           <p class="tiempo">: ${tiempo} min</p>
       </div>
-      <button id="ingresarComedor" onclick="entrarComedor(${id},${estado})">Entrar</button>
+      <button id="ingresarComedor" onclick="entrarComedor('${id}',${estado})">Entrar</button>
     `;
   
     return restaurante;

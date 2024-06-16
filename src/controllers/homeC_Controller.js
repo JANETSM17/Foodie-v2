@@ -35,31 +35,28 @@ router.get('/', (req, res) => {
 
 router.get('/comedores',async (req,res) => {
     console.log('inicia el query para mostrar los comedores')
-    const idComedores = await db.query("find","clientes",{_id:db.objectID(req.session.userID)},{"proveedores.id_proveedor":1,_id:0})
-    let resultado = []
-    console.log(idComedores[0].proveedores)
-    if(idComedores[0].proveedores.length>0){
-        idComedores[0].proveedores.forEach( async comedor  =>{
-            const info = await db.query("find","proveedores",{_id:comedor.id_proveedor},{nombre:1,calif:1,min_espera:1,imagen:1,active:1})
-            console.log(comedor)
-            console.log(info[0])
-            resultado.push(info[0])
-            if(resultado.length==idComedores[0].proveedores.length){
-                console.log("mostrando resultado")
-                console.log(resultado)
-                console.log("resultado mostrado")
-                res.json(resultado)
-            }
+    const respuesta = await db.query("find","clientes",{_id:db.objectID(req.session.userID)},{"proveedores.id_proveedor":1,_id:0})
+    let idsComedores = []
+    if(respuesta[0].proveedores.length>0){
+        respuesta[0].proveedores.forEach(comedor => {
+            idsComedores.push(comedor.id_proveedor)
         })
+        console.log("mostrando correos:")
+        console.log(idsComedores)
+        console.log("Buscando comedores:")
+        const info = await db.query("find","proveedores",{_id:{$in:idsComedores}},{_id:1,nombre:1,calif:1,min_espera:1,imagen:1,active:1})
+        
+        
+       res.json(info)
     }else{
-        res.json(resultado)
+        res.json({})
     }
 });
 
 router.post('/agregarComedor', async (req,res)=>{
     const codigo = req.body.campoCodigo;
     const comedor = await db.query("find","proveedores",{clave:codigo},{_id:1})
-    const confirmComedor = await db.query("find","clientes",{_id:db.objectID(req.session.userID),"proveedores.id_proveedor":comedor[0]._id},{_id:1})
+    const confirmComedor = await db.query("find","clientes",{_id:db.objectID(req.session.userID),"proveedores.id_comedor":comedor[0]._id},{id:1})
     if(confirmComedor.length==0){
         if(comedor.length>0){ 
             console.log(comedor)
@@ -68,9 +65,11 @@ router.post('/agregarComedor', async (req,res)=>{
             res.redirect('/login/homeC')
         }else{
             console.log("No existe un comedor con esa clave")
+            res.redirect('/login/homeC')
         }
     }else{
         console.log("Ya tienes este comedor agregado")
+        res.redirect('/login/homeC')
     }
 });
 
@@ -80,13 +79,6 @@ router.get('/borrarComedor/:id',async (req,res)=>{
     console.log('id='+id)
     console.log('global='+req.session.userID)
     res.json({resultado})
-    /*db.query(sql,(error)=>{
-        if(error){
-            console.error("No funciono el delete "+error.message)
-        }else{
-            console.log("si se pudo eliminar el enlace");
-        }
-    })*/
 })
 
 router.get('/setMenu/:id',(req,res)=>{

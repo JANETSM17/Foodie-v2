@@ -44,6 +44,7 @@ router.post('/', async (req, res) => {
             const result = await db.query("insert","proveedores",queryObject)//hace el insert en la base de datos
             req.session.userID = await result.insertedId //guarda el ID en una variable de sesion
             req.session.userType = "proveedor"
+            req.session.userMail = correo
             console.log('Usuario registrado con éxito');
             res.redirect('/homeP');
         }

@@ -26,21 +26,10 @@ router.get('/', (req, res) => {
     }
 });
 
-router.get('/getUsrInfo',(req,res) => {
+router.get('/getUsrInfo',async (req,res) => {
     console.log('inicia la consulta del usuario')
-    const sql = `select nombre, telefono from clientes where id = ${req.session.userID}`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("se obtuvieron los datos del usuario")
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
-
-    })
+    const resultado = await db.query("find","clientes",{_id:db.objectID(req.session.userID)},{nombre:1,telefono:1,_id:0})
+    res.json(resultado)
 })
 
 router.get('/getProductos',(req,res) => {
@@ -60,20 +49,11 @@ router.get('/getProductos',(req,res) => {
     })
 })
 
-router.get('/getPedido',(req,res) => {
+router.get('/getPedido',async (req,res) => {
     console.log('inicia el query para obtener el id del carrito')
-    const sql = `select id from pedidos where id_cliente = ${req.session.userID} and id_estado = 1`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("se obtuvo el id del carrito: "+ resultado[0].id)
-            res.json(resultado)
-            
-        };   
-
-    })
+    const info = await db.query("find","pedidos",{cliente:req.session.userMail,estado:"carrito"},{_id:1})
+    console.log("se obtuvo el id del carrito: "+ info[0]._id)
+    res.json(info)
 })
 
 router.get('/enviarPedido/:id/:espera',(req,res) => {

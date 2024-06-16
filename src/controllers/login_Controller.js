@@ -20,6 +20,7 @@ router.post('/', async (req, res) => {
     if(cliente.length>0){
         req.session.userID = cliente[0]._id;//obtiene el id de la cuenta que inicio sesion y le da ese valor a la variable idUser
         req.session.userType = "cliente"
+        req.session.userMail = email
         console.log(req.session.userID);//confirmacion del valor de idUser
         res.redirect(`/homeC`);
     }else{
@@ -27,6 +28,7 @@ router.post('/', async (req, res) => {
         if(proveedor.length>0){
             req.session.userID = proveedor[0]._id;//obtiene el id de la cuenta que inicio sesion y le da ese valor a la variable idUser
             req.session.userType = "proveedor"
+            req.session.userMail = email
             console.log(req.session.userID);//confirmacion del valor de idUser
             res.redirect(`/homeP`);
         }else{
@@ -37,45 +39,24 @@ router.post('/', async (req, res) => {
         }
     }
 
-    /*db.query(sql1, [email, password], (err, results) => {
-        if (err) {
-            console.error('Error al buscar usuario:', err);
-            res.status(500).send('Error interno del servidor');
-            return;
-        }
-        if (results.length > 0) {
-            // El usuario existe y es un cliente, aquí puedes redirigirlo a una página de inicio de sesión exitosa
-
-            req.session.userID = results[0].id;//obtiene el id de la cuenta que inicio sesion y le da ese valor a la variable idUser
-            req.session.userType = "cliente"
-            console.log(req.session.userID);//confirmacion del valor de idUser
-            res.redirect(`/homeC`);
-        } else {
-            // El usuario no es un cliente así que busca si es proveedor
-            db.query(sql2, [email, password], (err, results) => {
-                if (err) {
-                    console.error('Error al buscar usuario:', err);
-                    res.status(500).send('Error interno del servidor');
-                    return;
-                }
-                if (results.length > 0) {
-                    // El usuario existe, aquí puedes redirigirlo a una página de inicio de sesión exitosa
-                    
-                    req.session.userID = results[0].id;//obtiene el id de la cuenta que inicio sesion y le da ese valor a la variable idUser
-                    req.session.userType = "proveedor"
-                    console.log(req.session.userID);//confirmacion del valor de idUser
-                    res.redirect('/homeP');
-                } else {
-                    // El usuario no existe o la contraseña es incorrecto
-                    res.send(`<script>
-                    window.location.href = "/login";
-                    alert("Correo y/o contraseña incorrecta, intente de nuevo");
-                    </script>`);
-                }
-            });
-        }
-    });*/
 });
+
+router.get('/app/:email/:password', async(req,res)=>{
+    const email = req.params.email
+    const password = req.params.password
+    const cliente = await db.query("find","clientes",{correo:email,"contraseña":password},{_id:1})
+    console.log(cliente)
+    if(cliente.length>0){
+        res.json({id:cliente[0]._id,tipoCuenta:"cliente",email:email,status:"succes"})//crea un JSON con la info
+    }else{
+        const proveedor = await db.query("find","proveedores",{correo:email,password:password},{_id:1})
+        if(proveedor.length>0){
+            res.json({id:cliente[0]._id,tipoCuenta:"proveedor",email:email,status:"succes"})//crea un JSON con la info
+        }else{
+            res.json({status:"failed"})
+        }
+    }
+})
 router.use(`/homeC`, homeCController); //Home cliente
 router.use('/homeP', homePController); //Home Proveedor
 module.exports = router;
