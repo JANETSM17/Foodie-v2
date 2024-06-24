@@ -1,9 +1,10 @@
 // db.js es la configuración de la base de datos
 const { MongoClient, ObjectId} = require('mongodb')
-const url = 'mongodb+srv://Admin:FOODIE@clusterfoodie.10j4aom.mongodb.net/'//'mongodb://localhost:27017'
+const local = true
+const url = local?'mongodb://127.0.0.1:27017':'mongodb+srv://Admin:FOODIE@clusterfoodie.10j4aom.mongodb.net/'
 const client = new MongoClient(url)
 
-const dbName = 'foodie'//'foodieLocal'
+const dbName = local?'foodieLocal':'foodie'
 
 async function con(){
     console.log("inicia la funcion")
@@ -52,8 +53,8 @@ async function query(type,collection,mainObject,secondObject,thirdObject) {
             await client.close()
             console.log(res)
             return res
-        case "agregation":
-            console.log("Agregate:")
+        case "aggregation":
+            console.log("Aggregate:")
             res = await database.collection(collection).aggregate(mainObject).toArray()
             await client.close()
             console.log(res)

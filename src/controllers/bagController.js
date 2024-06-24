@@ -32,28 +32,22 @@ router.get('/getUsrInfo',async (req,res) => {
     res.json(resultado)
 })
 
-router.get('/getProductos',(req,res) => {
+router.get('/getProductos/:idCarrito',async (req,res) => {
     console.log('inicia la consulta del carrito')
-    const sql = `select id, nombre, imagen, precio from productos where id in (select id_producto from productos_pedidos where id_pedido = (select id from pedidos where id_cliente = ${req.session.userID} and id_estado = 1))`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("se obtuvieron los productos del carrito")
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
+    const idCarrito = req.params.idCarrito
+    console.log(idCarrito)
+    const infoProductos = await db.query("aggregation","pedidos",[{$match:{_id:db.objectID(idCarrito)}},{$unwind:"$descripcion"},{$lookup:{from:"productos",localField:"descripcion.producto.id_producto",foreignField:"_id",as:"infoProducto"}},{$project:{_id:0,cantidad:"$descripcion.cantidad",infoProducto:1}},{$unwind:"$infoProducto"},{$project:{cantidad:1,_id:"$infoProducto._id",nombre:"$infoProducto.nombre",precio:"$infoProducto.precio",imagen:"$infoProducto.imagen"}}])
 
-    })
+    //const infoProductos = await db.query("find","productos",{_id:{$in:ids[0].ids}},{_id:1,nombre:1,imagen:1,precio:1})
+
+    res.json(infoProductos)
 })
 
 router.get('/getPedido',async (req,res) => {
     console.log('inicia el query para obtener el id del carrito')
     const info = await db.query("find","pedidos",{cliente:req.session.userMail,estado:"carrito"},{_id:1})
     console.log("se obtuvo el id del carrito: "+ info[0]._id)
-    res.json(info)
+    res.json(info[0]._id)
 })
 
 router.get('/enviarPedido/:id/:espera',(req,res) => {
@@ -104,24 +98,15 @@ router.get('/confirmar',(req,res) => {
     })
 })
 
-router.get('/actualizarCantidad/:idProducto/:cantidad/:idCarrito',(req,res) => {
+router.get('/actualizarCantidad/:idProducto/:cantidad/:idCarrito',async (req,res) => {
     const idProducto = req.params.idProducto;
-    const cantidad = req.params.cantidad;
+    const cantidad = +req.params.cantidad;
     const idCarrito = req.params.idCarrito
     console.log(idProducto)
     console.log(cantidad)
     console.log('Inicia el actualizar')
-    const sql = `update productos_pedidos set cantidad = ${cantidad} where id_producto = ${idProducto} and id_pedido = ${idCarrito}`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log('Se actualizo la cantidad del producto')
-            res.json(resultado)
-            
-        };   
-    })
+    resultado = await db.query("update","pedidos",{_id:db.objectID(idCarrito)},{$set:{"descripcion.$[elem].cantidad":cantidad}},{arrayFilters:[{"elem.producto.id_producto":db.objectID(idProducto)}]})
+    res.json(resultado)
 })
 
 router.get('/confirmarEspera/:idCarrito',(req,res) => {
@@ -141,23 +126,14 @@ router.get('/confirmarEspera/:idCarrito',(req,res) => {
     })
 })
 
-router.get('/quitarProducto/:idProducto/:idCarrito',(req,res) => {
+router.get('/quitarProducto/:idProducto/:idCarrito',async (req,res) => {
     const idProducto = req.params.idProducto;
     const idCarrito = req.params.idCarrito
     console.log(idProducto)
     console.log(idCarrito)
     console.log('Inicia la eliminacion del producto del carrito')
-    const sql = `delete from productos_pedidos where id_producto = ${idProducto} AND id_pedido = ${idCarrito}`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log('Se elimino el producto del pedido')
-            res.json(resultado)
-            
-        };   
-    })
+    const resultado = await db.query("update","pedidos",{_id:db.objectID(idCarrito)},{$pull:{descripcion:{"producto.id_producto":db.objectID(idProducto)}}})
+    res.json(resultado)
 })
 
 module.exports = router;

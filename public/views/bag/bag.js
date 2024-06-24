@@ -45,7 +45,8 @@ numTel.textContent = infoUsr[0].telefono;
 //para la info de los productos del pedido
 
 const infoCarrito = hacerSolicitud('/bag/getPedido');
-const idCarrito = infoCarrito[0].id;
+const idCarrito = infoCarrito;
+console.log(idCarrito)
 
 function cerrarDescripcion(event) {
     let cerrar = event.target;
@@ -59,7 +60,7 @@ function cerrarDescripcion(event) {
 }
 
 
-  function crearProductoPedido(ruta, nombre, precio, id) {
+  function crearProductoPedido(ruta, nombre, precio, id,cantidad) {
     const productoPedido = document.createElement("div");
     productoPedido.classList.add("producto");
     productoPedido.setAttribute("name","bagItems")
@@ -71,14 +72,14 @@ function cerrarDescripcion(event) {
         <p>${nombre}</p>
         <p class="precioU">$${precio}</p>
         <div class="total">
-            <input type="number" name="cantidad${id}" id="cantidad" value="1" readonly>
+            <input type="number" name="cantidad${id}" id="cantidad" value="${cantidad}" readonly>
             <div class="botones">
-                <button class="aumentar" onclick="modificarCantidad(event, 'aumentar', ${precio});updtCantidad(${id})"></button>
-                <button class="disminuir" onclick="modificarCantidad(event, 'disminuir', ${precio});updtCantidad(${id})"></button>
+                <button class="aumentar" onclick="modificarCantidad(event, 'aumentar', ${precio});updtCantidad('${id}')"></button>
+                <button class="disminuir" onclick="modificarCantidad(event, 'disminuir', ${precio});updtCantidad('${id}')"></button>
             </div>
         </div>
-        <p class="precioT">$${precio}</p>
-        <button class="cerrar" onclick="quitarProducto(${id})"></button>
+        <p class="precioT">$${precio*cantidad}</p>
+        <button class="cerrar" onclick="quitarProducto('${id}')"></button>
     `;
     return productoPedido;
 }
@@ -88,10 +89,10 @@ const contenedorProductos = document.getElementById("productos");
 const pedidoPendienteArreglo = [];
 
 
-const infoProductosCarrito = hacerSolicitud('/bag/getProductos');
+const infoProductosCarrito = hacerSolicitud(`/bag/getProductos/${idCarrito}`);
 
 infoProductosCarrito.forEach(item => {
-  pedidoPendienteArreglo.push(crearProductoPedido(item.imagen,item.nombre,item.precio,item.id))
+  pedidoPendienteArreglo.push(crearProductoPedido(item.imagen,item.nombre,item.precio,item._id,item.cantidad))
 });
 
 pedidoPendienteArreglo.forEach(productoPedido => {

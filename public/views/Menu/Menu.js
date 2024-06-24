@@ -226,17 +226,20 @@ function modificarCantidad(event, accion) {
     }
   }
 
-  const infoCarrito = hacerSolicitud('/bag/getPedido');
-    const idCarrito = infoCarrito[0]._id;
+  
+    const idCarrito = hacerSolicitud('/bag/getPedido');
 
   function agregarCarritoRapido(id_producto) {
     const infoConfirm = hacerSolicitud(`/menu/confirmar/${id_producto}/${idCarrito}`);
     const cuenta = infoConfirm.length;
-    alert(cuenta)
 
-    if (cuenta.length == 0) {
-        hacerSolicitud(`/menu/agregarCarrito/${id_producto}/1/${idCarrito}`)
-        alert("Producto agregado")
+    if (cuenta == 0) {
+        const resultado = hacerSolicitud(`/menu/agregarCarrito/${id_producto}/1/${idCarrito}`)
+        if(resultado.dar_aviso){
+            alert("El producto que acabas de agregar le pertenece a un proveedor diferente que los productos que tenias en el carrito, por lo que el unico producto en tu carrito sera el que acabas de agregar. Recuerda que cada pedido debe de ser a un solo proveedor")
+        }else{
+            alert("Producto agregado")
+        }
     }else{
         alert('Ya has agregado este producto a tu carrito.\nSi deseas agregar mas elementos de este articulo,\n modifica la cantidad desde el apartado de "Bolsa"')
     } 
