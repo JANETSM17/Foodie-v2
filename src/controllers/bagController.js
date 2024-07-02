@@ -45,57 +45,40 @@ router.get('/getProductos/:idCarrito',async (req,res) => {
 
 router.get('/getPedido',async (req,res) => {
     console.log('inicia el query para obtener el id del carrito')
-    const info = await db.query("find","pedidos",{cliente:req.session.userMail,estado:"carrito"},{_id:1})
+    const info = await db.query("find","pedidos",{cliente:req.session.userMail,estado:"Carrito"},{_id:1})
     console.log("se obtuvo el id del carrito: "+ info[0]._id)
     res.json(info[0]._id)
 })
 
-router.get('/enviarPedido/:id/:espera',(req,res) => {
+router.get('/enviarPedido/:id/:espera',async (req,res) => {
     const id = req.params.id
-    const espera = req.params.espera
+    const espera = +req.params.espera
     console.log('inicia el envio del pedido')
-    const sql = `call sndOrd(${id},${req.session.userID},${espera})`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            res.json(resultado)
-            
-        };   
-
-    })
+    console.log("Espera:")
+    console.log(espera)
+    let date = new Date()
+    console.log(date)
+    console.log("Nueva fecha")
+    date.setMinutes(date.getMinutes()+espera)
+    console.log(date)
+    const resultado = await db.query("update","pedidos",{_id:db.objectID(id)},{$set:{estado:"En proceso",entrega:date}})
+    const nuevoCarrito = await db.query("insert","pedidos",{cliente:req.session.userMail,estado:"Carrito",proveedor:"",especificaciones:"",descripcion:[],especificaciones:""})
+    console.log(nuevoCarrito)
+    res.json(resultado)
 })
-router.get('/enviarEspecificaciones/:texto',(req,res) => {
-    const texto = req.params.texto
+router.get('/enviarEspecificaciones/:texto',async (req,res) => {
+    const texto = decodeURI(req.params.texto)
     console.log('inicia el envio de especificaciones')
-    const sql = `update pedidos set especificaciones = '${texto}' where id_cliente = ${req.session.userID} and id_estado = 1`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            res.json(resultado)
-            
-        };   
-
-    })
+    const resultado = await db.query("update","pedidos",{cliente:req.session.userMail,estado:"Carrito"},{$set:{especificaciones:texto}})
+    res.json(resultado)
 })
 
-router.get('/confirmar',(req,res) => {
+router.get('/confirmar',async (req,res) => {
     console.log('inicia la confirmacion')
-    const sql = `select count(*) as cuenta from pedidos where id_cliente = ${req.session.userID} and (id_estado = 3 or id_estado = 4)`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log('termina la confirmacion')
-            res.json(resultado)
-            
-        };   
-
-    })
+    const estados = ["En proceso","Listo para recoger"]
+    const resultado = await db.query("find","pedidos",{cliente:req.session.userMail,estado:{$in:estados}})
+    console.log(resultado.length)
+    res.json({cuenta:resultado.length})
 })
 
 router.get('/actualizarCantidad/:idProducto/:cantidad/:idCarrito',async (req,res) => {
@@ -109,21 +92,11 @@ router.get('/actualizarCantidad/:idProducto/:cantidad/:idCarrito',async (req,res
     res.json(resultado)
 })
 
-router.get('/confirmarEspera/:idCarrito',(req,res) => {
+router.get('/confirmarEspera/:idCarrito',async(req,res) => {
     const carrito = req.params.idCarrito
     console.log('inicia la confirmacion del tiempo de espera')
-    const sql = `select min_espera from proveedores where id = (select id_proveedor from productos where id in (select id_producto from productos_pedidos where id_pedido = ${carrito}) order by id_proveedor desc limit 1)`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
-
-    })
+    const resultado = await db.query("aggregation","pedidos",[{$match:{_id:db.objectID(carrito)}},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"proveedorInfo"}},{$project:{min_espera:"$proveedorInfo.min_espera"}}])
+    res.json(resultado)
 })
 
 router.get('/quitarProducto/:idProducto/:idCarrito',async (req,res) => {

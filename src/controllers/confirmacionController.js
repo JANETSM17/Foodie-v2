@@ -25,22 +25,34 @@ router.get('/', (req, res) => {
         }
     }
 });
-router.get('/pedidosEnCurso',(req,res) => {
+router.get('/pedidosEnCurso',async (req,res) => {
     console.log('inicia el query')
-    const sql = `select clientes.nombre as nombre,clientes.telefono as telefono, pedidos.id as id, pedidos.descripcion as descripcion, pedidos.especificaciones as especificaciones, pedidos.entrega as entrega, pedidos.total as total from pedidos join clientes on clientes.id = pedidos.id_cliente where id_cliente = ${req.session.userID} and (id_estado = 3 or id_estado = 4)`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            console.log('los resultados son')
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
-
+    const userInfo = await db.query("find","clientes",{_id:db.objectID(req.session.userID)},{nombre:1,telefono:1,_id:0})
+    const estados = ["En proceso","Listo para recoger"]
+    const pedidoInfo = await db.query("find","pedidos",{cliente: req.session.userMail,estado:{$in:estados}},{_id:1,especificaciones:1,descripcion:1, entrega:1,estado:1})
+    let resultado = []
+    pedidoInfo.forEach(pedido=>{
+        let total = 0
+        let descripcion = ""
+        pedido.descripcion.forEach(articulo=>{
+            total += (articulo.producto.precio*articulo.cantidad)
+            descripcion += `${articulo.producto.nombre} x${articulo.cantidad},`
+        })
+        descripcion = descripcion.slice(0,-1)
+        let id = pedido._id.inspect()
+        resultado.push(
+            {
+                id:id.substring(id.length-8,id.length-2).toUpperCase(),
+                nombre: userInfo[0].nombre,
+                telefono: userInfo[0].telefono,
+                especificaciones: pedido.especificaciones,
+                total: total,
+                descripcion: descripcion,
+                entrega: pedido.entrega.toLocaleString()
+            }
+        )
     })
+    res.json(resultado)
 });
 
 module.exports = router;

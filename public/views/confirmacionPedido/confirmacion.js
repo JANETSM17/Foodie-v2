@@ -34,7 +34,7 @@ function hacerSolicitud(url) {
     }
   }
 
-function crearPedido(id, nombre, numerodepedido, telefono, especificaciones, total,descripcion,entrega) {
+function crearPedido(id, nombre, telefono, especificaciones, total,descripcion,entrega) {
     const pedido = document.createElement('article');
     pedido.id = id + 'pedido';
     pedido.classList.add("pedido")
@@ -46,7 +46,7 @@ function crearPedido(id, nombre, numerodepedido, telefono, especificaciones, tot
             </div>
             <div class="numero">
                 <p>Número de <br>Pedido:</p>
-                <p id="numerodepedido">${numerodepedido}</p>
+                <p id="numerodepedido">${id}</p>
             </div>
             <p class="telefono">${telefono}</p>
         </div>
@@ -80,7 +80,7 @@ var  resPendientes = hacerSolicitud('/pedidos/pedidosEnCurso');
 var pedidos = [];
 
 resPendientes.forEach(item => {
-    pedidos.push(crearPedido(item.id,item.nombre,item.id,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
+    pedidos.push(crearPedido(item.id,item.nombre,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
   console.log(pedidos)
 })
 

@@ -20,10 +20,12 @@ router.post('/', async (req, res) => {
             const queryObject = {nombre: nombre, correo: correo, contraseña: contraseña, telefono: telefono, created_at: new Date(),imagen: 'rutaImaginaria.jpg',active: true, proveedores: []};//crea un objeto con la info del usuario
 
             const result = await db.query("insert","clientes",queryObject,{})//hace el insert en la base de datos
-            req.session.userID = await result.insertedId //guarda el ID en una variable de sesion
+            req.session.userID =  result.insertedId //guarda el ID en una variable de sesion
             req.session.userMail = correo
             req.session.userType = "cliente"
             console.log('Usuario registrado con éxito');
+            const nuevoCarrito = await db.query("insert","pedidos",{cliente:req.session.userMail,estado:"Carrito",proveedor:"",especificaciones:"",descripcion:[],especificaciones:""})
+            console.log(nuevoCarrito)
             res.redirect('/homeC');
         }
         

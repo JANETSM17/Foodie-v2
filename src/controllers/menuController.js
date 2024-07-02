@@ -103,7 +103,9 @@ router.get('/agregarCarrito/:id_producto/:cantidad/:idCarrito',async (req,res) =
     let darAviso = false
     if(proveedorProducto[0].correo!=proveedorPedido[0].proveedor){
         const updatePedido = db.query("update","pedidos",{_id:db.objectID(id_carrito)},{$set:{proveedor:proveedorProducto[0].correo,descripcion:[]}})
-        darAviso = true
+        darAviso = (proveedorPedido[0].proveedor != "")
+        console.log("DarAviso: "+darAviso)
+        console.log(proveedorPedido[0].proveedor)
     }
     const resultado = await db.query("update","pedidos",{_id:db.objectID(id_carrito)},{$push:{descripcion:{producto:{id_producto:db.objectID(id_producto),nombre:producto[0].nombre,precio:producto[0].precio},cantidad: cantidad}}})
     res.json({status:resultado,dar_aviso: darAviso})

@@ -128,13 +128,15 @@ function modificarCantidad(event, accion, precio) {
 
   function enviarPedido() {
     let infoConfirm = hacerSolicitud('/bag/confirmar');
-    let cuenta = infoConfirm[0].cuenta;
+    console.log(infoConfirm)
+    let cuenta = infoConfirm.cuenta;
 
     if (document.getElementsByClassName("producto").length==0) {
       alert("No puedes hacer un pedido sin productos")
       window.location.href = "/homeC"
     }else{
       if (cuenta == 0) {
+        console.log("Se manda el pedido")
       let especificacionesCampo = document.getElementById("especificaciones");
     let especificaciones = especificacionesCampo.value
     if (especificaciones.length==0){
