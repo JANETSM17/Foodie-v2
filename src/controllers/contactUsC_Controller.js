@@ -26,19 +26,11 @@ router.get('/', (req, res) => {
     res.sendFile(ContactUsCPagePath);
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const { nombreC, correoC, telefonoC, mensajeC} = req.body;
     // Insertar el usuario en la base de dato
-    const sql = 'INSERT INTO comentarios (nombreC,  correoC, telefonoC, mensajeC) VALUES (?, ?, ?, ?)';
-      db.query(sql, [nombreC, correoC, telefonoC, mensajeC], (err, results) => {
-        if (err) {
-            console.error('Error al registrar el comentario: ' + err.message);
-            res.send('No registrado con exito');
-        } else {
-            console.log('Comentario registrado con éxito');
-            res.send('Registrado con exito');
-        }
-    });  
+    const resultado = await db.query("insert","comentarios",{nombre:nombreC,correo:correoC,telefono:telefonoC,mensaje:mensajeC,created_at:new Date()})
+    res.json({resultado})
 });
 
 module.exports = router;
