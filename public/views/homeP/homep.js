@@ -29,7 +29,7 @@ function hacerSolicitud(url) {
     }
   }
 
-function crearPedido(id, nombre, numerodepedido, telefono, especificaciones, total,descripcion,entrega) {
+function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, total,descripcion,entrega) {
     const pedido = document.createElement('article');
     pedido.id = id + 'pedido';
     pedido.classList.add("pedido")
@@ -74,11 +74,11 @@ function crearPedido(id, nombre, numerodepedido, telefono, especificaciones, tot
 
 //para los pedidos en proceso
 
-var  resPendientes = hacerSolicitud('/homeP/pedidosEnCurso');
+var  resPendientes = hacerSolicitud('/homeP/pedidos/En proceso');
 var pedidos = [];
 
 resPendientes.forEach(item => {
-    pedidos.push(crearPedido(item.id,item.nombre,item.id,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
+    pedidos.push(crearPedido(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
   console.log(pedidos)
 })
 
@@ -130,7 +130,7 @@ const pedidoslistos = document.getElementById("pedidoslistos");
 
 
 
-function pedidoListo(id, nombre, numerodepedido, telefono, especificaciones, total,descripcion,entrega){
+function pedidoListo(id, nombre,numerodepedido, telefono, especificaciones, total,descripcion,entrega){
     const listo = document.createElement('article');
     listo.id = id + 'listo';
     listo.classList.add("pedido")
@@ -172,10 +172,10 @@ function pedidoListo(id, nombre, numerodepedido, telefono, especificaciones, tot
 }
 
 var listos = [];
-var  resListos = hacerSolicitud('/homeP/pedidosListos');
+var  resListos = hacerSolicitud('/homeP/pedidos/Listo para recoger');
 
 resListos.forEach(item => {
-    listos.push(pedidoListo(item.id,item.nombre,item.id,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
+    listos.push(pedidoListo(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
   console.log(listos)
 })
 

@@ -26,69 +26,46 @@ router.get('/', (req, res) => {
     }
 });
 
-router.get('/pedidosEnCurso',(req,res) => {
-    console.log('inicia el query')
-    const sql = `select pedidos.id as id, clientes.nombre as nombre, clientes.telefono as telefono, pedidos.especificaciones as especificaciones, pedidos.total as total, pedidos.descripcion as descripcion, pedidos.entrega as entrega from pedidos join clientes on pedidos.id_cliente=clientes.id where pedidos.id_estado = 3 AND pedidos.id in (select id_pedido from productos_pedidos where id_producto in (select id from productos where id_proveedor = ${req.session.userID}))`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            console.log('los resultados son')
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
+router.get('/pedidos/:estado',async (req,res)=>{
+    const estado = decodeURI(req.params.estado)
+    const infoPedidos = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail, estado: estado}},{$lookup:{from:"clientes",localField:"cliente",foreignField:"correo",as:"infoCliente"}}])
+    let resultado = []
+    infoPedidos.forEach(pedido=>{
+        let total = 0
+        let descripcion = ""
+        pedido.descripcion.forEach(articulo=>{
+            total += (articulo.producto.precio*articulo.cantidad)
+            descripcion += `${articulo.producto.nombre} x${articulo.cantidad},`
+        })
+        descripcion = descripcion.slice(0,-1)
+        let id = pedido._id.inspect()
 
+        resultado.push({
+            id: id.substring(14,id.length-2),
+            numerodepedido:id.substring(id.length-7,id.length-2).toUpperCase(),
+            nombre: pedido.infoCliente[0].nombre,
+            telefono: pedido.infoCliente[0].telefono,
+            especificaciones: pedido.especificaciones,
+            total: total,
+            descripcion: descripcion,
+            entrega: pedido.entrega.toLocaleString()
+        })
     })
-});
-
-router.get('/pedidoListo/:id',(req,res)=>{
-    const id = req.params.id;
-    const sql = `update pedidos set id_estado = 4 where id = ${id}`
-    console.log('id='+id)
-    db.query(sql,(error)=>{
-        if(error){
-            console.error("No funciono el delete "+error.message)
-        }else{
-            console.log("si se pudo actualizar el pedido");
-        }
-    })
+    res.json(resultado)
 })
 
-router.get('/pedidosListos',(req,res) => {
-    console.log('inicia el query')
-    const sql = `select pedidos.id as id, clientes.nombre as nombre, clientes.telefono as telefono, pedidos.especificaciones as especificaciones, pedidos.total as total, pedidos.descripcion as descripcion, pedidos.entrega as entrega from pedidos join clientes on pedidos.id_cliente=clientes.id where pedidos.id_estado = 4 AND pedidos.id in (select id_pedido from productos_pedidos where id_producto in (select id from productos where id_proveedor = ${req.session.userID}))`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            console.log('los resultados son')
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
-
-    })
-});
-
-router.get('/pedidoEntregado/:id',(req,res)=>{
+router.get('/pedidoListo/:id',async (req,res)=>{
     const id = req.params.id;
-    const sql = `update pedidos set id_estado = 5 where id = ${id}`
-    console.log('id='+id)
-    db.query(sql,(error)=>{
-        if(error){
-            console.error("No funciono el delete "+error.message)
-        }else{
-            console.log("si se pudo actualizar el pedido");
-        }
-    })
+    const resultado = await db.query("update","pedidos",{_id:db.objectID(id)},{$set:{estado:"Listo para recoger"}})
+    res.json({status: "done"})
+})
+
+router.get('/pedidoEntregado/:id',async (req,res)=>{
+    const id = req.params.id;
+    const resultado = await db.query("update","pedidos",{_id:db.objectID(id)},{$set:{estado:"Entregado"}})
+    res.json({status: "done"})
 })
 
 router.use('/perfilProveedor', profilePController);
 router.use('/contactP', contactUsEController);
 module.exports = router;
-//res.send('Llegaste a home Proveedor');
