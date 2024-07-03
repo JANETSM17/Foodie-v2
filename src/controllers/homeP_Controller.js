@@ -42,7 +42,7 @@ router.get('/pedidos/:estado',async (req,res)=>{
 
         resultado.push({
             id: id.substring(14,id.length-2),
-            numerodepedido:id.substring(id.length-7,id.length-2).toUpperCase(),
+            numerodepedido:id.substring(id.length-8,id.length-2).toUpperCase(),
             nombre: pedido.infoCliente[0].nombre,
             telefono: pedido.infoCliente[0].telefono,
             especificaciones: pedido.especificaciones,

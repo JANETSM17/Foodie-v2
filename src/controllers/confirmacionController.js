@@ -42,7 +42,7 @@ router.get('/pedidosEnCurso',async (req,res) => {
         let id = pedido._id.inspect()
         resultado.push(
             {
-                id:id.substring(id.length-7,id.length-1).toUpperCase(),
+                id:id.substring(id.length-8,id.length-2).toUpperCase(),
                 nombre: userInfo[0].nombre,
                 telefono: userInfo[0].telefono,
                 especificaciones: pedido.especificaciones,

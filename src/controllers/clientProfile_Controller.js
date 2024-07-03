@@ -24,49 +24,10 @@ router.get('/', (req, res) => {
     }
 });
 
-router.get('/infoC',(req,res) => {
-    const sql = `SELECT  nombre, correo, telefono, DATE(created_at) as fecha FROM clientes WHERE id = ${req.session.userID};`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
-
-    })
-});
-
-router.get('/getPedidos',(req,res) => {
-    const sql = `SELECT pedidos.id, pedidos.total, pedidos. created_at FROM pedidos WHERE id_cliente = ${req.session.userID};`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
-
-    })
-});
-
-router.get('/getTotal',(req,res) => {
-    const sql = `select SUM(total) as total from pedidos where id_cliente = ${req.session.userID} and id_estado=5`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
-
-    })
+router.get('/infoC',async (req,res) => {
+    const resultado = await db.query("find","clientes",{correo:req.session.userMail},{_id:0,nombre:1,correo:1,telefono:1,fecha:'$created_at'})
+    res.json(resultado)
+    
 });
 
 router.post('/logout', (req, res) => {
@@ -117,35 +78,46 @@ router.post('/deleteAccount', (req, res) => {
     });
 });
 
-router.get('/getPedidoPendiente',(req,res) => {
-    const sql = `select proveedores.ruta as ruta,proveedores.nombre as nombre,pedidos.total as total from pedidos join productos_pedidos on productos_pedidos.id_pedido = pedidos.id join productos on productos_pedidos.id_producto = productos.id join proveedores on proveedores.id = productos.id_proveedor where pedidos.id = (select id from pedidos where id_cliente = ${req.session.userID} and (id_estado = 3 or id_estado = 4))`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("el pedido es:")
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
-
+router.get('/getPedidoPendiente',async (req,res) => {
+    const estados = ["En proceso","Listo para recoger"]
+    const pedidosInfo = await db.query("aggregation","pedidos",[{$match:{cliente:req.session.userMail,estado:{$in:estados}}},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"infoProveedor"}},{$project:{descripcion:1,entrega:1,"infoProveedor.imagen":1,_id:0}}])
+    let resultado = []
+    pedidosInfo.forEach(pedido=>{
+        let total = 0
+        pedido.descripcion.forEach(articulo=>{
+            total += (articulo.producto.precio*articulo.cantidad)
+        })
+        resultado.push(
+            {
+                total: total,
+                hora: pedido.entrega.toLocaleString(),
+                ruta:pedido.infoProveedor[0].imagen
+            }
+        )
     })
+    res.json(resultado)
 });
 
-router.get('/getPedidosHist',(req,res) => {
+router.get('/getPedidosHist',async (req,res) => {
     const sql = `select proveedores.ruta as ruta, pedidos.total as total, pedidos.created_at as hora from pedidos join productos_pedidos on productos_pedidos.id_pedido = pedidos.id join productos on productos_pedidos.id_producto = productos.id join proveedores on proveedores.id = productos.id_proveedor where pedidos.id in (select id from pedidos where id_cliente = ${req.session.userID} and id_estado = 5)`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("el historial es:")
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
-
+    const estados=["Entregado"]
+    const pedidosInfo = await db.query("aggregation","pedidos",[{$match:{cliente:req.session.userMail,estado:{$in:estados}}},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"infoProveedor"}},{$project:{estado:1,descripcion:1,entrega:1,"infoProveedor.imagen":1,_id:0}},{$sort:{entrega:-1}}])
+    let resultado = []
+    let total = 0
+    pedidosInfo.forEach(pedido=>{
+        let precio = 0
+        pedido.descripcion.forEach(articulo=>{
+            precio += (articulo.producto.precio*articulo.cantidad)
+        })
+        total += precio
+        resultado.push(
+            {
+                total: precio,
+                hora: pedido.entrega.toLocaleString(),
+                ruta:pedido.infoProveedor[0].imagen
+            }
+        )
     })
+    res.json({res:resultado,total:total})
 });
 module.exports = router;

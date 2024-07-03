@@ -34,9 +34,9 @@ function crearPedido(ruta,hora,total) {
   }
   
 const infoHist = hacerSolicitud("/clientProfile/getPedidosHist")
-console.log(infoHist.length)
+console.log(infoHist)
 let pedidosH = [];
-infoHist.forEach(item => {
+infoHist.res.forEach(item => {
     console.log("se crea un pedido")
     pedidosH.push(crearPedido(item.ruta,item.hora,item.total))
 });
@@ -70,7 +70,7 @@ pedidosH.forEach(pedido => {
 
 
   
-  const infoTotal = hacerSolicitud("/clientProfile/getTotal")
+  const infoTotal = infoHist.total
   const infoUsr = hacerSolicitud("/clientProfile/infoC")
   const nombre = document.getElementById("name");
   nombre.textContent=infoUsr[0].nombre;
@@ -85,7 +85,7 @@ pedidosH.forEach(pedido => {
   const año = fechaOrg.getFullYear()
   fechaPage.textContent = `${año}/${mes}/${dia}`
   const totalCuenta = document.getElementById("totalCuenta")
-  totalCuenta.textContent =  `$${infoTotal[0].total}`
+  totalCuenta.textContent =  `$${infoTotal}`
   
   const infoPedidoPendiente = hacerSolicitud("/clientProfile/getPedidoPendiente")
   if (infoPedidoPendiente.length==0) {

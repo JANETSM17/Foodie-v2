@@ -26,10 +26,13 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { nombreC, correoC, telefonoC, mensajeC} = req.body;
+    const { nombre, correo, telefono, mensaje} = req.body;
     // Insertar el usuario en la base de dato
-    const resultado = await db.query("insert","comentarios",{nombre:nombreC,correo:correoC,telefono:telefonoC,mensaje:mensajeC,created_at:new Date()})
-    res.json({resultado})
+    const resultado = await db.query("insert","comentarios",{nombre:nombre,correo:correo,telefono:telefono,mensaje:mensaje,created_at:new Date()})
+    res.send(`<script>
+        window.location.href = "/homeP";
+        alert("Comentario enviado, gracias por su aportación");
+        </script>`);
 });
 
 module.exports = router;
