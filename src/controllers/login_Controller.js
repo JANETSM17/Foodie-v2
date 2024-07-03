@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
         console.log(req.session.userID);//confirmacion del valor de idUser
         res.redirect(`/homeC`);
     }else{
-        const proveedor = await db.query("find","proveedores",{correo:email,password:password},{_id:1})
+        const proveedor = await db.query("find","proveedores",{correo:email,"contraseña":password},{_id:1})
         if(proveedor.length>0){
             req.session.userID = proveedor[0]._id;//obtiene el id de la cuenta que inicio sesion y le da ese valor a la variable idUser
             req.session.userType = "proveedor"
@@ -41,22 +41,6 @@ router.post('/', async (req, res) => {
 
 });
 
-router.get('/app/:email/:password', async(req,res)=>{
-    const email = req.params.email
-    const password = req.params.password
-    const cliente = await db.query("find","clientes",{correo:email,"contraseña":password},{_id:1})
-    console.log(cliente)
-    if(cliente.length>0){
-        res.json({id:cliente[0]._id,tipoCuenta:"cliente",email:email,status:"succes"})//crea un JSON con la info
-    }else{
-        const proveedor = await db.query("find","proveedores",{correo:email,password:password},{_id:1})
-        if(proveedor.length>0){
-            res.json({id:cliente[0]._id,tipoCuenta:"proveedor",email:email,status:"succes"})//crea un JSON con la info
-        }else{
-            res.json({status:"failed"})
-        }
-    }
-})
 router.use(`/homeC`, homeCController); //Home cliente
 router.use('/homeP', homePController); //Home Proveedor
 module.exports = router;
