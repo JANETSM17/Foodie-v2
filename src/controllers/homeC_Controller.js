@@ -76,8 +76,6 @@ router.post('/agregarComedor', async (req,res)=>{
 router.get('/borrarComedor/:id',async (req,res)=>{
     const id = req.params.id;
     const resultado = await db.query("update","clientes",{_id:db.objectID(req.session.userID)},{$pull:{proveedores:{id_proveedor:db.objectID(id)}}})
-    console.log('id='+id)
-    console.log('global='+req.session.userID)
     res.json({resultado})
 })
 

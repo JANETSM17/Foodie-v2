@@ -33,6 +33,7 @@ function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, tota
     const pedido = document.createElement('article');
     pedido.id = id + 'pedido';
     pedido.classList.add("pedido")
+    
     pedido.innerHTML = `
         <div class="contacto">
             <div class="usuario">

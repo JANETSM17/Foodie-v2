@@ -14,9 +14,9 @@ function hacerSolicitud(url) {
     }
   }
 
-function CrearProductoHistoria(id, total, ruta, NombreUsuario, cantidad, fechaYhora) {
+function CrearProductoHistoria(numerodepedido, total, ruta, NombreUsuario, descripcion, hora) {
     const producto = document.createElement("div");
-    producto.id = id
+    producto.id = numerodepedido
     producto.className = "pedido";
     producto.innerHTML = `
     <div class="Pedido">
@@ -25,8 +25,8 @@ function CrearProductoHistoria(id, total, ruta, NombreUsuario, cantidad, fechaYh
                 </div>
                 <p id="CustomerName">${NombreUsuario}</p>
                 <hr class="line">
-                <div class="NoProductos">Productos: <span id="NoProductos"> ${cantidad}</span></div>
-                <div class="FechaPedido">${fechaYhora}</div>
+                <div class="NoProductos">Productos: <span id="NoProductos"> ${descripcion}</span></div>
+                <div class="FechaPedido">${hora}</div>
                 <div class="TotalPedido">Total: <b>$<span id="TotalPedido">${total}</b></span></div>
             </div>
     `;
@@ -38,7 +38,7 @@ const historia = document.getElementById("Historial")
 
 const infoHist = hacerSolicitud("/providerProfileHistory/getPedidosHist")
 infoHist.forEach(item => {
-  pedidos.push(CrearProductoHistoria(item.id,item.total,item.ruta,item.nombre,item.descripcion,item.hora))
+  pedidos.push(CrearProductoHistoria(item.numerodepedido,item.total,item.ruta,item.nombre,item.descripcion,item.hora))
 });
 
 pedidos.forEach(producto => {

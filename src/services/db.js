@@ -39,6 +39,13 @@ async function query(type,collection,mainObject,secondObject,thirdObject) {
             await client.close()
             await console.log(res)
             return res
+            
+        case "deleteMany":
+            console.log("Delete Many:")
+            res = await database.collection(collection).deleteMany(mainObject)
+            await client.close()
+            await console.log(res)
+            return res
 
         case "update":
             console.log("Update:")

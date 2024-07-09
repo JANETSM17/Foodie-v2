@@ -34,48 +34,20 @@ router.post('/logout', (req, res) => {
     req.session.userID = null;
     req.session.selectedMenu = null;
     req.session.userType=null;
+    req.session.userMail=null;
     res.sendStatus(200);
 });
 
-router.post('/deleteAccount', (req, res) => {
+router.post('/deleteAccount', async (req, res) => {
     const enteredPassword = req.body.password;
 
-    // Verifica si la contraseña ingresada coincide con la almacenada en la base de datos
-    const checkPasswordQuery = `SELECT contraseña FROM clientes WHERE id = ${req.session.userID};`;
-
-    db.query(checkPasswordQuery, (error, results) => {
-        if (error) {
-            console.error("Error al obtener la contraseña actual:", error.message);
-            return res.status(500).send("Error al eliminar la cuenta");
-        }
-
-        // Verifica si se obtuvo algún resultado
-        if (results.length > 0) {
-            const currentPasswordFromDB = results[0].contraseña;
-
-            // Compara la contraseña almacenada con la proporcionada por el usuario
-            if (currentPasswordFromDB === enteredPassword) {
-                // Realiza la eliminación de la cuenta en la base de datos
-                const deleteAccountQuery = `DELETE FROM clientes WHERE id = ${req.session.userID};`;
-
-                db.query(deleteAccountQuery, (error, result) => {
-                    if (error) {
-                        console.error("Error al eliminar la cuenta:", error.message);
-                        return res.status(500).send("Error al eliminar la cuenta");
-                    }
-
-                    console.log("Cuenta eliminada con éxito");
-                    res.sendStatus(200);
-                });
-            } else {
-                console.error("La contraseña ingresada no coincide con la almacenada");
-                res.status(400).send("La contraseña ingresada no coincide");
-            }
-        } else {
-            console.error("No se encontró la contraseña actual en la base de datos");
-            res.status(500).send("Error al eliminar la cuenta");
-        }
-    });
+    //borra la cuenta que coincida en id y contraseña
+    const resultado = await db.query("deleteOne","proveedores",{_id:db.objectID(req.session.userID),"contraseña":enteredPassword})
+    if(resultado.deletedCount>0){
+        res.sendStatus(200);
+    }else{
+        return res.status(500).send("Error al borrar la cuenta");
+    }
 });
 
 router.get('/getPedidoPendiente',async (req,res) => {

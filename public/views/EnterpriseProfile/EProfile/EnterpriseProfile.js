@@ -1,4 +1,4 @@
-/*VENTANAS MODALES*/
+/*VENTANAS MODALES*/ 
 /*VENTANA MODALE DE Logout*/
 document.addEventListener('DOMContentLoaded', function () {
     var Logout = document.getElementById('Logout');
@@ -164,3 +164,25 @@ function handleImageUpload() {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function hacerSolicitud(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, false);  // El tercer parámetro indica si la solicitud es asíncrona
+    xhr.send();
+  
+    // Verificar el estado de la solicitud
+    if (xhr.status === 200) {
+      // Procesar la respuesta
+      var respuesta = JSON.parse(xhr.responseText);
+      return respuesta;
+    } else {
+      // Manejar errores
+      console.error('Error en la solicitud:', xhr.status);
+    }
+  }
+function setToggle() {
+    let activeState = hacerSolicitud('/providerProfile/activeP')
+    let toggle = document.getElementById("toggleSwitch")
+    toggle.checked = activeState.active
+}
+setToggle()

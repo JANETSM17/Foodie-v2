@@ -25,69 +25,66 @@ router.get('/', (req, res) => {
     
 });
 
-router.get('/productos',(req,res) => {
-    const sql = `SELECT categorias.nombre AS categoria, productos.nombre AS nombre, productos.precio AS precio, productos.descripcion AS descripcion, productos.imagen AS imagen, productos.active AS active, productos.id AS id FROM productos JOIN categorias ON categorias.id=productos.id_categoria WHERE productos.id_proveedor = ${req.session.userID};`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("si se pudo")
-            res.json(resultado)
-            
-        };   
-
-    })
+router.get('/productos',async (req,res) => {
+    const resultado = await db.query("find","productos",{id_proveedor:db.objectID(req.session.userID)},{categoria:1,nombre:1,precio:1,descripcion:1,imagen:1,id:'$_id',active:1})
+    res.json(resultado)
 });
 
-router.post('/updateSwitchState/:id', (req, res) => {
+router.post('/updateSwitchState/:id', async (req, res) => {
     const id = req.params.id;
     const newState = req.body.state; // Obtener el nuevo estado del cuerpo de la solicitud
     // Actualizar el estado en la base de datos
-    const sql = `UPDATE productos SET active = ${newState} WHERE id =${id};`;
-
-    db.query(sql, (error, resultado) => {
-        if (error) {
-            console.error("Error al actualizar el estado en la base de datos:", error.message);
-            return res.status(500).send("Error al actualizar el estado en la base de datos");
-        } else {
-            console.log("Estado actualizado en la base de datos");
-            res.sendStatus(200);
-        }
-    });
+    const resultado = await db.query("update","productos",{_id:db.objectID(id)},{$set:{active:newState}})
+    if(resultado.modifiedCount>0){
+        res.sendStatus(200);
+    }else{
+        return res.status(500).send("Error al actualizar el estado");
+    }
 });
 
-router.post('/eliminarProducto/:id', (req, res) => {
+router.post('/eliminarProducto/:id', async (req, res) => {
     const id = req.params.id;
-
-    // Realiza la eliminación del producto en la base de datos
-    const sql = `DELETE FROM productos WHERE id = ${id};`;
-
-    db.query(sql, (error, resultado) => {
-        if (error) {
-            console.error("Error al eliminar el producto en la base de datos:", error.message);
-            return res.status(500).send("Error al eliminar el producto en la base de datos");
-        } else {
-            console.log("Producto eliminado en la base de datos");
-            res.sendStatus(200);
-        }
-    });
+    console.log("Se borra el producto")
+    const resultado = await db.query("deleteOne","productos",{_id:db.objectID(id)})
+    if(resultado.acknowledged){
+        res.sendStatus(200)
+    }else{
+        res.status(500).send("Error al eliminar el producto");
+    }
 });
 
-router.post('/agregarProducto', (req, res) => {
-    const newProduct = req.body;
+router.post('/agregarProducto', async (req, res) => {
+    const {nombre,precio,descripcion,id_categoria} = req.body;
+    let categoria
+    switch (id_categoria) {
+        case 1:
+            categoria="comida"
+            break;
+        case 2:
+            categoria="bebidas"
+            break;
+        case 3:
+            categoria="dulces"
+            break;
+        case 4:
+            categoria="frituras"
+            break;
+        case 5:
+            categoria="otros"
+            break;
+        default:
+            res.status(500).send("Categoria invalida");
+            break;
+    }
+    console.log("Agregando producto")
     // Realizar la inserción del nuevo producto en la base de datos
-    const sql = `INSERT INTO productos (nombre, precio, descripcion, id_categoria, id_proveedor) VALUES (?, ?, ?, ?, ?);`;
+    const resultado = await db.query("insert","productos",{nombre:nombre,precio:precio,descripcion:descripcion,id_proveedor:db.objectID(req.session.userID),imagen:"../../../Assets/Imagenes/Comida/burrito.png",categoria:categoria,active:true,created_at: new Date()})
+    if(resultado.acknowledged){
+        res.sendStatus(200)
+    }else{
+        res.status(500).send("Error al eliminar el producto");
+    }
 
-    db.query(sql, [newProduct.nombre, newProduct.precio, newProduct.descripcion, newProduct.id_categoria, req.session.userID], (error, resultado) => {
-        if (error) {
-            console.error("Error al agregar el nuevo producto en la base de datos:", error.message);
-            return res.status(500).send("Error al agregar el nuevo producto en la base de datos");
-        } else {
-            console.log("Nuevo producto agregado en la base de datos");
-            res.sendStatus(200);
-        }
-    });
 });
 
 module.exports = router;

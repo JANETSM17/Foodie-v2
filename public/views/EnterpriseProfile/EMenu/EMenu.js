@@ -42,11 +42,11 @@ function crearProductoMenu(id, imagen, nombre, categoria, descripcion, precio, a
                 </div>
                 <p class="precio">$${precio}</p>
                 <button class="masInfo" onclick="poderEditar()"></button>
-                <button id="eliminarProducto" onclick="eliminarProducto(${id})" class="cerrar"></button>
+                <button id="eliminarProducto" onclick="eliminarProducto('${id}')" class="cerrar"></button>
             </div>
     `;
     let miCheckbox = producto.querySelector('.toggleSwitch');
-    if (active === 1) {
+    if (active) {
         miCheckbox.checked = true;
     } else {
         miCheckbox.checked = false;
@@ -102,7 +102,8 @@ function updateSwitchState(state,id) {
     };
 }
 
-function eliminarProducto(id) {
+function eliminarProducto(id){
+    alert("eliminando")
     if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
         // Hacer la solicitud al servidor para eliminar el producto
         var xhr = new XMLHttpRequest();
@@ -207,7 +208,7 @@ function assignCategory(categoryNumber, id) {
 
 // Itera sobre la NodeList y cambia el fondo de cada elemento
     elementos.forEach(function (elemento) {
-        elemento.style.backgroundColor = 'white'; // Cambia el color de fondo a rojo, puedes ajustar esto según tus necesidades
+        elemento.style.backgroundColor = 'white'; // Cambia el color de fondo a blanco, puedes ajustar esto según tus necesidades
     });
     selectedCategory = categoryNumber;
     const botonSeleccionado = document.getElementById(id);

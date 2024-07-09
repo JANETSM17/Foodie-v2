@@ -63,7 +63,8 @@ function rellenarRate(calif){
     `;
     return contenedorR;
 }
-var infoP = hacerSolicitud('/providerProfile/infoP');
+var infoP = hacerSolicitud('/providerProfile/infoP').resultado;
+console.log(infoP)
 var infoGen = [];
 var infoNombre = [];
 var infoCodigo = [];
@@ -72,17 +73,9 @@ var infoRate = [];
 
 infoP.forEach(item => {
     infoGen.push(rellenarinfo(item.telefono, item.direccion, item.correo));
-});
-infoP.forEach(item => {
     infoNombre.push(rellenarName(item.nombre));
-});
-infoP.forEach(item => {
-    infoCodigo.push(rellenarCodigo(item.clave_de_paso));
-});
-infoP.forEach(item => {
+    infoCodigo.push(rellenarCodigo(item.clave));
     infoTiempo.push(rellenartiempo(item.min_espera));
-});
-infoP.forEach(item => {
     infoRate.push(rellenarRate(item.calif));
 });
 
@@ -102,17 +95,19 @@ infoRate.forEach(item => {
     contenedorR.appendChild(item);
 });
 
+//funcion para dar el valor actual del active al toggleswitch
+
+
 function toggleSwitch() {
     var switchElement = document.getElementById("toggleSwitch");
     var slider = document.querySelector(".Slider");
-
+    
     // Obtener el estado actual del interruptor (1 o 0)
-    var switchState = switchElement.checked ? 1 : 0;
+    var switchState = switchElement.checked ? true : false;
 
     // Llamar a la función que envía la solicitud al backend
     updateSwitchState(switchState);
 }
-toggleSwitch();
 
 // Función para enviar el estado del interruptor al backend
 function updateSwitchState(state) {
