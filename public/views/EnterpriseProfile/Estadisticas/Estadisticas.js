@@ -16,7 +16,8 @@ function hacerSolicitud(url) {
 
 const venta = document.getElementById("CategoryTotal")
 const total = hacerSolicitud("/providerProfileStatistics/ventaSemana")
-venta.textContent = `$${total[0].total}`
+console.log(total)
+venta.textContent = `$${total.total}`
 
 const infoProductos = hacerSolicitud('/providerProfileStatistics/infoProductos');
 const espacioGrafica = document.getElementById("ContenedorGrafica");
@@ -75,19 +76,19 @@ function filtrar(id) {
     let categoriaBuscar = "";
     switch (id) {
         case "Comida":
-            categoriaBuscar = "1";
+            categoriaBuscar = "comida";
             break;
         case "Bebidas":
-            categoriaBuscar = "2";
+            categoriaBuscar = "bebidas";
             break;
         case "Frituras":
-            categoriaBuscar = "3";
+            categoriaBuscar = "frituras";
             break;
         case "Dulces":
-            categoriaBuscar = "4";
+            categoriaBuscar = "dulces";
             break;
         case "Otros":
-            categoriaBuscar = "5";
+            categoriaBuscar = "otros";
             break;
         case "Todas":
             categoriaBuscar = "6";

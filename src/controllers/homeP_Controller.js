@@ -38,11 +38,11 @@ router.get('/pedidos/:estado',async (req,res)=>{
             descripcion += `${articulo.producto.nombre} x${articulo.cantidad},`
         })
         descripcion = descripcion.slice(0,-1)
-        let id = pedido._id.inspect()
+        let id = pedido._id.toString()
 
         resultado.push({
-            id: id.substring(14,id.length-2),
-            numerodepedido:id.substring(id.length-8,id.length-2).toUpperCase(),
+            id: id,
+            numerodepedido:id.substring(id.length-6,id.length).toUpperCase(),
             nombre: pedido.infoCliente[0].nombre,
             telefono: pedido.infoCliente[0].telefono,
             especificaciones: pedido.especificaciones,

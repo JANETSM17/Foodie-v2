@@ -25,38 +25,38 @@ router.get('/', (req, res) => {
     
 });
 
-router.get('/infoProductos',(req,res) => {
+router.get('/infoProductos',async (req,res) => {
     console.log('obtenemos las estadisticas')
-    const sql = `select productos.nombre as nombre, productos.id_categoria as categoria, productos.id as id, SUM(productos_pedidos.cantidad) as cantidad from productos join productos_pedidos on productos_pedidos.id_producto = productos.id where productos_pedidos.id_pedido in (select id from pedidos where created_at >= NOW()- INTERVAL 1 WEEK AND id_estado=5) and productos.id_proveedor = ${req.session.userID} group by productos.id order by cantidad desc;`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("se obtuvieron los productos")
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
-
+    const semanaPasada = new Date()
+    semanaPasada.setDate(semanaPasada.getDate()-7)
+    const productosInfo = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail,estado:"Entregado",entrega:{$gte:semanaPasada}}},{$unwind:"$descripcion"},{$project:{id_producto:"$descripcion.producto.id_producto",cantidad:"$descripcion.cantidad",_id:0}},{$lookup:{from:"productos",localField:"id_producto",foreignField:"_id",as:"producto"}},{$project:{id:"$id_producto",cantidad:1,nombre:"$producto.nombre",categoria:"$producto.categoria"}},{$unwind:"$nombre"},{$unwind:"$categoria"},{$group:{_id:"$id",nombre:{$first:"$nombre"},categoria:{$first:"$categoria"},cantidad:{$sum:"$cantidad"}}},{$sort:{cantidad:-1}}])
+    let resultado = []
+    productosInfo.forEach(producto=>{
+        let id = producto._id.toString()
+        resultado.push({
+            id:id.substring(id.length-4,id.length),
+            nombre:producto.nombre,
+            categoria:producto.categoria,
+            cantidad:producto.cantidad
+        })
     })
+    res.json(resultado)
 });
 
-router.get('/ventaSemana',(req,res) => {
+router.get('/ventaSemana',async (req,res) => {
     console.log('obtenemos el total de la semana')
-    const sql = `select SUM(pedidos.total) as total from pedidos where created_at >= NOW()- INTERVAL 1 WEEK AND id_estado=5 and id in (select id_pedido from productos_pedidos where id_producto in (select id from productos where id_proveedor = ${req.session.userID}))`
-    db.query(sql,(error,resultado)=>{
-        if(error){
-            console.error("Error"+error.message);
-            return res.status(500).send("Error al consultar los datos");
-        }else{
-            console.log("se obtuvieron los productos")
-            console.log(resultado)
-            res.json(resultado)
-            
-        };   
-
+    const semanaPasada = new Date()
+    semanaPasada.setDate(semanaPasada.getDate()-7)
+    let total = 0
+    const pedidosInfo = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail,estado:"Entregado",proveedor:req.session.userMail,entrega:{$gte:semanaPasada}}},{$project:{descripcion:1,_id:0}}])
+    pedidosInfo.forEach(pedido=>{
+        let precio = 0
+        pedido.descripcion.forEach(articulo=>{
+            precio += (articulo.producto.precio*articulo.cantidad)
+        })
+        total += precio
     })
+    res.json({total:total})
 });
 
 module.exports = router;

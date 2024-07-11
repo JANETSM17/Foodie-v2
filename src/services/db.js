@@ -76,10 +76,4 @@ con()
 .catch(console.error)
 .finally(()=>client.close())
 
-
-
-const db ={
-    "client":client,
-    "database": this.database
-}
 module.exports = {query,objectID};

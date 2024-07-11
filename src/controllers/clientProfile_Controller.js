@@ -42,9 +42,15 @@ router.post('/deleteAccount', async (req, res) => {
     const enteredPassword = req.body.password;
 
     //borra la cuenta que coincida en id y contraseña
-    const resultado = await db.query("deleteOne","proveedores",{_id:db.objectID(req.session.userID),"contraseña":enteredPassword})
+    const resultado = await db.query("deleteOne","clientes",{_id:db.objectID(req.session.userID),"contraseña":enteredPassword})
     if(resultado.deletedCount>0){
-        res.sendStatus(200);
+        const dltBag = await db.query("deleteOne","pedidos",{cliente:req.session.userMail,estado:{$in:["Carrito","En proceso", "Listo para recoger"]}})
+        if (dltBag.deletedCount>0){
+            res.redirect('/');
+        }else{
+            return res.status(500).send("Error al borrar el carrito");
+        }
+        
     }else{
         return res.status(500).send("Error al borrar la cuenta");
     }
@@ -71,7 +77,6 @@ router.get('/getPedidoPendiente',async (req,res) => {
 });
 
 router.get('/getPedidosHist',async (req,res) => {
-    const sql = `select proveedores.ruta as ruta, pedidos.total as total, pedidos.created_at as hora from pedidos join productos_pedidos on productos_pedidos.id_pedido = pedidos.id join productos on productos_pedidos.id_producto = productos.id join proveedores on proveedores.id = productos.id_proveedor where pedidos.id in (select id from pedidos where id_cliente = ${req.session.userID} and id_estado = 5)`
     const estados=["Entregado"]
     const pedidosInfo = await db.query("aggregation","pedidos",[{$match:{cliente:req.session.userMail,estado:{$in:estados}}},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"infoProveedor"}},{$project:{estado:1,descripcion:1,entrega:1,"infoProveedor.imagen":1,_id:0}},{$sort:{entrega:-1}}])
     let resultado = []

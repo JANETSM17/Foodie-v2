@@ -72,9 +72,13 @@ router.post('/deleteAccount', async (req, res) => {
     const resultado = await db.query("deleteOne","proveedores",{_id:db.objectID(req.session.userID),"contraseña":enteredPassword})
     if(resultado.deletedCount>0){
         const resBorrarProducts = await db.query("deleteMany","productos",{id_proveedor:db.objectID(req.session.userID)})
-        if(resBorrarProducts.deletedCount>0){
-            const resBrkLink = await db.query("update","clientes",{},{$pull:{proveedores:{id_proveedor:db.objectID(id)}}})
-            res.sendStatus(200);
+        if(resBorrarProducts.acknowledged){
+            const resBrkLink = await db.query("update","clientes",{},{$pull:{proveedores:{id_proveedor:db.objectID(req.session.userID)}}})
+            if(resBrkLink.acknowledged){
+                res.redirect("/")
+            }else{
+                res.status(500).send("Error al desenlazar el proveedor con sus clientes")
+            }
         }else{
             res.status(500).send("Error al borrar los productos del proveedor");
         }
