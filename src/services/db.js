@@ -30,28 +30,28 @@ async function query(type,collection,mainObject,secondObject,thirdObject) {
             console.log("Insert:")
             res = await database.collection(collection).insertOne(mainObject)
             await client.close()
-            await console.log(res)
+            console.log(res)
             return res
 
         case "deleteOne":
             console.log("Delete One:")
             res = await database.collection(collection).deleteOne(mainObject)
             await client.close()
-            await console.log(res)
+            console.log(res)
             return res
             
         case "deleteMany":
             console.log("Delete Many:")
             res = await database.collection(collection).deleteMany(mainObject)
             await client.close()
-            await console.log(res)
+            console.log(res)
             return res
 
         case "update":
             console.log("Update:")
             res = await database.collection(collection).updateOne(mainObject,secondObject,thirdObject)
             await client.close()
-            await console.log(res)
+            console.log(res)
             return res
 
         case "find":
@@ -68,7 +68,8 @@ async function query(type,collection,mainObject,secondObject,thirdObject) {
             return res
 
         default:
-            break;
+            await client.close()
+            return "Query no valido"
     }
 }
 
