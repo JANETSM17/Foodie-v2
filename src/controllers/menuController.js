@@ -14,7 +14,7 @@ async function obtenerPromedio(idProveedor){
     return promedio[0].calif
 }
 
-router.use(express.json());
+//router.use(express.json());
 
 router.get('/', (req, res) => {
     if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
