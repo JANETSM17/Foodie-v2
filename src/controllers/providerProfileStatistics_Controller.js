@@ -25,11 +25,27 @@ router.get('/', (req, res) => {
     
 });
 
-router.get('/infoProductos',async (req,res) => {
+router.get('/infoProductos/:periodo',async (req,res) => {
     console.log('obtenemos las estadisticas')
-    const semanaPasada = new Date()
-    semanaPasada.setDate(semanaPasada.getDate()-7)
-    const productosInfo = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail,estado:"Entregado",entrega:{$gte:semanaPasada}}},{$unwind:"$descripcion"},{$project:{id_producto:"$descripcion.producto.id_producto",cantidad:"$descripcion.cantidad",_id:0}},{$lookup:{from:"productos",localField:"id_producto",foreignField:"_id",as:"producto"}},{$project:{id:"$id_producto",cantidad:1,nombre:"$producto.nombre",categoria:"$producto.categoria"}},{$unwind:"$nombre"},{$unwind:"$categoria"},{$group:{_id:"$id",nombre:{$first:"$nombre"},categoria:{$first:"$categoria"},cantidad:{$sum:"$cantidad"}}},{$sort:{cantidad:-1}}])
+    const fechaPeriodo = new Date() //se obtendran los pedidos de esta fecha en adelante
+
+    const {periodo} = req.params
+
+    switch (periodo) {
+        case "1W":
+            fechaPeriodo.setDate(fechaPeriodo.getDate()-7)
+            break;
+        
+        case "1M":
+            fechaPeriodo.setMonth(fechaPeriodo.getMonth()-1)
+            break;
+
+        case "6M":
+            fechaPeriodo.setMonth(fechaPeriodo.getMonth()-6)
+            break;
+    }
+
+    const productosInfo = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail,estado:"Entregado",entrega:{$gte:fechaPeriodo}}},{$unwind:"$descripcion"},{$project:{id_producto:"$descripcion.producto.id_producto",cantidad:"$descripcion.cantidad",_id:0}},{$lookup:{from:"productos",localField:"id_producto",foreignField:"_id",as:"producto"}},{$project:{id:"$id_producto",cantidad:1,nombre:"$producto.nombre",categoria:"$producto.categoria"}},{$unwind:"$nombre"},{$unwind:"$categoria"},{$group:{_id:"$id",nombre:{$first:"$nombre"},categoria:{$first:"$categoria"},cantidad:{$sum:"$cantidad"}}},{$sort:{cantidad:-1}}])
     let resultado = []
     productosInfo.forEach(producto=>{
         let id = producto._id.toString()
