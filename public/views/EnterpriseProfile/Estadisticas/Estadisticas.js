@@ -14,16 +14,20 @@ function hacerSolicitud(url) {
     }
   }
 
-const venta = document.getElementById("CategoryTotal")
-const total = hacerSolicitud("/providerProfileStatistics/ventaSemana")
-console.log(total)
-venta.textContent = `$${total.total}`
+let periodoActual = ''
+
+let barras = [];
+
 
 
 function setBarras(periodo) {
+    periodoActual = periodo
     const espacioGrafica = document.getElementById("ContenedorGrafica");
     espacioGrafica.innerHTML = ''
     const infoProductos = hacerSolicitud(`/providerProfileStatistics/infoProductos/${periodo}`);//productos vendidos en el periodo
+    let total = 0 //variable donde se guardara el total de ventas del periodo
+
+    barras = []
 
     //Da valor a las marcas de la grafica
     let limiteSuperior= infoProductos[0].cantidad
@@ -38,11 +42,29 @@ function setBarras(periodo) {
         limite.textContent = `${limiteSuperior - (gapMarcas*i)}`
     }
 
-    const barras = [];
-
     //Crea las barras para los productos
 
     function crearBarra(id,cantidad,categoria){
+        let idCategoria = 0
+        switch (categoria) {
+            case "comida":
+                idCategoria = "1"
+                break;
+            case "bebidas":
+                idCategoria = "2"
+                break;
+            case "frituras":
+                idCategoria = "3"
+                break;
+            case "dulces":
+                idCategoria = "4"
+                break;
+            case "otros":
+                idCategoria = "5"
+                break;
+            default:
+                break;
+        }
         const altura = ((cantidad/limiteSuperior)*37)
         const barra = document.createElement("div")
         barra.id=id
@@ -50,28 +72,59 @@ function setBarras(periodo) {
         barra.classList.add(`${categoria}`)
         barra.style.height= altura + "vh";
         barra.innerHTML=`
-            <p class="NoProducto" id="${categoria}">#${id}</p>
+            <p class="NoProducto" id="${idCategoria}">#${id}</p>
         `;
         return barra;
     }
 
     infoProductos.forEach(item => {
         barras.push(crearBarra(item.id,item.cantidad,item.categoria));
+        total += (item.precio*item.cantidad)
     });
 
+    //agrega las barras a la pagina
+
     barras.forEach(barra => {
+        
         espacioGrafica.appendChild(barra);
     });
+
+    //actualiza el total de ventas
+
+    const venta = document.getElementById("CategoryTotal")
+    venta.textContent = `$${total}`
+
+    //Crea la lista de los productos
 
     const listaProductos = document.getElementById("ListaProductos")
     listaProductos.innerHTML = ''
     const nombres = [];
 
     function crearNombre(id,cantidad,categoria,name) {
+        let idCategoria = 0
+        switch (categoria) {
+            case "comida":
+                idCategoria = "1"
+                break;
+            case "bebidas":
+                idCategoria = "2"
+                break;
+            case "frituras":
+                idCategoria = "3"
+                break;
+            case "dulces":
+                idCategoria = "4"
+                break;
+            case "otros":
+                idCategoria = "5"
+                break;
+            default:
+                break;
+        }
         const nombre = document.createElement("li")
         nombre.id=id
         nombre.classList.add("producto")
-        nombre.classList.add(`${categoria}`)
+        nombre.classList.add(`${idCategoria}`)
         nombre.textContent=`#${id}: ${name} x${cantidad}`
         return nombre;
     }
@@ -118,7 +171,7 @@ function filtrar(id) {
             break;
     };
     if (categoriaBuscar == "6") {
-        window.location.reload();
+        setBarras(periodoActual);
     } else {
         
     const barrasMostrar = barras.filter(barra => {
@@ -128,9 +181,11 @@ function filtrar(id) {
     if (barrasMostrar.length <= 0) {
         alert("No Tienes Ningun Producto De Esa Categoria");
     } else {
-        espacioGrafica.innerHTML = "";
+        const espacioGrafica = document.getElementById("ContenedorGrafica");
+        espacioGrafica.innerHTML = '';
 
         barrasMostrar.forEach(result => {
+            
             espacioGrafica.appendChild(result);
         })
     }

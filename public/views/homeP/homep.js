@@ -11,9 +11,7 @@ function irProfile() {
     window.location.href = "/providerProfile";
   }
 
-const pedidospendientes = document.getElementById("pedidospendientes");
-
-function hacerSolicitud(url) {
+  function hacerSolicitud(url) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, false);  // El tercer parámetro indica si la solicitud es síncrona
     xhr.send();
@@ -75,21 +73,32 @@ function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, tota
 
 //para los pedidos en proceso
 
-var  resPendientes = hacerSolicitud('/homeP/pedidos/En proceso');
-var pedidos = [];
-
-resPendientes.forEach(item => {
-    pedidos.push(crearPedido(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
-  console.log(pedidos)
-})
+function setPedidosPend() {
+    let  resPendientes = hacerSolicitud('/homeP/pedidos/En proceso');
+    let pedidos = [];
 
 
+    const pedidospendientes = document.getElementById("pedidospendientes");
+    pedidospendientes.innerHTML = ''
 
-pedidos.forEach(pedido => {
-    console.log(pedido)
-    pedidospendientes.appendChild(pedido);
-});
+    resPendientes.forEach(item => {
+        pedidos.push(crearPedido(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
+    console.log(pedidos)
+    })
 
+    pedidos.forEach(pedido => {
+        console.log(pedido)
+        pedidospendientes.appendChild(pedido);
+    });
+}
+
+
+
+function listo(id) {
+    fetch(`/homeP/pedidoListo/${id}`)
+    .then(setHomeP())
+    .catch(error => console.log('Error:', error));
+}
 
 const buscar = document.getElementById("buscarpendiente");
 const regresarBusqueda = document.getElementById('nobuscarpendiente');
@@ -118,18 +127,7 @@ regresarBusqueda.addEventListener('click', function(){
     renderizarPedidosPendientes();
 })
 
-function listo(id) {
-    fetch(`/homeP/pedidoListo/${id}`)
-    .then(window.location.reload())
-    .catch(error => console.log('Error:', error));
-}
-
 //a partir de aqui son los pedidos listos
-
-
-const pedidoslistos = document.getElementById("pedidoslistos");
-
-
 
 function pedidoListo(id, nombre,numerodepedido, telefono, especificaciones, total,descripcion,entrega){
     const listo = document.createElement('article');
@@ -172,17 +170,40 @@ function pedidoListo(id, nombre,numerodepedido, telefono, especificaciones, tota
     return listo;
 }
 
-var listos = [];
-var  resListos = hacerSolicitud('/homeP/pedidos/Listo para recoger');
+function setPedidosListos() {
+    var listos = [];
+    var  resListos = hacerSolicitud('/homeP/pedidos/Listo para recoger');
+    
+    const pedidoslistos = document.getElementById("pedidoslistos");
+    pedidoslistos.innerHTML = ''
+    
+    resListos.forEach(item => {
+        listos.push(pedidoListo(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
+      console.log(listos)
+    })
+    
+    listos.forEach(listo => {
+        pedidoslistos.appendChild(listo);
+    }); 
+}
 
-resListos.forEach(item => {
-    listos.push(pedidoListo(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
-  console.log(listos)
-})
+function entregado(id) {
+    fetch(`/homeP/pedidoEntregado/${id}`)
+    .then(setHomeP())
+    .catch(error => console.log('Error:', error));
+}
 
-listos.forEach(listo => {
-    pedidoslistos.appendChild(listo);
-});
+//Funcion para actualizar los pedidos
+
+function setHomeP() {
+    setPedidosListos()
+    setPedidosPend()
+}
+
+setHomeP()
+
+setInterval(setHomeP,300000)
+
 const buscarL = document.getElementById("buscarlisto");
 const regresarBusquedaL = document.getElementById('nobuscarlisto');
 
@@ -224,8 +245,3 @@ function renderizarPedidosListos() {
     });
 }
 
-function entregado(id) {
-    fetch(`/homeP/pedidoEntregado/${id}`)
-    .then(window.location.reload())
-    .catch(error => console.log('Error:', error));
-}

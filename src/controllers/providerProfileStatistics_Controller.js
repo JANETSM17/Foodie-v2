@@ -45,7 +45,7 @@ router.get('/infoProductos/:periodo',async (req,res) => {
             break;
     }
 
-    const productosInfo = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail,estado:"Entregado",entrega:{$gte:fechaPeriodo}}},{$unwind:"$descripcion"},{$project:{id_producto:"$descripcion.producto.id_producto",cantidad:"$descripcion.cantidad",_id:0}},{$lookup:{from:"productos",localField:"id_producto",foreignField:"_id",as:"producto"}},{$project:{id:"$id_producto",cantidad:1,nombre:"$producto.nombre",categoria:"$producto.categoria"}},{$unwind:"$nombre"},{$unwind:"$categoria"},{$group:{_id:"$id",nombre:{$first:"$nombre"},categoria:{$first:"$categoria"},cantidad:{$sum:"$cantidad"}}},{$sort:{cantidad:-1}}])
+    const productosInfo = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail,estado:"Entregado",entrega:{$gte:fechaPeriodo}}},{$unwind:"$descripcion"},{$project:{id_producto:"$descripcion.producto.id_producto",precio: "$descripcion.producto.precio",cantidad:"$descripcion.cantidad",_id:0}},{$lookup:{from:"productos",localField:"id_producto",foreignField:"_id",as:"producto"}},{$project:{id:"$id_producto",cantidad:1,precio:1,nombre:"$producto.nombre",categoria:"$producto.categoria"}},{$unwind:"$nombre"},{$unwind:"$categoria"},{$group:{_id:"$id",nombre:{$first:"$nombre"},precio:{$first:"$precio"},categoria:{$first:"$categoria"},cantidad:{$sum:"$cantidad"}}},{$sort:{cantidad:-1}}])
     let resultado = []
     productosInfo.forEach(producto=>{
         let id = producto._id.toString()
@@ -53,7 +53,8 @@ router.get('/infoProductos/:periodo',async (req,res) => {
             id:id.substring(id.length-4,id.length),
             nombre:producto.nombre,
             categoria:producto.categoria,
-            cantidad:producto.cantidad
+            cantidad:producto.cantidad,
+            precio: producto.precio
         })
     })
     res.json(resultado)
