@@ -186,3 +186,13 @@ function modificarCantidad(event, accion, precio) {
 
     total.textContent = "Total: $"+suma
 }
+
+
+function toggleCheckboxes(clickedId, otherId) {
+  var clickedCheckbox = document.getElementById(clickedId);
+  var otherCheckbox = document.getElementById(otherId);
+
+  if (clickedCheckbox.checked) {
+      otherCheckbox.checked = false;
+  }
+}
