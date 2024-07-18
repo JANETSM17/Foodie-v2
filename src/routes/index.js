@@ -22,6 +22,7 @@ const providerProfileMenuController = require('../controllers/providerProfileMen
 const providerProfileQAController = require('../controllers/providerProfileQA_Controller');
 const providerProfileStatisticsController = require('../controllers/providerProfileStatistics_Controller');
 const QAController = require('../controllers/QA_Controller');
+const foodieboxController = require('../controllers/foodieboxController')
 
 router.use('/', landingController);
 router.use('/Choose', chooseController);
@@ -43,5 +44,6 @@ router.use('/providerProfileMenu', providerProfileMenuController);
 router.use('/providerQA', providerProfileQAController);
 router.use('/providerProfileStatistics', providerProfileStatisticsController);
 router.use('/QA', QAController);
+router.use('/foodie-box',foodieboxController)
 
 module.exports = router;
