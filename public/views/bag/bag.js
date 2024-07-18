@@ -189,8 +189,8 @@ function modificarCantidad(event, accion, precio) {
 
 
 function toggleCheckboxes(clickedId, otherId) {
-  var clickedCheckbox = document.getElementById(clickedId);
-  var otherCheckbox = document.getElementById(otherId);
+  let clickedCheckbox = document.getElementById(clickedId);
+  let otherCheckbox = document.getElementById(otherId);
 
   if (clickedCheckbox.checked) {
       otherCheckbox.checked = false;

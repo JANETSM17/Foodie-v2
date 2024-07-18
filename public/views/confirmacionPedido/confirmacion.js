@@ -34,7 +34,7 @@ function hacerSolicitud(url) {
     }
   }
 
-function crearPedido(id, nombre, telefono, especificaciones, total,descripcion,entrega) {
+function crearPedido(id, nombre, numerodepedido, telefono, especificaciones, total,descripcion,entrega,status,clave,pickup) {
     const pedido = document.createElement('article');
     pedido.id = id + 'pedido';
     pedido.classList.add("pedido")
@@ -67,7 +67,18 @@ function crearPedido(id, nombre, telefono, especificaciones, total,descripcion,e
             <p>Hora <span>de</span> Pick-Up</p>
             <p>${entrega}</p>
         </div>
-        
+        <div class="status">
+            <p>Estado</p>
+            <p>${status}</p>
+        </div>
+        <div class="clave">
+            <p>Clave</p>
+            <p>${clave}</p>
+        </div>
+        <div class="pick-up">
+            <p>Metodo de pick-up</p>
+            <p>${pickup}</p>
+        </div>
     `;
   
     // Agregar un event listener al botón "Listo"
