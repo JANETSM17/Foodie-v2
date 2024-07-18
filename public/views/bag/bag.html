@@ -48,6 +48,12 @@
             <p class="advertencia">**Una Vez Enviado El Pedido No Podras Cancelar**</p>
         </div>
         <p class="pick-up">Hacer <br><span>Pick-up</span><br>En</p>
+        <div class="foodiebox">
+            <input type="checkbox" id="foodiechecknt" onclick="toggleCheckboxes('foodiechecknt', 'foodiecheck')">
+            No Foodie-Box?
+            <input type="checkbox" id="foodiecheck" onclick="toggleCheckboxes('foodiecheck', 'foodiechecknt')">
+            Foodie-Box?
+        </div>
         <div class="recogida">
             <input type="text" name="" id="minutos"  maxlength="2" oninput="validarNumeros(this)">
             Minutos
