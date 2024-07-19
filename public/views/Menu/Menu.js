@@ -227,7 +227,7 @@ function modificarCantidad(event, accion) {
   }
 
   
-    const idCarrito = hacerSolicitud('/bag/getPedido');
+    const idCarrito = hacerSolicitud('/bag/getPedido').id;
 
   function agregarCarritoRapido(id_producto) {
     const infoConfirm = hacerSolicitud(`/menu/confirmar/${id_producto}/${idCarrito}`);

@@ -91,7 +91,7 @@ var  resPendientes = hacerSolicitud('/pedidos/pedidosEnCurso');
 var pedidos = [];
 
 resPendientes.forEach(item => {
-    pedidos.push(crearPedido(item.id,item.nombre,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
+    pedidos.push(crearPedido(item.id,item.nombre,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega,item.status,item.clave,item.pickup));
   console.log(pedidos)
 })
 

@@ -15,11 +15,14 @@ function crearClave() {
         
     }
 }
-for (let i = 0; i < 6; i++) {
+
+crearClave()
+
+/*for (let i = 0; i < 6; i++) {
     const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
     clave += caracteres.charAt(indiceAleatorio);
     
-}
+}*/
 
 router.get('/', (req, res) => {
     const signUpPPagePath = path.join(__dirname, '../../public/views/SingUp-P/singup-p.html');
@@ -36,7 +39,7 @@ router.post('/', async (req, res) => {
         }else{
             const claves = await db.query("find","proveedores",{},{clave:1,_id:0})
             crearClave()
-            while(claves.includes(clave)){
+            while(claves.some(elem=>elem.clave == clave)){
                 crearClave()
             }
             const queryObject = {nombre: nombre, correo: correo, contraseña: contraseña, telefono: telefono,rfc:rfc, created_at: new Date(),imagen: '../assets/Imagenes/Logos/cubiertos.png',active: true, "regimen fiscal": regimen, direccion: direccion, calif: 0, min_espera:15,clave:clave};//crea un objeto con la info del usuario
