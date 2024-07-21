@@ -49,7 +49,6 @@ const idCarrito = infoCarrito.id;
 const proveedorCarrito = infoCarrito.proveedor
 if(proveedorCarrito){
   const statusFoodieBox = hacerSolicitud(`/bag/confirmarFoodieBox/${proveedorCarrito}`)
-  alert(statusFoodieBox.status)
   if(!statusFoodieBox.status){
     let foodieBoxCheck = document.getElementById("foodiecheck")
     foodieBoxCheck.disabled = true

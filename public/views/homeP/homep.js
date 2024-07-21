@@ -27,6 +27,14 @@ function irProfile() {
     }
   }
 
+  var pendientes = [];//arreglo para guardar las fichas de los pedidos en proceso
+
+var listos = [];//arreglo para guardar las fichas de los pedidos listos
+
+const pedidospendientes = document.getElementById("pedidospendientes");
+
+const pedidoslistos = document.getElementById("pedidoslistos");
+
 function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, total,descripcion,entrega) {
     const pedido = document.createElement('article');
     pedido.id = id + 'pedido';
@@ -73,24 +81,7 @@ function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, tota
 
 //para los pedidos en proceso
 
-function setPedidosPend() {
-    let  resPendientes = hacerSolicitud('/homeP/pedidos/En proceso');
-    let pedidos = [];
 
-
-    const pedidospendientes = document.getElementById("pedidospendientes");
-    pedidospendientes.innerHTML = ''
-
-    resPendientes.forEach(item => {
-        pedidos.push(crearPedido(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
-    console.log(pedidos)
-    })
-
-    pedidos.forEach(pedido => {
-        console.log(pedido)
-        pedidospendientes.appendChild(pedido);
-    });
-}
 
 
 
@@ -106,7 +97,7 @@ const regresarBusqueda = document.getElementById('nobuscarpendiente');
 buscar.addEventListener('click', function (){
     pedidospendientes.innerHTML = '' ; 
     const nombreBuscado = document.getElementById('busqueda').value.toLowerCase();
-    pedidos.forEach(pedido => {
+    pendientes.forEach(pedido => {
         // Verificar si el nombre del pedido coincide parcial o totalmente con el nombre buscado
         if (pedido.querySelector('.usuario p').innerText.toLowerCase().includes(nombreBuscado)) {
             pedidospendientes.appendChild(pedido.cloneNode(true)); // Clonar el nodo para evitar la eliminación del original
@@ -170,23 +161,6 @@ function pedidoListo(id, nombre,numerodepedido, telefono, especificaciones, tota
     return listo;
 }
 
-function setPedidosListos() {
-    var listos = [];
-    var  resListos = hacerSolicitud('/homeP/pedidos/Listo para recoger');
-    
-    const pedidoslistos = document.getElementById("pedidoslistos");
-    pedidoslistos.innerHTML = ''
-    
-    resListos.forEach(item => {
-        listos.push(pedidoListo(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega));
-      console.log(listos)
-    })
-    
-    listos.forEach(listo => {
-        pedidoslistos.appendChild(listo);
-    }); 
-}
-
 function entregado(id) {
     fetch(`/homeP/pedidoEntregado/${id}`)
     .then(setHomeP())
@@ -196,8 +170,37 @@ function entregado(id) {
 //Funcion para actualizar los pedidos
 
 function setHomeP() {
-    setPedidosListos()
-    setPedidosPend()
+    const pedidos = hacerSolicitud('/homeP/pedidos');//todos los pedidos activos del proveedor (en proceso y listos)
+
+    pendientes = [];//arreglo para guardar las fichas de los pedidos en proceso
+
+    listos = [];//arreglo para guardar las fichas de los pedidos listos
+
+    pedidospendientes.innerHTML = '' //se limpia el espacio para pedidos pendientes
+
+    pedidoslistos.innerHTML = ''//se limpia el espacio para pedidos listos
+
+    pedidos.forEach(item=>{//en este switch se acomodan todos los pedidos segun su estado
+        switch (item.estado) {
+            case "En proceso":
+            pendientes.push(crearPedido(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega))
+                break;
+            case "Listo para recoger":
+            listos.push(pedidoListo(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega))
+                break;
+        
+            default:
+                break;
+        }
+    })
+
+    pendientes.forEach(pedido => {
+        pedidospendientes.appendChild(pedido);
+    });
+
+    listos.forEach(listo => {
+        pedidoslistos.appendChild(listo);
+    }); 
 }
 
 setHomeP()
@@ -233,7 +236,7 @@ regresarBusquedaL.addEventListener('click', function(){
 
 function renderizarPedidosPendientes() {
     pedidospendientes.innerHTML = '';
-    pedidos.forEach(pedido => {
+    pendientes.forEach(pedido => {
         pedidospendientes.appendChild(pedido);
     });
 }

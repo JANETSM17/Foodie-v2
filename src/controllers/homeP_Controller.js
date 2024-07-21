@@ -26,6 +26,37 @@ router.get('/', (req, res) => {
     }
 });
 
+router.get('/pedidos',async (req,res)=>{
+    const estados = ["En proceso","Listo para recoger"]
+    const infoPedidos = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail, estado:{$in:estados}}},{$lookup:{from:"clientes",localField:"cliente",foreignField:"correo",as:"infoCliente"}}])
+    let resultado = []
+    infoPedidos.forEach(pedido=>{
+        let total = 0
+        let descripcion = ""
+        pedido.descripcion.forEach(articulo=>{
+            total += (articulo.producto.precio*articulo.cantidad)
+            descripcion += `${articulo.producto.nombre} x${articulo.cantidad},`
+        })
+        descripcion = descripcion.slice(0,-1)
+        let id = pedido._id.toString()
+
+        resultado.push({
+            id: id,
+            numerodepedido:id.substring(id.length-6,id.length).toUpperCase(),
+            nombre: pedido.infoCliente[0].nombre,
+            telefono: pedido.infoCliente[0].telefono,
+            especificaciones: pedido.especificaciones,
+            total: total,
+            descripcion: descripcion,
+            entrega: pedido.entrega.toLocaleString(),
+            pickup: pedido.pickup,
+            clave: pedido.clave,
+            estado: pedido.estado
+        })
+    })
+    res.json(resultado)
+})
+
 router.get('/pedidos/:estado',async (req,res)=>{
     const estado = decodeURI(req.params.estado)
     const infoPedidos = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail, estado: estado}},{$lookup:{from:"clientes",localField:"cliente",foreignField:"correo",as:"infoCliente"}}])
@@ -48,7 +79,9 @@ router.get('/pedidos/:estado',async (req,res)=>{
             especificaciones: pedido.especificaciones,
             total: total,
             descripcion: descripcion,
-            entrega: pedido.entrega.toLocaleString()
+            entrega: pedido.entrega.toLocaleString(),
+            pickup: pedido.pickup,
+            clave: pedido.clave
         })
     })
     res.json(resultado)

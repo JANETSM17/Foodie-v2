@@ -29,6 +29,66 @@ router.get('/prueba/:clave',async (req,res)=>{
     }
 })
 
+router.get('/pedidoListo/:clave',async (req,res)=>{
+    const {clave} = req.params
+    console.log("Lo detecta")
+    const pedido = await db.query("find","pedidos",{clave:clave},{cliente:1,clave:1,_id:1})
+    if(pedido.length>0){
+        const setListo = await db.query("update","pedidos",{clave:clave},{$set:{estado:"Listo para recoger"}})
+        if(setListo.modifiedCount>0){
+            const id = pedido[0]._id.toString()
+        res.json({
+            usuario: pedido[0].cliente,
+            clave: pedido[0].clave,
+            numPedido: id.substring(id.length-6,id.length).toUpperCase()
+        })
+        }else{
+            res.json({
+                usuario: "",
+                clave: "",
+                numPedido: ""
+            })
+        }
+    }else{
+        res.json({
+            usuario: "",
+            clave: "",
+            numPedido: ""
+        })
+    }
+    
+})
+
+router.get('/pedidoEntregado/:clave',async (req,res)=>{
+    const {clave} = req.params
+    console.log("Lo detecta")
+    const pedido = await db.query("find","pedidos",{clave:clave},{cliente:1,clave:1,_id:1})
+    if(pedido.length>0){
+        const setEntregado = await db.query("update","pedidos",{clave:clave},{$set:{estado:"Entregado",clave:"N/A"}})
+        if(setEntregado.modifiedCount>0){
+            const id = pedido[0]._id.toString()
+        res.json({
+            usuario: pedido[0].cliente,
+            clave: clave,
+            numPedido: id.substring(id.length-6,id.length).toUpperCase()
+        })
+        }else{
+            res.json({
+                usuario: "",
+                clave: "",
+                numPedido: ""
+            })
+        }
+    }else{
+        res.json({
+            usuario: "",
+            clave: "",
+            numPedido: ""
+        })
+    }
+    
+})
+
 router.get('/prueba/',async (req,res)=>{
     console.log("Lo detecta")
     const pedidos = [{clave:"123456", usuario: "Checo", numPedido: "6A6BB8"},{clave:"654321", usuario: "Sifuentes", numPedido: "131313"},{clave:"777777", usuario: "Shanet", numPedido: "ABCABC"}]
