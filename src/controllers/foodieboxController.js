@@ -10,6 +10,12 @@ router.get('/ping/:numSerie',async (req,res)=>{
     res.json({status:resultado.acknowledged?"todo piola":"todo piolan't"})
 })
 
+router.get('/info/:numSerie',async (req,res)=>{
+    const {numSerie} = req.params
+    const resultado = await db.query("find","foodieboxes",{numSerie:numSerie},{_id:0,clave:1})
+    res.json({clave:resultado[0].clave??""})
+})
+
 router.get('/prueba/:clave',async (req,res)=>{
     console.log("Lo detecta")
     const clave = +req.params.clave
@@ -27,6 +33,12 @@ router.get('/prueba/:clave',async (req,res)=>{
     if(!mandado){
         res.json({clave:"", usuario: "", numPedido: ""})
     }
+})
+
+router.get('/prueba/',async (req,res)=>{
+    console.log("Lo detecta")
+    const pedidos = [{clave:"123456", usuario: "Checo", numPedido: "6A6BB8"},{clave:"654321", usuario: "Sifuentes", numPedido: "131313"},{clave:"777777", usuario: "Shanet", numPedido: "ABCABC"}]
+    res.json(pedidos)
 })
 
 router.get('/pedidoListo/:clave',async (req,res)=>{
@@ -87,12 +99,6 @@ router.get('/pedidoEntregado/:clave',async (req,res)=>{
         })
     }
     
-})
-
-router.get('/prueba/',async (req,res)=>{
-    console.log("Lo detecta")
-    const pedidos = [{clave:"123456", usuario: "Checo", numPedido: "6A6BB8"},{clave:"654321", usuario: "Sifuentes", numPedido: "131313"},{clave:"777777", usuario: "Shanet", numPedido: "ABCABC"}]
-    res.json(pedidos)
 })
 
 module.exports = router;

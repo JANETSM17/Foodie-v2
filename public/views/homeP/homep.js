@@ -27,14 +27,6 @@ function irProfile() {
     }
   }
 
-  var pendientes = [];//arreglo para guardar las fichas de los pedidos en proceso
-
-var listos = [];//arreglo para guardar las fichas de los pedidos listos
-
-const pedidospendientes = document.getElementById("pedidospendientes");
-
-const pedidoslistos = document.getElementById("pedidoslistos");
-
 function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, total,descripcion,entrega) {
     const pedido = document.createElement('article');
     pedido.id = id + 'pedido';
@@ -79,47 +71,6 @@ function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, tota
     return pedido;
 }
 
-//para los pedidos en proceso
-
-
-
-
-
-function listo(id) {
-    fetch(`/homeP/pedidoListo/${id}`)
-    .then(setHomeP())
-    .catch(error => console.log('Error:', error));
-}
-
-const buscar = document.getElementById("buscarpendiente");
-const regresarBusqueda = document.getElementById('nobuscarpendiente');
- 
-buscar.addEventListener('click', function (){
-    pedidospendientes.innerHTML = '' ; 
-    const nombreBuscado = document.getElementById('busqueda').value.toLowerCase();
-    pendientes.forEach(pedido => {
-        // Verificar si el nombre del pedido coincide parcial o totalmente con el nombre buscado
-        if (pedido.querySelector('.usuario p').innerText.toLowerCase().includes(nombreBuscado)) {
-            pedidospendientes.appendChild(pedido.cloneNode(true)); // Clonar el nodo para evitar la eliminación del original
-        } 
-    });
-        if (pedidospendientes.innerHTML == '') {
-        alert('No Tienes Ningun Pedido Pendiente Con Ese Usuario')
-        }
-
-    regresarBusqueda.style.display = 'block';
-})
-
-regresarBusqueda.addEventListener('click', function(){
-    pedidospendientes.innerHTML = '' ;   
-    const nombreBuscado = document.getElementById('busqueda');
-    nombreBuscado.value = "";
-    regresarBusqueda.style.display = "none"
-    renderizarPedidosPendientes();
-})
-
-//a partir de aqui son los pedidos listos
-
 function pedidoListo(id, nombre,numerodepedido, telefono, especificaciones, total,descripcion,entrega){
     const listo = document.createElement('article');
     listo.id = id + 'listo';
@@ -159,6 +110,20 @@ function pedidoListo(id, nombre,numerodepedido, telefono, especificaciones, tota
         </div>
     `;
     return listo;
+}
+
+var pendientes = [];//arreglo para guardar las fichas de los pedidos en proceso
+
+var listos = [];//arreglo para guardar las fichas de los pedidos listos
+
+const pedidospendientes = document.getElementById("pedidospendientes");
+
+const pedidoslistos = document.getElementById("pedidoslistos");
+
+function listo(id) {
+    fetch(`/homeP/pedidoListo/${id}`)
+    .then(setHomeP())
+    .catch(error => console.log('Error:', error));
 }
 
 function entregado(id) {
@@ -206,6 +171,33 @@ function setHomeP() {
 setHomeP()
 
 setInterval(setHomeP,300000)
+
+const buscar = document.getElementById("buscarpendiente");
+const regresarBusqueda = document.getElementById('nobuscarpendiente');
+ 
+buscar.addEventListener('click', function (){
+    pedidospendientes.innerHTML = '' ; 
+    const nombreBuscado = document.getElementById('busqueda').value.toLowerCase();
+    pendientes.forEach(pedido => {
+        // Verificar si el nombre del pedido coincide parcial o totalmente con el nombre buscado
+        if (pedido.querySelector('.usuario p').innerText.toLowerCase().includes(nombreBuscado)) {
+            pedidospendientes.appendChild(pedido.cloneNode(true)); // Clonar el nodo para evitar la eliminación del original
+        } 
+    });
+        if (pedidospendientes.innerHTML == '') {
+        alert('No Tienes Ningun Pedido Pendiente Con Ese Usuario')
+        }
+
+    regresarBusqueda.style.display = 'block';
+})
+
+regresarBusqueda.addEventListener('click', function(){
+    pedidospendientes.innerHTML = '' ;   
+    const nombreBuscado = document.getElementById('busqueda');
+    nombreBuscado.value = "";
+    regresarBusqueda.style.display = "none"
+    renderizarPedidosPendientes();
+})
 
 const buscarL = document.getElementById("buscarlisto");
 const regresarBusquedaL = document.getElementById('nobuscarlisto');
