@@ -33,9 +33,11 @@ router.post('/', async (req, res) => {
     const { nombre, telefono, correo, contraseña, regimen, rfc ,direccion, password } = req.body;
     // Insertar el usuario en la base de dato
     if(contraseña==password){
-        const usuarios = await db.query("find","proveedores",{$or:[{telefono:telefono},{correo:correo},{rfc:rfc},]})
-        if(usuarios.length > 0){//revisa que no este tratando de crear una cuenta con un correo o telefono ya utilizadp
-            res.send('Correo, telefono o rfc ya registrado en otra cuenta, intente de nuevo')
+        const proveedores = await db.query("find","proveedores",{$or:[{telefono:telefono},{correo:correo},{rfc:rfc}]},{_id:0,correo:1})
+        const clientes = await db.query("find","clientes",{$or:[{telefono:telefono},{correo:correo}]},{_id:0,correo:1})
+
+        if(proveedores.length > 0 || clientes.length > 0){//revisa que no este tratando de crear una cuenta con un correo o telefono ya utilizadp
+            res.json({status:"datos repetidos"})
         }else{
             const claves = await db.query("find","proveedores",{},{clave:1,_id:0})
             crearClave()
@@ -49,13 +51,10 @@ router.post('/', async (req, res) => {
             req.session.userType = "proveedor"
             req.session.userMail = correo
             console.log('Usuario registrado con éxito');
-            res.redirect('/homeP');
+            res.json({status:"OK"})
         }
     }else{
-        res.send(`<script>
-                    window.location.href = "/signUp-P";
-                    alert("La contraseña no fue confirmada correctamente");
-                    </script>`);
+        res.json({status:"error al confirmar contraseña"})
     }
 });
 

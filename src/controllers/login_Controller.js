@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
         req.session.userType = "cliente"
         req.session.userMail = email
         console.log(req.session.userID);//confirmacion del valor de idUser
-        res.redirect(`/homeC`);
+        res.json({status:"cliente"});
     }else{
         const proveedor = await db.query("find","proveedores",{correo:email,"contraseña":password},{_id:1})
         if(proveedor.length>0){
@@ -30,12 +30,9 @@ router.post('/', async (req, res) => {
             req.session.userType = "proveedor"
             req.session.userMail = email
             console.log(req.session.userID);//confirmacion del valor de idUser
-            res.redirect(`/homeP`);
+            res.json({status:"proveedor"});
         }else{
-            res.send(`<script>
-                window.location.href = "/login";
-                alert("Correo y/o contraseña incorrecta, intente de nuevo");
-                </script>`);
+            res.json({status:"failed"});
         }
     }
 

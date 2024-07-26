@@ -85,7 +85,7 @@
             <img id="FLog" src="../Assets/Imagenes/Logos/FoodieNegro.png" alt="Foodies">
         </div>
         <div class="linea"></div>
-      <form class="form" action="/" method="post">
+      <form class="form" action="/" method="post" id="commentForm">
         <div class="SeccionDerecha">
             <input class="introducir" type="text" id= "nombre" name= "nombre" placeholder="Nombre">
             <input class="introducir" type="text" id= "correo" name= "correo" placeholder="Correo">
@@ -120,6 +120,48 @@
     })
     document.getElementById("botonregister").addEventListener("click", function() {
     window.location.href = "/Choose";
+    })
+
+
+    const formulario = document.getElementById("commentForm")
+
+    formulario.addEventListener('submit',async function(event){
+        event.preventDefault()
+        const formData = new FormData(this)
+        const data = Object.fromEntries(formData.entries())
+        console.log(data)
+        let ready = true
+        for(const key in data){
+        const input = document.getElementById(key)
+            if(data[key]==""){
+                input.style.border = "2px solid red"
+                ready = false
+            }else{
+                input.style.border = "none"
+            }
+        }
+
+        if(ready){
+            fetch("/contactUsC",{
+                method:'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.status)
+                if(data.status){
+                    alert("Comentario enviado, gracias por su aportacion")
+                    window.location.reload()
+                }else{
+                    alert("Error al enviar el comentario, intente de nuevo mas tarde")
+                }
+            })
+        }else{
+            alert("Rellene todos los campos antes de enviar un mensaje")
+        }
     })
     </script>
     

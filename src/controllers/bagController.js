@@ -88,12 +88,6 @@ router.get('/enviarPedido/:id/:espera/:especificaciones/:pickup',async (req,res)
     console.log(nuevoCarrito)
     res.json(resultado)
 })
-/*router.get('/enviarEspecificaciones/:texto',async (req,res) => {
-    const especificaciones = decodeURI(req.params.especificaciones)
-    console.log('inicia el envio de especificaciones')
-    const resultado = await db.query("update","pedidos",{cliente:req.session.userMail,estado:"Carrito"},{$set:{especificaciones:texto}})
-    res.json(resultado)
-})*/
 
 router.get('/confirmar',async (req,res) => {
     console.log('inicia la confirmacion')
@@ -120,8 +114,12 @@ router.get('/confirmarFoodieBox/:proveedor',async (req,res)=>{
     dateLimit.setMinutes(dateLimit.getMinutes()-5)
     const ping = await db.query("aggregation","proveedores",[{$match:{correo:proveedor}},{$lookup:{from:"foodieboxes",localField:"foodiebox",foreignField:"numSerie",as:"infoFoodieBox"}},{$project:{ping:"$infoFoodieBox.ping"}},{$unwind:"$ping"}])
     console.log("ping recibido")
-    console.log({status:  ping[0].ping>dateLimit})
-    res.json({status:  ping[0].ping>dateLimit})
+    if(ping.length>0){
+        console.log({status:  ping[0].ping>dateLimit})
+        res.json({status:  ping[0].ping>dateLimit})
+    }else{
+        res.json({status:  false})
+    }
 })
 
 router.get('/confirmarEspera/:idCarrito',async(req,res) => {

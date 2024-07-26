@@ -53,8 +53,6 @@ if(proveedorCarrito){
     let foodieBoxCheck = document.getElementById("foodiecheck")
     foodieBoxCheck.disabled = true
   }
-}else{
-  alert("no hay proveedor")
 }
 
 

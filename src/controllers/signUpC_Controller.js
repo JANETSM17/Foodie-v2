@@ -10,12 +10,14 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    console.log(req.body)
     const { nombre, telefono, correo, contraseña, confirm_password } = req.body;
     if (contraseña===confirm_password) {//revisa que se confirme correctamente la contraseña
-        const usuarios = await db.query("find","clientes",{$or:[{telefono:telefono},{correo:correo}]},{})
-        console.log(usuarios)
-        if(usuarios.length > 0){//revisa que no este tratando de crear una cuenta con un correo o telefono ya utilizadp
-            res.send('Correo o telefono ya registrado en otra cuenta, intente de nuevo')
+        const clientes = await db.query("find","clientes",{$or:[{telefono:telefono},{correo:correo}]},{_id:0,correo:1})
+        const proveedores = await db.query("find","proveedores",{$or:[{telefono:telefono},{correo:correo}]},{_id:0,correo:1})
+        console.log(clientes)
+        if(clientes.length > 0 || proveedores.length>0){//revisa que no este tratando de crear una cuenta con un correo o telefono ya utilizado
+            res.json({status:"datos repetidos"})
         }else{
             const queryObject = {nombre: nombre, correo: correo, contraseña: contraseña, telefono: telefono, created_at: new Date(),imagen: 'rutaImaginaria.jpg',active: true, proveedores: []};//crea un objeto con la info del usuario
 
@@ -26,14 +28,10 @@ router.post('/', async (req, res) => {
             console.log('Usuario registrado con éxito');
             const nuevoCarrito = await db.query("insert","pedidos",{cliente:req.session.userMail,estado:"Carrito",proveedor:"",especificaciones:"",descripcion:[],especificaciones:""})
             console.log(nuevoCarrito)
-            res.redirect('/homeC');
+            res.json({status:"OK"});
         }
-        
     } else {
-        res.send(`<script>
-                    window.location.href = "/signUp-C";
-                    alert("La contraseña no fue confirmada correctamente");
-                    </script>`);
+        res.json({status:"error al confirmar contraseña"})
     }
     
 });
