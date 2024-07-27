@@ -20,6 +20,7 @@
            <li><button onclick="irHome()">Pedidos Pendientes</button></li>
            <li><button onclick="irQA()">Preguntas Frecuentes</button></li>
            <li><button onclick="irContact()">Contact</button></li>
+           <li><button onclick="irFoodiebox()">Mi Foodiebox</button></li>
         </ul>
         <div class="funciones">
             <button title="ir hacia el perfil"class="perfil" onclick="irProfile()"></button>
@@ -30,18 +31,18 @@
         <div id="instructions">
            <h1> Bienvenido, para enlazar tu foodiebox sigue las siguientes instrucciones </h1>
             <ul class="instruccciones">
-                <li>Paso 1: Identifica el numero serial de tu foodiebox que se encuentra al reverso del mismo</li>
+                <li>Paso 1: Identifica el numero serial de tu foodiebox que se encuentra al reverso de la misma</li>
                 <li>Paso 2: Escribelo en el siguiente campo  y dale click a ENLAZAR</li>
                 <li>Paso 3: Empieza a usar la foodiebox para aumentar tus ventas :)</li>
             </ul>
         </div>
         <div id="addFoodiebox">
             <p>Liga tu foodiebox</p>
-            <input type="text">
-            <button type="button">Ligar</button>
+            <input type="text" id="numSerie">
+            <button type="button" onclick="ligar()">Ligar</button>
         </div>
     <section>
 
-        <script src="foodiebox.js"></script>
+        <script src="../../views/foodiebox/foodiebox.js"></script>
 </body>
 </html>

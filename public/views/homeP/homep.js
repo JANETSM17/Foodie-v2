@@ -8,7 +8,10 @@ function irContact() {
     window.location.href = "/contactUsE";
   };
 function irProfile() {
-    window.location.href = "/providerProfile";
+    window.location.href = "/clientProfile";
+  }
+function irFoodiebox() {
+    window.location.href = "/foodiebox";
   }
   function hacerSolicitud(url) {
     var xhr = new XMLHttpRequest();
@@ -206,13 +209,17 @@ function entregado(id) {
 }
 
 function aceptado(id) {
-    
+    fetch(`/homeP/aceptarPedido/${id}`)
+    .then(setHomeP())
+    .catch(error => console.log('Error:', error));
 }
 function rechazado(id) {
-    
+    fetch(`/homeP/rechazarPedido/${id}`)
+    .then(setHomeP())
+    .catch(error => console.log('Error:', error));
 }
 //Funcion para actualizar los pedidos
-
+ 
 function setHomeP() {
     const pedidos = hacerSolicitud('/homeP/pedidos');//todos los pedidos activos del proveedor (en proceso y listos)
 

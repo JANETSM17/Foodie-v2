@@ -103,7 +103,51 @@ router.get('/pedidoEntregado/:clave',async (req,res)=>{
             numPedido: ""
         })
     }
-    
+})
+
+router.get('/pedidoEntregado/:clave',async (req,res)=>{
+    const {clave} = req.params
+    console.log("Lo detecta")
+    const pedido = await db.query("find","pedidos",{clave:clave},{cliente:1,clave:1,_id:1})
+    if(pedido.length>0){
+        const setEntregado = await db.query("update","pedidos",{clave:clave},{$set:{estado:"No recogido",clave:"N/A"}})
+        if(setEntregado.modifiedCount>0){
+            const id = pedido[0]._id.toString()
+        res.json({
+            usuario: pedido[0].cliente,
+            clave: clave,
+            numPedido: id.substring(id.length-6,id.length).toUpperCase()
+        })
+        }else{
+            res.json({
+                usuario: "",
+                clave: "",
+                numPedido: ""
+            })
+        }
+    }else{
+        res.json({
+            usuario: "",
+            clave: "",
+            numPedido: ""
+        })
+    }
+})
+
+router.get("/ligar/:numSerie",async (req,res)=>{
+    const {numSerie} =req.params
+
+    const busqueda = await db.query("find","foodieboxes",{numSerie:numSerie},{_id:0,numSerie:1})
+    if(busqueda.length>0){
+        const update = await db.query("update","proveedores",{correo:req.session.userMail},{$set:{foodiebox:numSerie}})
+        if(update.acknowledged){
+            res.json({status:"OK"})
+        }else{
+            res.json({status:"Failed"})
+        }
+    }else{
+        res.json({status:"Not found"})
+    }
 })
 
 module.exports = router;
