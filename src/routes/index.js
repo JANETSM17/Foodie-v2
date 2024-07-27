@@ -44,6 +44,6 @@ router.use('/providerProfileMenu', providerProfileMenuController);
 router.use('/providerQA', providerProfileQAController);
 router.use('/providerProfileStatistics', providerProfileStatisticsController);
 router.use('/QA', QAController);
-router.use('/foodie-box',foodieboxController)
+router.use('/foodiebox',foodieboxController)
 
 module.exports = router;

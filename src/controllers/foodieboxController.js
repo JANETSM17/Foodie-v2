@@ -3,6 +3,11 @@ const db = require('../services/db'); // Importa la configuración de la base de
 const path = require('path');
 const router = express.Router();
 
+router.get('/', (req, res) => {
+    const QAPagePath = path.join(__dirname, '../../public/views/foodiebox/foodiebox.html');
+    res.sendFile(QAPagePath);
+});
+
 router.get('/ping/:numSerie',async (req,res)=>{
     const {numSerie} = req.params
     const ping = new Date()
