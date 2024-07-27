@@ -26,11 +26,23 @@ function irProfile() {
     }
   }
 
-function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, total,descripcion,entrega) {
+function crearPedido(id,clave, nombre,numerodepedido, telefono, metodo, especificaciones, total,descripcion,entrega) {
     const pedido = document.createElement('article');
     pedido.id = id + 'pedido';
     pedido.classList.add("pedido")
-    
+    let boton;
+    if (metodo == "Mostrador") {
+        boton = `
+        Listo
+        <button class="listo" id="listo${id}" onclick="listo('${id}')"></button>
+        `
+    } else {
+        boton = `
+        Clave Foodiebox
+        <h3>${clave}</h3>
+        `
+    }
+
     pedido.innerHTML = `
         <div class="contacto">
             <div class="usuario">
@@ -60,19 +72,33 @@ function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, tota
             <p>Hora <span>de</span> Pick-Up</p>
             <p>${entrega}</p>
         </div>
-        <div class="boton">
-            Listo
-            <button class="listo" id="listo${id}" onclick="listo('${id}')"></button>
+        <div class= "boton">
+        ${boton}
         </div>
     `;
   
     return pedido;
 }
 
-function pedidoListo(id, nombre,numerodepedido, telefono, especificaciones, total,descripcion,entrega){
+function pedidoListo(id,clave, nombre,numerodepedido, telefono, metodo, especificaciones, total,descripcion,entrega){
     const listo = document.createElement('article');
     listo.id = id + 'listo';
     listo.classList.add("pedido")
+
+    let boton;
+    if (metodo == "Mostrador") {
+        boton = `
+        Entregado
+            <button id="entregado" onclick="entregado('${id}')"></button>
+        `
+    } else {
+        boton = `
+        Clave Foodiebox
+        <h3>${clave}</h3>
+        `
+    }
+
+
     listo.innerHTML = `
     <div class="contacto">
     <div class="usuario">
@@ -103,8 +129,7 @@ function pedidoListo(id, nombre,numerodepedido, telefono, especificaciones, tota
     <p>${entrega}</p>
 </div>
         <div class="boton">
-            Entregado
-            <button id="entregado" onclick="entregado('${id}')"></button>
+        ${boton}
         </div>
     `;
     return listo;
@@ -210,10 +235,10 @@ function setHomeP() {
             esperando.push(crearEspera(item.id,item.nombre,item.numerodepedido,item.telefono,item.pickup,item.especificaciones,item.total,item.descripcion,item.entrega));    //aun no existe lo que va aqui
                 break;
             case "En proceso":
-            pendientes.push(crearPedido(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega))
+            pendientes.push(crearPedido(item.id,item.clave,item.nombre,item.numerodepedido,item.telefono,item.pickup,item.especificaciones,item.total,item.descripcion,item.entrega))
                 break;
             case "Listo para recoger":
-            listos.push(pedidoListo(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega))
+            listos.push(pedidoListo(item.id,item.clave,item.nombre,item.numerodepedido,item.telefono,item.pickup,item.especificaciones,item.total,item.descripcion,item.entrega))
                 break;
             default:
                 break;
