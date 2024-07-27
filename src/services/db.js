@@ -1,6 +1,6 @@
 // db.js es la configuración de la base de datos
 const { MongoClient, ObjectId} = require('mongodb')
-const local = false
+const local = true
 const url = local?'mongodb://127.0.0.1:27017':'mongodb+srv://Admin:FOODIE@clusterfoodie.10j4aom.mongodb.net/'
 
 const dbName = local?'foodieLocal':'foodie'

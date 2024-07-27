@@ -57,36 +57,6 @@ router.get('/pedidos',async (req,res)=>{
     res.json(resultado)
 })
 
-router.get('/pedidos/:estado',async (req,res)=>{
-    const estado = decodeURI(req.params.estado)
-    const infoPedidos = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail, estado: estado}},{$lookup:{from:"clientes",localField:"cliente",foreignField:"correo",as:"infoCliente"}}])
-    let resultado = []
-    infoPedidos.forEach(pedido=>{
-        let total = 0
-        let descripcion = ""
-        pedido.descripcion.forEach(articulo=>{
-            total += (articulo.producto.precio*articulo.cantidad)
-            descripcion += `${articulo.producto.nombre} x${articulo.cantidad},`
-        })
-        descripcion = descripcion.slice(0,-1)
-        let id = pedido._id.toString()
-
-        resultado.push({
-            id: id,
-            numerodepedido:id.substring(id.length-6,id.length).toUpperCase(),
-            nombre: pedido.infoCliente[0].nombre,
-            telefono: pedido.infoCliente[0].telefono,
-            especificaciones: pedido.especificaciones,
-            total: total,
-            descripcion: descripcion,
-            entrega: pedido.entrega.toLocaleString(),
-            pickup: pedido.pickup,
-            clave: pedido.clave
-        })
-    })
-    res.json(resultado)
-})
-
 router.get('/pedidoListo/:id',async (req,res)=>{
     const id = req.params.id;
     const resultado = await db.query("update","pedidos",{_id:db.objectID(id)},{$set:{estado:"Listo para recoger"}})
@@ -96,6 +66,18 @@ router.get('/pedidoListo/:id',async (req,res)=>{
 router.get('/pedidoEntregado/:id',async (req,res)=>{
     const id = req.params.id;
     const resultado = await db.query("update","pedidos",{_id:db.objectID(id)},{$set:{estado:"Entregado"}})
+    res.json({status: "done"})
+})
+
+router.get('/aceptarPedido/:id',async (req,res)=>{
+    const id = req.params.id;
+    const resultado = await db.query("update","pedidos",{_id:db.objectID(id)},{$set:{estado:"En proceso"}})
+    res.json({status: "done"})
+})
+
+router.get('/rechazarPedido/:id',async (req,res)=>{
+    const id = req.params.id;
+    const resultado = await db.query("update","pedidos",{_id:db.objectID(id)},{$set:{estado:"Rechazado"}})
     res.json({status: "done"})
 })
 

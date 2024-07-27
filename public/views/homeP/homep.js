@@ -8,7 +8,10 @@ function irContact() {
     window.location.href = "/contactUsE";
   };
 function irProfile() {
-    window.location.href = "/providerProfile";
+    window.location.href = "/clientProfile";
+  }
+function irFoodiebox() {
+    window.location.href = "/foodiebox";
   }
   function hacerSolicitud(url) {
     var xhr = new XMLHttpRequest();
