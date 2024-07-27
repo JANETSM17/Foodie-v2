@@ -194,7 +194,7 @@ function entregado(id) {
 }
 
 //Funcion para actualizar los pedidos
-
+ 
 function setHomeP() {
     setPedidosListos()
     setPedidosPend()
