@@ -184,10 +184,14 @@ function entregado(id) {
 }
 
 function aceptado(id) {
-    
+    fetch(`/homeP/aceptarPedido/${id}`)
+    .then(setHomeP())
+    .catch(error => console.log('Error:', error));
 }
 function rechazado(id) {
-    
+    fetch(`/homeP/rechazarPedido/${id}`)
+    .then(setHomeP())
+    .catch(error => console.log('Error:', error));
 }
 //Funcion para actualizar los pedidos
  
