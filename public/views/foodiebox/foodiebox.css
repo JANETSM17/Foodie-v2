@@ -1,0 +1,129 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../../../Assets/Tipografias/Nunito/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NunitoBold';
+    src: url('../../../Assets/Tipografias/Nunito/static/Nunito-Bold.ttf') format('truetype');
+    font-weight: bold; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+html{
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+header {
+    width: 100%;
+    height: 12vh;
+    background-color: black;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding: 0%;
+}
+.paginas li button{
+    cursor: pointer;
+    max-height: 100%;
+    background-color: unset;
+    border-style: none;
+    padding: 8px;
+}
+button {
+    background-color: unset;
+    border-style: none;
+}
+
+header{
+    width: 100%;
+    height: 10vh;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+img{
+    max-height: 100%;
+    max-width: 30%;
+    margin-left: 10px;
+    
+}
+.paginas{
+    display: flex;
+    justify-content: space-between;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+}
+.paginas button{
+    background-color: transparent;
+    border-style: none;
+    color: white;
+    font-size: 1.25rem;
+    border-radius: 30px;
+}
+.funciones{
+    width: 10%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    margin-right: 10px;
+}
+.funciones button{
+    height: 30px;
+    width: 30px;
+    border-style: none;
+    background-color: transparent;
+}
+.bolsa{
+    background-image: url('../../assets/Imagenes/Recursos%20extras/bolsaW.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.bolsa:hover{
+    cursor: pointer;
+    background-color: white;
+    background-image: url('../../../assets/Imagenes/Recursos%20extras/bolsaB.png');
+}
+.perfil{
+    background-image: url('../../assets/Imagenes/Recursos%20extras/avatarW.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.perfil:hover{
+    cursor: pointer;
+    background-color: white;
+    background-image: url('../../assets/Imagenes/Recursos%20extras/avatarN.png');
+}
+.paginas button:hover{
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+#check{
+    display: none;
+}
+.paginas{
+  list-style: none;  
+}
+
+section{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+}
+#addFoodiebox{
+    width: 50%;
+    height: 60vh;
+    background-color: rebeccapurple;
+}
