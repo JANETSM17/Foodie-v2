@@ -144,7 +144,7 @@ img{
         justify-content: space-between;
     }
     img{
-        width: 150px;
+        width: 100px;
         height: auto;
         
     }
@@ -169,7 +169,7 @@ img{
         height: 10vh;
         border-style: none;
         color: white;
-        font-size: 1.25rem;
+        font-size: 1rem;
         transition: height 0.5s ease;
     }
     .paginas button:hover{

@@ -135,7 +135,7 @@ function entregado(id) {
 }
 
 //Funcion para actualizar los pedidos
-
+ 
 function setHomeP() {
     const pedidos = hacerSolicitud('/homeP/pedidos');//todos los pedidos activos del proveedor (en proceso y listos)
 
