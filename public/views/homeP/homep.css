@@ -372,8 +372,14 @@ section{
     width: 100%;
 }
 
+#esperando{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 .pedido{
-    width: 90%;
+    min-width: 90%;
     min-height: 150px;
     height: 20vh;
     justify-content: space-between;
@@ -385,6 +391,55 @@ section{
     display: flex;
 }
 
+.estado{
+    width: 100px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 3vh;
+    box-sizing: border-box;
+    font-size: 20px;
+    margin-right: 1vh;
+}
+.Aceptado{
+    width: 90%;
+    min-height: 50px;
+    height: 7vh;
+    background-color: #ffb400ff;
+    color: black;
+    border-radius: 2vh;
+    margin-top: 2vh;
+}
+.Rechazado{
+    width: 90%;
+    min-height: 50px;
+    height: 7vh;
+    background-color: #aaa;
+    color: black;
+    border-radius: 2vh;
+    margin-top: 2vh;
+}
+.Pick-Up{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+}
+.espera{
+    min-width: 90%;
+    min-height: 150px;
+    height: 20vh;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 3vh;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+    margin: 25px;
+    display: flex;
+}
 .contacto{
     height: 100%;
     width: 250px;

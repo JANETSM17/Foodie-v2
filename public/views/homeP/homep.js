@@ -69,7 +69,6 @@ function crearPedido(id, nombre,numerodepedido, telefono, especificaciones, tota
         </div>
     `;
   
-    // Agregar un event listener al botón "Listo"
     return pedido;
 }
 
@@ -113,14 +112,64 @@ function pedidoListo(id, nombre,numerodepedido, telefono, especificaciones, tota
     `;
     return listo;
 }
+function crearEspera(id, nombre,numerodepedido, telefono, metodo, especificaciones, total, descripcion,entrega) {
+    const espera = document.createElement('article');
+    espera.id = id + 'espera';
+    espera.classList.add("espera")
+    
+    espera.innerHTML = `
+        <div class="contacto">
+            <div class="usuario">
+                <img src="../Assets/Imagenes/Recursos extras/avatarN.png" alt="">
+                <p>${nombre}</p>
+            </div>
+            <div class="numero">
+                <p>Número de <br>Pedido:</p>
+                <p id="numerodepedido">${numerodepedido}</p>
+            </div>
+            <p class="telefono">${telefono}</p>
+        </div>
+        <div class="division"></div>
+        <div class="Pick-Up">
+        <h2>Pick-Up</h2>
+        <h3>${metodo}</h3>
+        </div>
+        <div class="contenido">
+            <ul class="productos">
+                <li>${descripcion}</li>
+            </ul>
+        </div>
+        <div class="comentario">
+            <p>${especificaciones}</p>
+        </div>
+        <div class="precio">
+            <p>Total:</p>
+            <p>$${total}</p>
+        </div>
+        <div class="recogida">
+            <p>Hora <span>de</span> Pick-Up</p>
+            <p>${entrega}</p>
+        </div>
+        <div class="estado">
+            <button class="Aceptado" id="aceptado${id}" onclick="aceptado('${id}')">Aceptar</button>
+            <button class="Rechazado" id="rechazado${id}" onclick="rechazado('${id}')">Rechazar</button>
+        </div>
+    `;
 
-var pendientes = [];//arreglo para guardar las fichas de los pedidos en proceso
+    return espera;
+}
 
-var listos = [];//arreglo para guardar las fichas de los pedidos listos
+let pendientes = [];//arreglo para guardar las fichas de los pedidos en proceso
+
+let listos = [];//arreglo para guardar las fichas de los pedidos listos
+
+let esperando = [];//arreglo para guardar las fichas de los pedidos en espera de aceptacion 
 
 const pedidospendientes = document.getElementById("pedidospendientes");
 
 const pedidoslistos = document.getElementById("pedidoslistos");
+
+const pedidosesperando = document.getElementById("esperando"); 
 
 function listo(id) {
     fetch(`/homeP/pedidoListo/${id}`)
@@ -134,6 +183,12 @@ function entregado(id) {
     .catch(error => console.log('Error:', error));
 }
 
+function aceptado(id) {
+    
+}
+function rechazado(id) {
+    
+}
 //Funcion para actualizar los pedidos
  
 function setHomeP() {
@@ -143,14 +198,19 @@ function setHomeP() {
 
     listos = [];//arreglo para guardar las fichas de los pedidos listos
 
-    pedidospendientes.innerHTML = '' //se limpia el espacio para pedidos pendientes
+    esperando = []; //arreglo para guardar las fichas de los pedidos listos
 
-    pedidoslistos.innerHTML = ''//se limpia el espacio para pedidos listos
+    pedidospendientes.innerHTML = ''; //se limpia el espacio para pedidos pendientes
+
+    pedidoslistos.innerHTML = '';//se limpia el espacio para pedidos listos
+
+    pedidosesperando.innerHTML = '';//se limpia el espacio para pedidos en espera
+
 
     pedidos.forEach(item=>{//en este switch se acomodan todos los pedidos segun su estado
         switch (item.estado) {
             case "Esperando confirmacion":
-                //aun no existe lo que va aqui
+            esperando.push(crearEspera(item.id,item.nombre,item.numerodepedido,item.telefono,item.pickup,item.especificaciones,item.total,item.descripcion,item.entrega));    //aun no existe lo que va aqui
                 break;
             case "En proceso":
             pendientes.push(crearPedido(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega))
@@ -170,6 +230,9 @@ function setHomeP() {
     listos.forEach(listo => {
         pedidoslistos.appendChild(listo);
     }); 
+    esperando.forEach(espera => {
+        pedidosesperando.appendChild(espera);
+    })
 }
 
 setHomeP()
