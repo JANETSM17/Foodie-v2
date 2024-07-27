@@ -28,8 +28,9 @@ router.get('/', (req, res) => {
 router.get('/pedidosEnCurso',async (req,res) => {
     console.log('inicia el query')
     const userInfo = await db.query("find","clientes",{_id:db.objectID(req.session.userID)},{nombre:1,telefono:1,_id:0})
-    const estados = ["En proceso","Listo para recoger"]
-    const pedidoInfo = await db.query("find","pedidos",{cliente: req.session.userMail,estado:{$in:estados}},{_id:1,especificaciones:1,descripcion:1, entrega:1,estado:1,clave:1,pickup:1})
+    const estados = ["Esperando confirmacion","En proceso","Listo para recoger","Cancelado"]
+    const pedidoInfo = await db.query("aggregation","pedidos",[{$match:{cliente: req.session.userMail,estado:{$in:estados}}},{$sort:{entrega:-1}},{$limit:1},{$project:{_id:1,especificaciones:1,descripcion:1, entrega:1,estado:1,clave:1,pickup:1}}])
+    const pedidoInfos = await db.query("find","pedidos",{cliente: req.session.userMail,estado:{$in:estados}},{_id:1,especificaciones:1,descripcion:1, entrega:1,estado:1,clave:1,pickup:1})
     let resultado = []
     pedidoInfo.forEach(pedido=>{
         let total = 0
