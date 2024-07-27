@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodiebox</title>
+    <link rel="icon" href="../../Assets/Imagenes/Logos/FoodieLogo.png">
+    <link rel="stylesheet" href="../../views/foodiebox/foodiebox.css">
+</head>
+<body>
+    <header>
+        <img src="../assets/Imagenes/Logos/FoodieOriginal.png" alt="Foodie">
+        <input type="checkbox" id="check">
+        <label for="check" class="menu-button">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </label>
+        <ul class="paginas">
+           <li><button onclick="irHome()">Pedidos Pendientes</button></li>
+           <li><button onclick="irQA()">Preguntas Frecuentes</button></li>
+           <li><button onclick="irContact()">Contact</button></li>
+        </ul>
+        <div class="funciones">
+            <button title="ir hacia el perfil"class="perfil" onclick="irProfile()"></button>
+        </div>
+    </header>
+    <section>
+        <div id="addFoodiebox">
+            <h3>Liga tu foodiebox</h3>
+            <input type="text">
+            <button type="button">Ligar</button>
+        </div>
+    <section>
+
+        <script src="foodiebox.js"></script>
+</body>
+</html>

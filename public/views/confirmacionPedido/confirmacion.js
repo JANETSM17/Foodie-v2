@@ -34,7 +34,7 @@ function hacerSolicitud(url) {
     }
   }
 
-function crearPedido(id, nombre, numerodepedido, telefono, especificaciones, total,descripcion,entrega,status,clave,pickup) {
+function crearPedido(id, nombre, telefono, especificaciones, total,descripcion,entrega,status,clave,pickup) {
     const pedido = document.createElement('article');
     pedido.id = id + 'pedido';
     pedido.classList.add("pedido")
