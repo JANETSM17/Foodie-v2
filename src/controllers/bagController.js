@@ -112,13 +112,13 @@ router.get('/confirmarFoodieBox/:proveedor',async (req,res)=>{
     const {proveedor} = req.params
     let dateLimit = new Date()
     dateLimit.setMinutes(dateLimit.getMinutes()-5)
-    const ping = await db.query("aggregation","proveedores",[{$match:{correo:proveedor}},{$lookup:{from:"foodieboxes",localField:"foodiebox",foreignField:"numSerie",as:"infoFoodieBox"}},{$project:{ping:"$infoFoodieBox.ping"}},{$unwind:"$ping"}])
+    const info = await db.query("aggregation","proveedores",[{$match:{correo:proveedor}},{$lookup:{from:"foodieboxes",localField:"foodiebox",foreignField:"numSerie",as:"infoFoodieBox"}},{$project:{nombre:1, active:1, ping:"$infoFoodieBox.ping"}},{$unwind:"$ping"}])
     console.log("ping recibido")
-    if(ping.length>0){
-        console.log({status:  ping[0].ping>dateLimit})
-        res.json({status:  ping[0].ping>dateLimit})
+    if(info.length>0){
+        console.log({status:  info[0].ping>dateLimit,active:info[0].active, nombre:info[0].nombre})
+        res.json({status:  info[0].ping>dateLimit,active:info[0].active, nombre:info[0].nombre})
     }else{
-        res.json({status:  false})
+        res.json({status:  false,active:false,nombre:""})
     }
 })
 

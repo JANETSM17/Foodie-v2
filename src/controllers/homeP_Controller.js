@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/pedidos',async (req,res)=>{
-    const estados = ["En proceso","Listo para recoger"]
+    const estados = ["Esperando confirmacion","En proceso","Listo para recoger"]
     const infoPedidos = await db.query("aggregation","pedidos",[{$match:{proveedor:req.session.userMail, estado:{$in:estados}}},{$lookup:{from:"clientes",localField:"cliente",foreignField:"correo",as:"infoCliente"}}])
     let resultado = []
     infoPedidos.forEach(pedido=>{

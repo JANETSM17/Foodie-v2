@@ -10,7 +10,6 @@ function irContact() {
 function irProfile() {
     window.location.href = "/providerProfile";
   }
-
   function hacerSolicitud(url) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, false);  // El tercer parámetro indica si la solicitud es síncrona
@@ -147,13 +146,15 @@ function setHomeP() {
 
     pedidos.forEach(item=>{//en este switch se acomodan todos los pedidos segun su estado
         switch (item.estado) {
+            case "Esperando confirmacion":
+                //aun no existe lo que va aqui
+                break;
             case "En proceso":
             pendientes.push(crearPedido(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega))
                 break;
             case "Listo para recoger":
             listos.push(pedidoListo(item.id,item.nombre,item.numerodepedido,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega))
                 break;
-        
             default:
                 break;
         }
@@ -187,7 +188,6 @@ buscar.addEventListener('click', function (){
         if (pedidospendientes.innerHTML == '') {
         alert('No Tienes Ningun Pedido Pendiente Con Ese Usuario')
         }
-
     regresarBusqueda.style.display = 'block';
 })
 
@@ -214,7 +214,6 @@ buscarL.addEventListener('click', function (){
         if (pedidoslistos.innerHTML == '') {
         alert('No Tienes Ningun Pedido Listo Con Ese Usuario')
         }
-
     regresarBusquedaL.style.display = 'block';
 })
 
@@ -239,4 +238,3 @@ function renderizarPedidosListos() {
         pedidoslistos.appendChild(listo);
     });
 }
-

@@ -47,13 +47,17 @@ numTel.textContent = infoUsr[0].telefono;
 const infoCarrito = hacerSolicitud('/bag/getPedido');
 const idCarrito = infoCarrito.id;
 const proveedorCarrito = infoCarrito.proveedor
+var infoProveedor
 if(proveedorCarrito){
-  const statusFoodieBox = hacerSolicitud(`/bag/confirmarFoodieBox/${proveedorCarrito}`)
-  if(!statusFoodieBox.status){
+  infoProveedor = hacerSolicitud(`/bag/confirmarFoodieBox/${proveedorCarrito}`)
+  if(!infoProveedor.status){
     let foodieBoxCheck = document.getElementById("foodiecheck")
     foodieBoxCheck.disabled = true
   }
+  proveedorAbierto = infoProveedor.active
 }
+
+
 
 
 function cerrarDescripcion(event) {
@@ -138,44 +142,44 @@ function modificarCantidad(event, accion, precio) {
     const foodieBoxCheck = document.getElementById("foodiecheck")
     const pagoMostradorCheck = document.getElementById("foodiechecknt")
     if(foodieBoxCheck.checked||pagoMostradorCheck.checked){
-      let infoConfirm = hacerSolicitud('/bag/confirmar');
-      console.log(infoConfirm)
-      let cuenta = infoConfirm.cuenta;
-
-      if (document.getElementsByClassName("producto").length==0) {
-        alert("No puedes hacer un pedido sin productos")
-        window.location.href = "/homeC"
-      }else{
-        if (cuenta == 0) {
-          console.log("Se manda el pedido")
-        let especificacionesCampo = document.getElementById("especificaciones");
-      let especificaciones = especificacionesCampo.value
-      if (especificaciones.length==0){
-        especificaciones="Pedido sin especificaciones especiales";
-      }
-
-      let esperaUsr = document.getElementById("minutos").value
-      let infoEsperaReal = hacerSolicitud(`/bag/confirmarEspera/${idCarrito}`);
-      let esperaReal = infoEsperaReal[0].min_espera;
-      console.log("los minutos de espera son:" + esperaReal)
-
-      const pickup = foodieBoxCheck.checked ? "foodiebox" : "mostrador"
+      if(infoProveedor.active){
+        let infoConfirm = hacerSolicitud('/bag/confirmar');
+        console.log(infoConfirm)
+        let cuenta = infoConfirm.cuenta;
+  
+        if (document.getElementsByClassName("producto").length==0) {
+          alert("No puedes hacer un pedido sin productos")
+          window.location.href = "/homeC"
+        }else{
+          if (cuenta == 0) {
+            console.log("Se manda el pedido")
+            let especificacionesCampo = document.getElementById("especificaciones");
+            let especificaciones = especificacionesCampo.value
+            if (especificaciones.length==0){
+              especificaciones="Pedido sin especificaciones especiales";
+            }
+  
+            let esperaUsr = document.getElementById("minutos").value
+            let infoEsperaReal = hacerSolicitud(`/bag/confirmarEspera/${idCarrito}`);
+            let esperaReal = infoEsperaReal[0].min_espera;
+            console.log("los minutos de espera son:" + esperaReal)
       
-
-      //hacerSolicitud(`/bag/enviarEspecificaciones/${especificaciones}`)
-      
-      if (esperaUsr<esperaReal) {
-        hacerSolicitud(`/bag/enviarPedido/${idCarrito}/${esperaReal}/${especificaciones}/${pickup}`);
-        alert("El tiempo seleccionado era menor al\ntiempo minimo de espera de su comedor, por\n lo que se le asignara el tiempo de espera\nminimo.");
-            
-      }else{
-        hacerSolicitud(`/bag/enviarPedido/${idCarrito}/${esperaUsr}/${especificaciones}/${pickup}`); 
+            const pickup = foodieBoxCheck.checked ? "foodiebox" : "mostrador"
+              
+            if (esperaUsr<esperaReal) {
+              hacerSolicitud(`/bag/enviarPedido/${idCarrito}/${esperaReal}/${especificaciones}/${pickup}`);
+              alert("El tiempo seleccionado era menor al\ntiempo minimo de espera de su comedor, por\n lo que se le asignara el tiempo de espera\nminimo.");    
+            }else{
+              hacerSolicitud(`/bag/enviarPedido/${idCarrito}/${esperaUsr}/${especificaciones}/${pickup}`); 
+            }
+            window.location.href = '/pedidos';
+          }else{
+            alert("Lo lamentamos, pero parece ser que tienes un pedido pendiente de recoger. \nNo podras hacer un pedido nuevo hasta que pagues y recojas tu pedido anterior");
+            window.location.href = '/pedidos';
+          }
         }
-      window.location.href = '/pedidos';
       }else{
-        alert("Lo lamentamos, pero parece ser que tienes un pedido pendiente de recoger. \nNo podras hacer un pedido nuevo hasta que pagues y recojas tu pedido anterior");
-        window.location.href = '/pedidos';
-        }
+        alert(`Parece ser que la cafeteria "${infoProveedor.nombre}" está cerrada.\nIntente hacer su pedido mas tarde. ;)`)
       }
     }else{
       alert("Seleccione un metodo de entrega")
