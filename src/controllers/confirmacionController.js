@@ -51,7 +51,7 @@ router.get('/pedidosEnCurso',async (req,res) => {
                 entrega: pedido.entrega.toLocaleString(),
                 status: pedido.estado,
                 clave: pedido.clave,
-                pickup: pedido.pickup=="mostrador"?"Mostrador":"Foodie-box"
+                pickup: pedido.pickup=="mostrador"?"Mostrador":"Foodiebox"
             }
         )
     })

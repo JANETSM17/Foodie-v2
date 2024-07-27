@@ -49,7 +49,7 @@ router.get('/pedidos',async (req,res)=>{
             total: total,
             descripcion: descripcion,
             entrega: pedido.entrega.toLocaleString(),
-            pickup: pedido.pickup,
+            pickup: pedido.pickup=="mostrador"?"Mostrador":"Foodiebox",
             clave: pedido.clave,
             estado: pedido.estado
         })
