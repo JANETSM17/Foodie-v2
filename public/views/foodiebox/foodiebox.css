@@ -117,13 +117,5 @@ img{
 section{
     width: 100%;
     height: 90vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: red;
-}
-#addFoodiebox{
-    width: 50%;
-    height: 60vh;
-    background-color: rebeccapurple;
+    background-color: #efefef;
 }
