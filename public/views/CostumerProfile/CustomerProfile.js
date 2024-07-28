@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var closeLogoutBtn = document.getElementById('closeLogoutBtn');
   var modal = document.getElementById('LogoutModal');
   
+  modal.style.display = 'none';
+
   Logout.addEventListener('click', function () {
       modal.style.display = 'block';
   });
