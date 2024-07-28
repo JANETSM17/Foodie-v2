@@ -377,7 +377,7 @@ input:checked + .Slider:before {
     cursor: pointer;
     background-color: transparent;
     border: none;
-    background-image: url("../../../Assets/Imagenes/Recursos%20extras/info.png");
+    background-image: url("../../../Assets/Imagenes/Recursos%20extras/pencil.png");
     background-repeat: no-repeat;
     background-size: contain;
 }

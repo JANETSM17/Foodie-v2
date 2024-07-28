@@ -1,5 +1,5 @@
 function poderEditar() {
-    alert("Si quieres editar un producto te pedimos que elimines el producto y vuelvas a crearlo con los cambios necesarios");
+    alert("Si lo que quieres es editar la informacion de un producto puedes hacerlo desde la foodie app");
 }
 
 function hacerSolicitud(url) {
