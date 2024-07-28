@@ -86,6 +86,24 @@ pedidosH.forEach(pedido => {
   fechaPage.textContent = `${año}/${mes}/${dia}`
   const totalCuenta = document.getElementById("totalCuenta")
   totalCuenta.textContent =  `$${infoTotal}`
+
+  const imagenPerfil = document.getElementById("fotoPerfil")
+  imagenPerfil.src = infoUsr[0].imagen
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var myWidget = cloudinary.createUploadWidget({
+        cloudName: 'foodiecloudinary', 
+        uploadPreset: 'preset_chido'
+    }, (error, result) => { 
+        if (!error && result && result.event === "success") { 
+            console.log('Done! Here is the image info: ', result.info); 
+        }
+    });
+
+    imagenPerfil.addEventListener("click", function() {
+        myWidget.open();
+    },false);
+});
   
   const infoPedidoPendiente = hacerSolicitud("/clientProfile/getPedidoPendiente")
   if (infoPedidoPendiente.length==0) {
