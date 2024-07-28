@@ -34,14 +34,14 @@ function hacerSolicitud(url) {
     }
   }
 
-function crearPedido(id, nombre, telefono, especificaciones, total,descripcion,entrega,status,clave,pickup) {
+function crearPedido(id, nombre, telefono, especificaciones, total,descripcion,entrega,status,clave,pickup,imagen) {
     const pedido = document.createElement('article');
     pedido.id = id + 'pedido';
     pedido.classList.add("pedido")
     pedido.innerHTML = `
         <div class="contacto">
             <div class="usuario">
-                <img src="../../Assets/Imagenes/Recursos extras/avatarN.png" alt="">
+                <img src=${imagen} alt="">
                 <p>${nombre}</p>
             </div>
             <div class="numero">
@@ -91,7 +91,7 @@ var  resPendientes = hacerSolicitud('/pedidos/pedidosEnCurso');
 var pedidos = [];
 
 resPendientes.forEach(item => {
-    pedidos.push(crearPedido(item.id,item.nombre,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega,item.status,item.clave,item.pickup));
+    pedidos.push(crearPedido(item.id,item.nombre,item.telefono,item.especificaciones,item.total,item.descripcion,item.entrega,item.status,item.clave,item.pickup,item.imagen));
   console.log(pedidos)
 })
 

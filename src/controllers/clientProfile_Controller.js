@@ -58,7 +58,7 @@ router.post('/deleteAccount', async (req, res) => {
 
 router.get('/getPedidoPendiente',async (req,res) => {
     const estados = ["En proceso","Listo para recoger"]
-    const pedidosInfo = await db.query("aggregation","pedidos",[{$match:{cliente:req.session.userMail,estado:{$in:estados}}},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"infoProveedor"}},{$project:{descripcion:1,entrega:1,"infoProveedor.imagen":1,_id:0}}])
+    const pedidosInfo = await db.query("aggregation","pedidos",[{$match:{cliente:req.session.userMail,estado:{$in:estados}}},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"infoProveedor"}},{$project:{descripcion:1,entrega:1,imagen:"$infoProveedor.imagen",_id:0}},{$unwind:"$imagen"}])
     let resultado = []
     pedidosInfo.forEach(pedido=>{
         let total = 0
@@ -69,7 +69,7 @@ router.get('/getPedidoPendiente',async (req,res) => {
             {
                 total: total,
                 hora: pedido.entrega.toLocaleString(),
-                ruta:pedido.infoProveedor[0].imagen
+                ruta:pedido.imagen
             }
         )
     })
@@ -78,7 +78,7 @@ router.get('/getPedidoPendiente',async (req,res) => {
 
 router.get('/getPedidosHist',async (req,res) => {
     const estados=["Entregado"]
-    const pedidosInfo = await db.query("aggregation","pedidos",[{$match:{cliente:req.session.userMail,estado:{$in:estados}}},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"infoProveedor"}},{$project:{estado:1,descripcion:1,entrega:1,"infoProveedor.imagen":1,_id:0}},{$sort:{entrega:-1}}])
+    const pedidosInfo = await db.query("aggregation","pedidos",[{$match:{cliente:req.session.userMail,estado:{$in:estados}}},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"infoProveedor"}},{$project:{estado:1,descripcion:1,entrega:1,imagen:"$infoProveedor.imagen",_id:0}},{$unwind:"$imagen"},{$sort:{entrega:-1}}])
     let resultado = []
     let total = 0
     pedidosInfo.forEach(pedido=>{
@@ -91,7 +91,7 @@ router.get('/getPedidosHist',async (req,res) => {
             {
                 total: precio,
                 hora: pedido.entrega.toLocaleString(),
-                ruta:pedido.infoProveedor[0].imagen
+                ruta:pedido.imagen
             }
         )
     })

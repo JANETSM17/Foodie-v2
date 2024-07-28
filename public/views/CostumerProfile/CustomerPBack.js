@@ -11,7 +11,7 @@ function crearPedido(ruta,hora,total) {
     const pedido = document.createElement('div');
     pedido.classList.add("pedidoH")
     pedido.innerHTML =`
-                    <div class="ImgH"><img src="../${ruta}" alt="" id="imagenPedidoH"></div>
+                    <div class="ImgH"><img src=${ruta} alt="" id="imagenPedidoH"></div>
                     <div class="FechaHora"><br><p id="horaPedido">${hora}</p></div>
                     <div class="Total"><b>Total:<br><p id="totalPedido">${total}</p></b></div>`
     return pedido;
@@ -144,7 +144,7 @@ pedidosH.forEach(pedido => {
   } else {
     const logoProveedor = document.getElementById("imgPendiente")
     const imagen = document.createElement("img")
-    imagen.src=`../${infoPedidoPendiente[0].ruta}`
+    imagen.src=infoPedidoPendiente[0].ruta
     imagen.id="logoProvPend"
     logoProveedor.appendChild(imagen)
     const nombreProveedor = document.getElementById("nombrePendiente");

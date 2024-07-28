@@ -29,7 +29,7 @@ router.get('/pedidosEnCurso',async (req,res) => {
     console.log('inicia el query')
     const userInfo = await db.query("find","clientes",{_id:db.objectID(req.session.userID)},{nombre:1,telefono:1,_id:0})
     const estados = ["Esperando confirmacion","En proceso","Listo para recoger","Cancelado"]
-    const pedidoInfo = await db.query("aggregation","pedidos",[{$match:{cliente: req.session.userMail,estado:{$in:estados}}},{$sort:{entrega:-1}},{$limit:1},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"infoProveedor"}},{$project:{_id:1,especificaciones:1,descripcion:1, entrega:1,estado:1,clave:1,pickup:1,nombre:"$infoProveedor.nombre",telefono:"$infoProveedor.telefono"}},{$unwind:"$nombre"},{$unwind:"$telefono"}])
+    const pedidoInfo = await db.query("aggregation","pedidos",[{$match:{cliente: req.session.userMail,estado:{$in:estados}}},{$sort:{entrega:-1}},{$limit:1},{$lookup:{from:"proveedores",localField:"proveedor",foreignField:"correo",as:"infoProveedor"}},{$project:{_id:1,especificaciones:1,descripcion:1, entrega:1,estado:1,clave:1,pickup:1,nombre:"$infoProveedor.nombre",telefono:"$infoProveedor.telefono",imagen:"$infoProveedor.imagen"}},{$unwind:"$nombre"},{$unwind:"$telefono"},{$unwind:"$imagen"}])
     let resultado = []
     pedidoInfo.forEach(pedido=>{
         let total = 0
@@ -51,7 +51,8 @@ router.get('/pedidosEnCurso',async (req,res) => {
                 entrega: pedido.entrega.toLocaleString(),
                 status: pedido.estado,
                 clave: pedido.clave,
-                pickup: pedido.pickup=="mostrador"?"Mostrador":"Foodiebox"
+                pickup: pedido.pickup=="mostrador"?"Mostrador":"Foodiebox",
+                imagen: pedido.imagen
             }
         )
     })
