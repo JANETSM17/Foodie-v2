@@ -21,31 +21,6 @@ router.get('/info/:numSerie',async (req,res)=>{
     res.json({clave:resultado[0].clave??""})
 })
 
-router.get('/prueba/:clave',async (req,res)=>{
-    console.log("Lo detecta")
-    const clave = +req.params.clave
-    const pedidos = [{clave:"123456", usuario: "Checo", numPedido: "6A6BB8"},{clave:"654321", usuario: "Sifuentes", numPedido: "131313"},{clave:"777777", usuario: "Shanet", numPedido: "ABCABC"}]
-
-    let mandado = false
-
-    pedidos.forEach(pedido=>{
-        if(clave==pedido.clave){
-            res.json(pedido)
-            mandado = true
-        }
-    })
-
-    if(!mandado){
-        res.json({clave:"", usuario: "", numPedido: ""})
-    }
-})
-
-router.get('/prueba/',async (req,res)=>{
-    console.log("Lo detecta")
-    const pedidos = [{clave:"123456", usuario: "Checo", numPedido: "6A6BB8"},{clave:"654321", usuario: "Sifuentes", numPedido: "131313"},{clave:"777777", usuario: "Shanet", numPedido: "ABCABC"}]
-    res.json(pedidos)
-})
-
 router.get('/pedidoListo/:clave',async (req,res)=>{
     const {clave} = req.params
     console.log("Lo detecta")
@@ -105,7 +80,7 @@ router.get('/pedidoEntregado/:clave',async (req,res)=>{
     }
 })
 
-router.get('/pedidoEntregado/:clave',async (req,res)=>{
+router.get('/pedidoCancelado/:clave',async (req,res)=>{
     const {clave} = req.params
     console.log("Lo detecta")
     const pedido = await db.query("find","pedidos",{clave:clave},{cliente:1,clave:1,_id:1})

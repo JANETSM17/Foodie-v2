@@ -90,26 +90,31 @@ pedidosH.forEach(pedido => {
   const infoPedidoPendiente = hacerSolicitud("/clientProfile/getPedidoPendiente")
   if (infoPedidoPendiente.length==0) {
     const logoProveedor = document.getElementById("imgPendiente")
-  const imagen = document.createElement("img")
-  imagen.src=`../../assets/Imagenes/Logos/cubiertos.png`
-  imagen.id="logoProvPend"
-  logoProveedor.appendChild(imagen)
-  const nombreProveedor = document.getElementById("nombrePendiente");
-  nombreProveedor.textContent = "Sigue comprando con Foodie :)"
-  const frase = document.getElementById("frase");
-  frase.textContent = "No tienes pedidos pendientes"
+    const imagen = document.createElement("img")
+    imagen.src=`../../assets/Imagenes/Logos/cubiertos.png`
+    imagen.id="logoProvPend"
+    logoProveedor.appendChild(imagen)
+    const nombreProveedor = document.getElementById("nombrePendiente");
+    nombreProveedor.textContent = "Sigue comprando con Foodie :)"
+    const frase = document.getElementById("frase");
+    frase.textContent = "No tienes pedidos pendientes"
+    const productosPend = document.getElementById("listaProductosPendientes")
+    productosPend.innerHTML = ''
+    const frasePedidoPend = document.getElementById("tituloPedidoPendiente")
+    frasePedidoPend.textContent = "No tienes un pedido pendiente de recoger,\nsigue comprando en foodie ;)"
+    const numPedidoPend = document.getElementById("idPedidoPendiente")
+    numPedidoPend.innerHTML = ''
   } else {
-    
+    const logoProveedor = document.getElementById("imgPendiente")
+    const imagen = document.createElement("img")
+    imagen.src=`../${infoPedidoPendiente[0].ruta}`
+    imagen.id="logoProvPend"
+    logoProveedor.appendChild(imagen)
+    const nombreProveedor = document.getElementById("nombrePendiente");
+    nombreProveedor.textContent = infoPedidoPendiente[0].nombre;
+    const totalPendiente = document.getElementById("totalPendiente")
+    totalPendiente.textContent = `$${infoPedidoPendiente[0].total}`;
   }
-  const logoProveedor = document.getElementById("imgPendiente")
-  const imagen = document.createElement("img")
-  imagen.src=`../${infoPedidoPendiente[0].ruta}`
-  imagen.id="logoProvPend"
-  logoProveedor.appendChild(imagen)
-  const nombreProveedor = document.getElementById("nombrePendiente");
-  nombreProveedor.textContent = infoPedidoPendiente[0].nombre;
-  const totalPendiente = document.getElementById("totalPendiente")
-  totalPendiente.textContent = `$${infoPedidoPendiente[0].total}`;
   
   // Obtiene el botón de hamburguesa y .profile
   const menuButton = document.querySelector('#check');
