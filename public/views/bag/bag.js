@@ -78,7 +78,7 @@ function cerrarDescripcion(event) {
     productoPedido.setAttribute("name","bagItems")
     productoPedido.innerHTML = `
         <div class="foto">
-            <img src="../../Assets/Imagenes/Comida/${ruta}" alt="${nombre}">
+            <img src=${ruta} alt="${nombre}">
         </div>
         <div class="linea"></div>
         <p>${nombre}</p>

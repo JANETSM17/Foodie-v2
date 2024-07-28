@@ -91,7 +91,7 @@ router.get('/enviarPedido/:id/:espera/:especificaciones/:pickup',async (req,res)
 
 router.get('/confirmar',async (req,res) => {
     console.log('inicia la confirmacion')
-    const estados = ["En proceso","Listo para recoger"]
+    const estados = ["Esperando confirmacion","En proceso","Listo para recoger"]
     const resultado = await db.query("find","pedidos",{cliente:req.session.userMail,estado:{$in:estados}})
     console.log(resultado.length)
     res.json({cuenta:resultado.length})

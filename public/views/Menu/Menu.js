@@ -40,7 +40,7 @@ function hacerSolicitud(url) {
 const comedor = document.getElementById("comedor")
 function mostrarComedor(nombre,rate, foto) {
     comedor.innerHTML = `
-    <img class="foto" src="../../${foto}" alt="">    
+    <img class="foto" src=${foto} alt="">    
     <div class="info">
         <p>${nombre}</p>
         <div class="rate">
