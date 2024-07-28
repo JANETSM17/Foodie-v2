@@ -115,6 +115,15 @@ hr {
     background-repeat: no-repeat;
     background-size: 30px;
     border-radius: 5px;
+    position: relative;
+    top: -40px;  
+    right: 40%;
+}
+.pls{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .OyD:hover {
     cursor: pointer;
