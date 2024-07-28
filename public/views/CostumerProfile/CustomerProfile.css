@@ -75,12 +75,7 @@ hr {
     border-radius: 50%;
     margin: 0% 15%;
 }
-.Imagen:hover{
-    background-color: rgb(224, 224, 224);
-    cursor: pointer;
-    box-shadow: .5vh .8vh 1vh rgba(0, 0, 0, 0.3);
-    transition: .2s ease-in ;
-}
+
 .buttons {
     flex-direction: column;
     display: flex;
@@ -109,6 +104,17 @@ hr {
 .OyD {
     margin: 4%;
     color: #ff9900;
+}
+.subirFoto{
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background-color: #ff9900;
+    background-image: url("../../Assets/Imagenes/Recursos%20extras/pencil.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px;
+    border-radius: 5px;
 }
 .OyD:hover {
     cursor: pointer;
