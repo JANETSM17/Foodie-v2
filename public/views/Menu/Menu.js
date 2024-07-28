@@ -78,7 +78,7 @@ function crearProducto(imagen, nombre, precio , descripcion, id){
     <div class="producto">
          <button onclick="descripcion(event)" class="producto">
              <div class="fotop">
-                 <img src="../../Assets/Imagenes/Comida/${imagen}" alt="${nombre}">
+                 <img src=${imagen} alt="${nombre}">
              </div>
              <p class="nombrep">${nombre}</p>
              <p class="precio">$${precio}</p>
@@ -88,7 +88,7 @@ function crearProducto(imagen, nombre, precio , descripcion, id){
     <div class="productoExtendido">
          <div class="info2">
              <div class="fotop">
-                 <img src="../../Assets/Imagenes/Comida/${imagen}" alt="${nombre}">
+                 <img src=${imagen} alt="${nombre}">
              </div>
              <p class="nombrep">${nombre}</p>
          </div>
@@ -124,6 +124,7 @@ comida.innerHTML = "<p>Comida</p>";
 
 const infoComida = hacerSolicitud('/menu/comida');
 infoComida.forEach(item => {
+    console.log(item)
     comidaArreglo.push(crearProducto(item.imagen,item.nombre,item.precio,item.descripcion,item._id))
 });
 

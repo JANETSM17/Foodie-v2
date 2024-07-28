@@ -56,21 +56,27 @@ router.post('/eliminarProducto/:id', async (req, res) => {
 router.post('/agregarProducto', async (req, res) => {
     const {nombre,precio,descripcion,id_categoria} = req.body;
     let categoria
+    let ruta
     switch (id_categoria) {
         case 1:
             categoria="comida"
+            ruta = "https://res.cloudinary.com/foodiecloudinary/image/upload/v1722137391/hamburger_kvhvjh.png"
             break;
         case 2:
             categoria="bebidas"
+            ruta = "https://res.cloudinary.com/foodiecloudinary/image/upload/v1722137401/smoothie2_b9bzob.png"
             break;
         case 3:
             categoria="dulces"
+            ruta = "https://res.cloudinary.com/foodiecloudinary/image/upload/v1722137520/chocolate-bar-icon-bitten-pieces-600nw-2256291305_nu4re7.jpg"
             break;
         case 4:
             categoria="frituras"
+            ruta = "https://res.cloudinary.com/foodiecloudinary/image/upload/v1722137375/chips_cbcwfu.png"
             break;
         case 5:
             categoria="otros"
+            ruta = "https://res.cloudinary.com/foodiecloudinary/image/upload/v1722137836/estrella_ixt70l.png"
             break;
         default:
             res.status(500).send("Categoria invalida");
@@ -78,7 +84,7 @@ router.post('/agregarProducto', async (req, res) => {
     }
     console.log("Agregando producto")
     // Realizar la inserción del nuevo producto en la base de datos
-    const resultado = await db.query("insert","productos",{nombre:nombre,precio:precio,descripcion:descripcion,id_proveedor:db.objectID(req.session.userID),imagen:"../../../Assets/Imagenes/Comida/burrito.png",categoria:categoria,active:true,created_at: new Date()})
+    const resultado = await db.query("insert","productos",{nombre:nombre,precio:precio,descripcion:descripcion,id_proveedor:db.objectID(req.session.userID),imagen:ruta,categoria:categoria,active:true,created_at: new Date()})
     if(resultado.acknowledged){
         res.sendStatus(200)
     }else{

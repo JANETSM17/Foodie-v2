@@ -36,7 +36,7 @@ function crearProductoMenu(id, imagen, nombre, categoria, descripcion, precio, a
                 </p>
                 <div class="SwitchContainer">
                     <label class="Switch">
-                        <input type="checkbox" class="toggleSwitch" id="toggleSwitch-${id}" onclick="toggleSwitch(${id})">
+                        <input type="checkbox" class="toggleSwitch" id="toggleSwitch-${id}" onclick="toggleSwitch('${id}')">
                         <span class="Slider"></span>
                     </label>
                 </div>

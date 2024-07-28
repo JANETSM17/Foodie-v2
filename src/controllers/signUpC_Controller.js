@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
         if(clientes.length > 0 || proveedores.length>0){//revisa que no este tratando de crear una cuenta con un correo o telefono ya utilizado
             res.json({status:"datos repetidos"})
         }else{
-            const queryObject = {nombre: nombre, correo: correo, contraseña: contraseña, telefono: telefono, created_at: new Date(),imagen: 'rutaImaginaria.jpg',active: true, proveedores: []};//crea un objeto con la info del usuario
+            const queryObject = {nombre: nombre, correo: correo, contraseña: contraseña, telefono: telefono, created_at: new Date(),imagen: 'https://res.cloudinary.com/foodiecloudinary/image/upload/v1722136335/FoxClient_vmriqx.jpg',active: true, proveedores: []};//crea un objeto con la info del usuario
 
             const result = await db.query("insert","clientes",queryObject,{})//hace el insert en la base de datos
             req.session.userID =  result.insertedId //guarda el ID en una variable de sesion

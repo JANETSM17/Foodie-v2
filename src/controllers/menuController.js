@@ -49,34 +49,34 @@ router.get('/queCafe', async (req,res) => {
 
 router.get('/comida',async (req,res) => {
     console.log('inicia el query')
-    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"comida"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"comida"},{imagen:1,nombre:1,descripcion:1,precio:1,_id:1})
     res.json(info)
 });
 
 router.get('/bebidas',async (req,res) => {
     console.log('inicia el query')
-    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"bebidas"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"bebidas"},{imagen:1,nombre:1,descripcion:1,precio:1,_id:1})
 
     res.json(info)
 });
 
 router.get('/frituras', async (req,res) => {
     console.log('inicia el query')
-    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"frituras"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"frituras"},{imagen:1,nombre:1,descripcion:1,precio:1,_id:1})
 
     res.json(info)
 });
 
 router.get('/dulces',async (req,res) => {
     console.log('inicia el query')
-    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"dulces"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"dulces"},{imagen:1,nombre:1,descripcion:1,precio:1,_id:1})
 
     res.json(info)
 });
 
 router.get('/otros',async (req,res) => {
     console.log('inicia el query')
-    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"otros"},{imgen:1,nombre:1,descripcion:1,precio:1,_id:1})
+    const info = await db.query("find","productos",{id_proveedor:db.objectID(req.session.selectedMenu),categoria:"otros"},{imagen:1,nombre:1,descripcion:1,precio:1,_id:1})
 
     res.json(info)
 });

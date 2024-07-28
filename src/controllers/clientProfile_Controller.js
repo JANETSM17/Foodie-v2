@@ -97,4 +97,10 @@ router.get('/getPedidosHist',async (req,res) => {
     })
     res.json({res:resultado,total:total})
 });
+
+router.post("/updateImagen",async (req,res)=>{
+    const ruta = decodeURI(req.body.ruta)
+    const resultado = await db.query("update","clientes",{correo:req.session.userMail},{$set:{imagen:ruta}})
+    res.json({status:resultado.acknowledged})
+})
 module.exports = router;
