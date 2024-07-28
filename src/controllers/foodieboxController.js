@@ -4,8 +4,24 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    const QAPagePath = path.join(__dirname, '../../public/views/foodiebox/foodiebox.html');
-    res.sendFile(QAPagePath);
+    if(!req.session.userID||req.session.userID==null||!req.session.userType||req.session.userType==null){
+        res.redirect('/')
+    }else{
+        switch (req.session.userType) {
+            case "proveedor":
+                const foodieboxPagePath = path.join(__dirname, '../../public/views/foodiebox/foodiebox.html');
+                res.sendFile(foodieboxPagePath);
+                break;
+            
+            case "cliente":
+                res.redirect('/homeC');
+                break;
+
+            default:
+                res.redirect('/')
+                break;
+        }
+    }
 });
 
 router.get('/ping/:numSerie',async (req,res)=>{
