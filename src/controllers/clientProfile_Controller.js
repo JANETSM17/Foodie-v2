@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/infoC',async (req,res) => {
-    const resultado = await db.query("find","clientes",{correo:req.session.userMail},{_id:0,nombre:1,correo:1,telefono:1,fecha:'$created_at'})
+    const resultado = await db.query("find","clientes",{correo:req.session.userMail},{_id:0,imagen:1,nombre:1,correo:1,telefono:1,fecha:'$created_at'})
     res.json(resultado)
     
 });
