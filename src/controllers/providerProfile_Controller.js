@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
 
 router.get('/infoP',async (req,res) => {
     console.log("Se busca la info del proveedor")
-    const resultado = await db.query("find","proveedores",{_id:db.objectID(req.session.userID)},{_id:0,telefono:1,direccion:1,correo:1,nombre:1,clave:1,min_espera:1,calif:1})
+    const resultado = await db.query("find","proveedores",{_id:db.objectID(req.session.userID)},{_id:0,telefono:1,direccion:1,correo:1,nombre:1,clave:1,min_espera:1,calif:1,imagen:1})
     console.log("Se termina la busqueda")
     res.json({resultado})
 });

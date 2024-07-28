@@ -71,6 +71,44 @@ var infoCodigo = [];
 var infoTiempo = [];
 var infoRate = [];
 
+
+const botonWidget = document.getElementById("buttonWidget")
+const fotoPerfil = document.getElementById("fotoPerfil")
+fotoPerfil.src = infoP[0].imagen
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var myWidget = cloudinary.createUploadWidget({
+        cloudName: 'foodiecloudinary', 
+        uploadPreset: 'preset_chido'
+    }, (error, result) => { 
+        if (!error && result && result.event === "success") { 
+            console.log('Done! Here is the image info: ', result.info);
+            const data = {ruta:result.info.url}
+            fetch(`clientProfile/updateImagen`,{
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data=>{
+              if(data.status==true){
+                fotoPerfil.src = result.info.url
+              }else{
+                alert("Se presentó un error al actualizar la imagen de perfil\nIntente de nuevo más tarde")
+              }
+            })
+            //const respuesta = hacerSolicitud(`clientProfile/updateImagen/${result.info.url}`)
+            
+        }
+    });
+
+    botonWidget.addEventListener("click", function() {
+        myWidget.open();
+    },false);
+});
+
 infoP.forEach(item => {
     infoGen.push(rellenarinfo(item.telefono, item.direccion, item.correo));
     infoNombre.push(rellenarName(item.nombre));

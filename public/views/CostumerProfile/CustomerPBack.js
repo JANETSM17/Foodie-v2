@@ -87,7 +87,7 @@ pedidosH.forEach(pedido => {
   const totalCuenta = document.getElementById("totalCuenta")
   totalCuenta.textContent =  `$${infoTotal}`
 
-  const botonWidget = document.getElementById("botonWidget")
+  const botonWidget = document.getElementById("buttonWidget")
   const fotoPerfil = document.getElementById("fotoPerfil")
   fotoPerfil.src = infoUsr[0].imagen
 
