@@ -42,18 +42,23 @@
     <footer>
         <p class="comentario">C<span>o</span>mentari<span>o</span>s</p>
         <input id="especificaciones" class="especificaciones" type="text" placeholder="Escribe aqui las especificaciones de tu pedido">
+        <div class="foodiebox">
+            <label>
+                <input type="checkbox" checked id="foodiechecknt" onclick="toggleCheckboxes('foodiechecknt', 'foodiecheck')">
+                Mostrador
+            </label>
+            <label>
+                <input type="checkbox" id="foodiecheck" onclick="toggleCheckboxes('foodiecheck', 'foodiechecknt')">
+                FoodieBox
+            </label>
+        </div>
+        
         <div class="finalizar">
             <p id="totalBag">Total: $</p>
             <button class="EnviarPedido" onclick="enviarPedido()">Enviar Pedido</button>
             <p class="advertencia">**Una Vez Enviado El Pedido No Podras Cancelar**</p>
         </div>
         <p class="pick-up">Hacer <br><span>Pick-up</span><br>En</p>
-        <div class="foodiebox">
-            <input type="checkbox" checked = true id="foodiechecknt" onclick="toggleCheckboxes('foodiechecknt', 'foodiecheck')">
-            No Foodie-Box?
-            <input type="checkbox" id="foodiecheck" onclick="toggleCheckboxes('foodiecheck', 'foodiechecknt')">
-            Foodie-Box?
-        </div>
         <div class="recogida"> 
             <input type="text" name="" id="minutos"  maxlength="2" oninput="validarNumeros(this)">
             Minutos
