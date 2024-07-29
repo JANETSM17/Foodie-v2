@@ -101,7 +101,7 @@ router.get('/pedidoCancelado/:clave',async (req,res)=>{
     console.log("Lo detecta")
     const pedido = await db.query("find","pedidos",{clave:clave},{cliente:1,clave:1,_id:1})
     if(pedido.length>0){
-        const setEntregado = await db.query("update","pedidos",{clave:clave},{$set:{estado:"No recogido",clave:"N/A"}})
+        const setEntregado = await db.query("update","pedidos",{clave:clave},{$set:{estado:"Cancelado",clave:"N/A"}})
         if(setEntregado.modifiedCount>0){
             const id = pedido[0]._id.toString()
         res.json({
